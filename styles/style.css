@@ -41,7 +41,7 @@ html {
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
 
-    margin-bottom: 100px;
+    margin-bottom: 10px;
 }
 ::selection {
     background: none;
@@ -55,6 +55,7 @@ html {
     font-size: 32px;
 }
 #game .icon {
+    height: 60px;
     width: 60px;
     margin: 5px;
     stroke-opacity: .5;
@@ -152,4 +153,60 @@ html {
         -webkit-transform: scale3d(1, 1, 1);
         transform: scale3d(1, 1, 1);
     }
-} 
+}
+@media (max-height: 1200px) {
+    #game .icon {
+        height: 110px;
+        width: 110px;
+    }
+}
+@media (max-height: 1200px) {
+    #game .icon {
+        height: 90px;
+        width: 90px;
+    }
+}
+
+@media (max-height: 1000px) {
+    #game .icon {
+        height: 70px;
+        width: 70px;
+    }
+}
+@media (max-height: 900px) {
+    #game .icon {
+        height: 60px;
+        width: 60px;
+    }
+}
+@media (max-height: 800px) {
+    #game .icon {
+        height: 50px;
+        width: 50px;
+    }
+}
+
+@media (max-height: 700px) {
+    #game .icon {
+        height: 50px;
+        width: 50px;
+    }
+    #box h2 {
+        margin: 0 0 10px 0;
+    }
+}
+@media (max-height: 600px) {
+    #game .icon {
+        height: 40px;
+        width: 40px;
+    }
+    #box h2 {
+        font-size: 30px;
+    }
+    #box a {
+        font-size: 10px;
+    }
+    #game p#tour {
+        font-size: 24px;
+    }
+}

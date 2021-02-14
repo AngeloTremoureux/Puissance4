@@ -84,7 +84,6 @@ var monTour = monTour || (function () {
     };
 }());
 jQuery(document).ready(function ($) {
-
     $("html").keydown(function () {
         let canPlay = monTour.get();
         if (canPlay) {
