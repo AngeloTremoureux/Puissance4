@@ -38,3 +38,32 @@ function resetGame() {
     monTour.set(true);
     $(".icon").attr('style', '');
 }
+$(function(){
+    dialog = $("#dialog").dialog({
+        autoOpen: false,
+        modal: true,
+        buttons: {
+            "Ok": loadParam,
+            Cancel: function () {
+                dialog.dialog("close");
+            }
+        }
+
+    });
+});
+
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
+
+function openParam() {
+    dialog.dialog( "open" );
+}
+
+function loadParam() {
+    window.location.replace("?x=" + $("#nbCaseX").val() + "&y=" + $("#nbCaseY").val());
+}
