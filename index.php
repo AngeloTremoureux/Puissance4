@@ -1,16 +1,23 @@
 <?php
 
+define('DS', DIRECTORY_SEPARATOR);
+define('RACINE', new DirectoryIterator(dirname(__FILE__)) . DS);
+
+require_once (__DIR__ . '/config/config.php');
+require_once (__DIR__ . '/classes/Game.php');
+
 try {
-    require('game.php');
-    $game = new game('templates/tplIndex.php');
-    if (isset($_GET['x'], $_GET['y'])) {
-        $game->setCase($_GET['x'], $_GET['y']);
+    $game = new Game();
+    $game->setTemplateInk(PATH_TO_TEMPLATES . '/skeleton.php');
+    
+    if (isset($_GET['tailleVerticale'], $_GET['tailleHorizontale'])) {
+        $game->setCase($_GET['tailleHorizontale'], $_GET['tailleVerticale']);
     } else {
         $game->setCase(7, 5);
         
     }
-    require($game->getTemplate());
+    require($game->getTemplateInk());
+
 } catch (Exception $ex) {
-    print($ex->getMessage());
+    echo($ex->getMessage());
 }
-?>
