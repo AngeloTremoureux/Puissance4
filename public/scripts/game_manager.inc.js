@@ -4,13 +4,13 @@ function searchPiece (name, initCase) {
   const defaultCircle = $('#preview #basic_circle')
   if (initCase) {
     if (name === 'red') {
-      $(redCircle).children().attr('case', initCase)
+      $(redCircle).children().children().attr('case', initCase)
       return $(redCircle).html()
     } else if (name === 'yellow') {
-      $(yellowCircle).children().attr('case', initCase)
+      $(yellowCircle).children().children().attr('case', initCase)
       return $(yellowCircle).html()
     } else {
-      $(defaultCircle).children().attr('case', initCase)
+      $(defaultCircle).children().children().attr('case', initCase)
       return $(defaultCircle).html()
     }
   } else {
@@ -47,12 +47,11 @@ function resetGame () {
   const Py = game.getPy()
   clearGame()
   jeton.clear();
-  game.createBackground()
+  game.createAndLoadBackground()
   $('#tour').text('A toi de commencer !')
   monTour.set(true)
   $('.icon').attr('style', '')
 }
-
 function openParam () {
   $('#dialog').removeClass('d-none')
   $("#dialog").dialog({

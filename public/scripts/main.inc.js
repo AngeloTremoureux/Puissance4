@@ -52,4 +52,19 @@ jQuery(document).ready(function ($) {
         }
       }
     });
+    $("#box").on('click', '#game .icon', function() {
+      if (monTour.get()) {
+        jeton.add($(this), game.getPy(), game.getPx());
+      }
+    })
+    $("#box").on('mouseover', '#game .icon', function() {
+      if (monTour.get()) {
+        game.select($(this), game.getPy());
+      }
+    })
+    $("#box").on('mouseout', '#game .icon', function() {
+      if (monTour.get()) {
+        game.unSelect();
+      }
+    })
   });

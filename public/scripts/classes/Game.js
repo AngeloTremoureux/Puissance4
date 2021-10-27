@@ -107,34 +107,40 @@ var game =
           "font-size: 13px;"
         );
       },
-      createBackground: function () {
+      loadBackgroundAssets: function () {
         let Px = this.Px;
         let Py = this.Py;
-        for (let i = 0; i < Py; i++) {
-          let rowY = '<div class="row" val="' + (i + 1) + '"></div>';
-          $("#game").append(rowY);
-          for (let j = 0; j < Px; j++) {
-            $('.row[val="' + (i + 1) + '"]').append(searchPiece(null, j + 1));
-          }
-        }
         game.log("Puissance 4", "Chargement du contexte");
 
-        $("#game .icon").click(function (event) {
-          if (monTour.get()) {
-            jeton.add($(this), Py, Px);
-          }
-        });
-        $("#game .icon")
-          .mouseover(function (event) {
+        setTimeout(function () {
+          $("#game .icon").click(function (event) {
             if (monTour.get()) {
-              game.select($(this), Py);
-            }
-          })
-          .mouseout(function (event) {
-            if (monTour.get()) {
-              game.unSelect();
+              jeton.add($(this), Py, Px);
             }
           });
+          $("#game .icon")
+            .mouseover(function (event) {
+              if (monTour.get()) {
+                game.select($(this), Py);
+              }
+            })
+            .mouseout(function (event) {
+              if (monTour.get()) {
+                game.unSelect();
+              }
+            });
+          }, 20);
+      },
+      createAndLoadBackground: function() {
+        let Px = this.Px;
+        let Py = this.Py;
+        for (let i = 1; i <= this.Py; i++) {
+          let rowY = '<div class="row" val="' + i + '"></div>';
+          $("#game").append(rowY);
+          for (let j = 1; j <= this.Px; j++) {
+            $('.row[val="' + i + '"]').append(searchPiece(null, j));
+          }
+        }
       },
       getPositionX: function (event) {
         return $(event).attr("case");

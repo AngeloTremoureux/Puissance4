@@ -45,4 +45,12 @@ class Game {
         }
     }
 
+    public function getTailleHorizontale() : int {
+        return $this->nbCaseX;
+    }
+
+    public function getTailleVerticale() : int {
+        return $this->nbCaseY;
+    }
+
 }

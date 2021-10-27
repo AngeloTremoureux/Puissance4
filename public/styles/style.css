@@ -57,7 +57,7 @@ html {
 #game .icon {
     height: 60px;
     width: 60px;
-    margin: 10px;
+    margin: 10px 0;
     stroke-opacity: .5;
     cursor: pointer;
 }
