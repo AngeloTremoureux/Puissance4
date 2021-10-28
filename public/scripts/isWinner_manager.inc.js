@@ -28,15 +28,13 @@ function verifIfPionPlacedGiveWin(tailleHorizontale, tailleVerticale, numeroColo
 
 function setWinner(Surbrillance) {
   let couleur;
-  $(".icon[case]").css("opacity", 0.3);
+  $("#game .icon").css("opacity", 0.3);
+  console.log("s:" + Surbrillance)
+  
   for (i = 0; i < Surbrillance.length; i++) {
-    couleur = $(
-      '.row[val="' +
-        Surbrillance[i][0] +
-        '"] .icon[case="' +
-        Surbrillance[i][1] +
-        '"]'
-    );
-    $(couleur).css("opacity", 1);
+    let indexHorizontale = Surbrillance[i][0]
+    let indexVerticale   = Surbrillance[i][1]
+    couleur = $("#game .row").eq((indexHorizontale - 1)).find(".icon").eq((indexVerticale - 1))
+    $(couleur).css("opacity", 1)
   }
 }

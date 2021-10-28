@@ -81,8 +81,7 @@ function robotPlaceUnPion(tailleHorizontale, tailleVerticale, CouleurPion) {
     }
   });
     
-  if (!colonneChoisitAleatoirement) {
-    $("#game p#tour").text("La partie est nulle !");
+  if (!lesCasesPouvantEtreJouer || lesCasesPouvantEtreJouer.length === 0) {
     return 2;
   } else {
     let boucleActive = true;

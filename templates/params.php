@@ -1,6 +1,5 @@
 <script type="text/javascript">
     game.init(<?php echo $game->getNbCase('x') . ', ' . $game->getNbCase('y') ?>);
-    game.loadBackgroundAssets();
 </script>
 
 <div id="preview" style="display: none;">

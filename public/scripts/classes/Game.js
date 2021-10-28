@@ -107,31 +107,7 @@ var game =
           "font-size: 13px;"
         );
       },
-      loadBackgroundAssets: function () {
-        let Px = this.Px;
-        let Py = this.Py;
-        game.log("Puissance 4", "Chargement du contexte");
-
-        setTimeout(function () {
-          $("#game .icon").click(function (event) {
-            if (monTour.get()) {
-              jeton.add($(this), Py, Px);
-            }
-          });
-          $("#game .icon")
-            .mouseover(function (event) {
-              if (monTour.get()) {
-                game.select($(this), Py);
-              }
-            })
-            .mouseout(function (event) {
-              if (monTour.get()) {
-                game.unSelect();
-              }
-            });
-          }, 20);
-      },
-      createAndLoadBackground: function() {
+      createBackground: function() {
         let Px = this.Px;
         let Py = this.Py;
         for (let i = 1; i <= this.Py; i++) {

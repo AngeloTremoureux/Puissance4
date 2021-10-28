@@ -47,7 +47,7 @@ function resetGame () {
   const Py = game.getPy()
   clearGame()
   jeton.clear();
-  game.createAndLoadBackground()
+  game.createBackground()
   $('#tour').text('A toi de commencer !')
   monTour.set(true)
   $('.icon').attr('style', '')
