@@ -13,8 +13,14 @@ function RobotVsRobot(Color) {
   let tailleHorizontale = game.getPx();
   let tailleVerticale   = game.getPy();
 
-  let returnKey = robotPlaceUnPion(tailleHorizontale, tailleVerticale, Color);
-  setMatch(returnKey, tailleHorizontale, tailleVerticale, Color);
+  // Si la partie n'est pas terminé
+  if (!robotPlaceUnPion(tailleHorizontale, tailleVerticale, Color))
+  {
+    // On fais jouer l'équipe adverse
+    setTimeout(function () {
+      RobotVsRobot(getCouleurEquipeAdverse(Color))
+    }, 5)
+  }
 }
 
 function getCouleurEquipeAleatoire() {
@@ -82,7 +88,8 @@ function robotPlaceUnPion(tailleHorizontale, tailleVerticale, CouleurPion) {
   });
     
   if (!lesCasesPouvantEtreJouer || lesCasesPouvantEtreJouer.length === 0) {
-    return 2;
+    game.setWinner(CouleurPion, null);
+    return true;
   } else {
     let boucleActive = true;
     let indiceTailleVerticale = tailleVerticale;
@@ -92,13 +99,10 @@ function robotPlaceUnPion(tailleHorizontale, tailleVerticale, CouleurPion) {
         boucleActive = false;
         jeton.forceAdd(colonneChoisitAleatoirement, indiceTailleVerticale, CouleurPion)
         //ajouteUnPionDansBdd(colonneChoisitAleatoirement, indiceTailleVerticale, CouleurPion);
-        monTour.set(true);
         isWinner = verifWin(tailleHorizontale, tailleVerticale, CouleurPion);
         if (isWinner) {
-          setWinner(isWinner);
+          game.setWinner(CouleurPion, isWinner);
           return true;
-        } else {
-          return false;
         }
       }
       indiceTailleVerticale--;

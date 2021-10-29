@@ -100,6 +100,26 @@ var game =
         
         game.log("Puissance 4", "Fin de l'import");
       },
+      setWinner: function(couleur, pionsGagnants) {
+        if (pionsGagnants) {
+          let couleur;
+          $("#game .icon").css("opacity", 0.3);
+          
+          for (i = 0; i < pionsGagnants.length; i++) {
+            let indexHorizontale = pionsGagnants[i][0]
+            let indexVerticale   = pionsGagnants[i][1]
+            couleur = $("#game .row").eq((indexHorizontale - 1)).find(".icon").eq((indexVerticale - 1))
+            $(couleur).css("opacity", 1)
+          }
+        }
+        if (couleur == 'red') {
+          $("#game p#tour").text("Les rouges ont gagnés");
+        } else if (couleur == 'yellow') {
+          $("#game p#tour").text("Les jaunes ont gagnés");
+        } else {
+          $("#game p#tour").text("Match nul !");
+        }
+      },
       log: function (prefix, message) {
         console.log(
           "%c[" + prefix + "] %c" + message,

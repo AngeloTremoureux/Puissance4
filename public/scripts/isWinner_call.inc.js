@@ -60,13 +60,14 @@ const checkIfWinner = {
     let couleurDuPion, nbPionsGagnants;
     let indexCourantHorizontale;
     let listeDesPionsGagnants = [];
+    let indexCourantVerticale = 4;
 
     // Parcours toutes les diagonales à gauches à partir de 4.
     for (let indexVerticale = 4; indexVerticale <= tailleVerticale; indexVerticale++) {
       nbPionsGagnants = 0;
       listeDesPionsGagnants = [];
       indexCourantHorizontale = 1;
-      indexCourantVerticale = indexVerticale + 1;
+      
       // Vérifier la ligne en diagonale
       while (indexCourantHorizontale <= tailleHorizontale && indexCourantVerticale >= 1) {
         couleurDuPion = getColorOfPionPlaced(indexCourantHorizontale, indexCourantVerticale)
@@ -83,7 +84,7 @@ const checkIfWinner = {
         indexCourantVerticale--;
         indexCourantHorizontale++;
       }
-      
+      indexCourantVerticale = indexVerticale + 1;
     }
 
     listeDesPionsGagnants = [];
