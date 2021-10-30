@@ -33,10 +33,10 @@ var game =
         }
       },
       getPx: function () {
-        return this.Px;
+        return parseInt(this.Px);
       },
       getPy: function () {
-        return this.Py;
+        return parseInt(this.Py);
       },
       unSelect: function () {
         $(".row .icon").attr("surbrillance", "");

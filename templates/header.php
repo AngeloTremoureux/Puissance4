@@ -15,6 +15,7 @@
 <script type="text/javascript" src="<?= PATH_TO_SCRIPTS ?>/classes/Game.js"></script>
 <script type="text/javascript" src="<?= PATH_TO_SCRIPTS ?>/classes/Jeton.js"></script>
 <script type="text/javascript" src="<?= PATH_TO_SCRIPTS ?>/classes/MonTour.js"></script>
+<script type="text/javascript" src="<?= PATH_TO_SCRIPTS ?>/classes/TestsUnits.js"></script>
 
 <script type="text/javascript" src="<?= PATH_TO_SCRIPTS ?>/utils.inc.js"></script>
 <script type="text/javascript" src="<?= PATH_TO_SCRIPTS ?>/game_manager.inc.js"></script>
