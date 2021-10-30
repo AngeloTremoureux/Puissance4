@@ -20,7 +20,6 @@
 <script type="text/javascript" src="<?= PATH_TO_SCRIPTS ?>/utils.inc.js"></script>
 <script type="text/javascript" src="<?= PATH_TO_SCRIPTS ?>/game_manager.inc.js"></script>
 <script type="text/javascript" src="<?= PATH_TO_SCRIPTS ?>/robot_manager.inc.js"></script>
-<script type="text/javascript" src="<?= PATH_TO_SCRIPTS ?>/match_manager.inc.js"></script>
 <script type="text/javascript" src="<?= PATH_TO_SCRIPTS ?>/isWinner_manager.inc.js"></script>
 <script type="text/javascript" src="<?= PATH_TO_SCRIPTS ?>/isWinner_call.inc.js"></script>
 <script type="text/javascript" src="<?= PATH_TO_SCRIPTS ?>/main.inc.js"></script>
