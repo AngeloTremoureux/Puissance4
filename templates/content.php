@@ -1,7 +1,7 @@
 <div id="box">
     <h2>Puissance 4</h2>
     <div id="game">
-        <p id="tour">A toi de commencer !</p>
+        <p id="tour"></p>
         <?php
         for ($i=1; $i <= $game->getTailleVerticale(); $i++) { 
             ?>
@@ -20,8 +20,11 @@
         }
         ?>
     </div>
-    <a href="#" onclick="resetGame();">Relancer</a>
-    <a href="#" onclick="clearGame();">Effacer</a>
-    <a href="#" onclick="lanceUnePartieDeRobots();">Robot vs Robot</a>
-    <a href="#" onclick="openParam()">Paramètres</a>
+    <div class="btn-group" role="group">
+        <a href="#" class="btn btn-secondary" onclick="playGame();">Jouer</a>
+        <a href="#" class="btn btn-secondary" onclick="resetGame();">Relancer</a>
+        <a href="#" class="btn btn-secondary" onclick="clearGame();">Effacer</a>
+        <a href="#" class="btn btn-secondary" onclick="lanceUnePartieDeRobots();">Robot vs Robot</a>
+        <a href="#" class="btn btn-secondary" onclick="openParam()">Paramètres</a>
+    </div>
 </div>

@@ -25,7 +25,6 @@ function searchPiece (name, initCase) {
 }
 
 function ajouteUnPionDansBdd(px, py, color) {
-  console.log("Pion ajouté! ");
   let gameId = 4;
   $.post("/api/pions/setList/", {
       id: gameId,
@@ -34,7 +33,6 @@ function ajouteUnPionDansBdd(px, py, color) {
       Color:color
     })
     .done(function( data ) {
-    console.log("Response : " + data);
   });
 }
 
@@ -42,16 +40,20 @@ function clearGame () {
   $('.row').remove()
 }
 
+function playGame () {
+  resetGame()
+  game.enable()
+}
+
 function resetGame () {
   const Px = game.getPx()
   const Py = game.getPy()
   clearGame()
-  jeton.clear();
+  jeton.clear()
   game.createBackground()
-  $('#tour').text('A toi de commencer !')
-  monTour.set(true)
-  $('.icon').attr('style', '')
+  game.disable()
 }
+
 function openParam () {
   $('#dialog').removeClass('d-none')
   $("#dialog").dialog({

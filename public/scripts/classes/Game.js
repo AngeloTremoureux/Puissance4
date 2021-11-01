@@ -6,30 +6,24 @@ var game =
       init: function (Px, Py) {
         this.Px = Px;
         this.Py = Py;
-        monTour.set(true);
+        this.disable()
         jeton.init();
         game.log(
           "Puissance 4",
           "Initialisation du jeu en " + this.Px + "x" + this.Py
         );
       },
-      select: function (event, Py) {
-        let num = $(event).attr("case");
-        let style = $(event).attr("style");
-        let placeIsNotTaken = true;
-        let compteur = Py;
-        while (compteur > 0 && placeIsNotTaken) {
-          let teamColor = $(
-            ".row[val='" + compteur + "'] .icon[case='" + num + "']"
-          ).attr("team");
-          if (!teamColor && !style) {
-            $(".row[val='" + compteur + "'] .icon[case='" + num + "']").attr(
-              "surbrillance",
-              "red"
-            );
-            placeIsNotTaken = false;
+      select: function (indexHorizontale) {
+        indexHorizontale = parseInt(indexHorizontale)
+        let indexVerticale = game.getPy();
+        while (indexVerticale > 0) {
+          let teamColor = getColorOfPionPlaced(indexHorizontale, indexVerticale)
+          if (!teamColor && monTour.get()) {
+            let couleur = $("#game .row").eq((indexVerticale - 1)).find(".icon").eq((indexHorizontale - 1))
+            couleur.attr("surbrillance", "red");
+            return;
           }
-          compteur--;
+          indexVerticale--;
         }
       },
       getPx: function () {
@@ -106,9 +100,9 @@ var game =
           $("#game .icon").css("opacity", 0.3);
           
           for (i = 0; i < pionsGagnants.length; i++) {
-            let indexHorizontale = pionsGagnants[i][0]
-            let indexVerticale   = pionsGagnants[i][1]
-            couleur = $("#game .row").eq((indexHorizontale - 1)).find(".icon").eq((indexVerticale - 1))
+            let indexVerticale = pionsGagnants[i][0]
+            let indexHorizontale   = pionsGagnants[i][1]
+            couleur = $("#game .row").eq((indexVerticale - 1)).find(".icon").eq((indexHorizontale - 1))
             $(couleur).css("opacity", 1)
           }
         }
@@ -126,6 +120,14 @@ var game =
           "color: purple; font-size: 13px; font-weight: bold;",
           "font-size: 13px;"
         );
+      },
+      disable: function() {
+        $("#game .icon").css("opacity", 0.3)
+        monTour.set(false)
+      },
+      enable: function() {
+        $("#game .icon").css("opacity", 1)
+        monTour.set(true)
       },
       createBackground: function() {
         let Px = this.Px;

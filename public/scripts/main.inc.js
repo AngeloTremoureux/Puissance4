@@ -59,7 +59,7 @@ jQuery(document).ready(function ($) {
     })
     $("#box").on('mouseover', '#game .icon', function() {
       if (monTour.get()) {
-        game.select($(this), game.getPy());
+        game.select($(this).attr('case'));
       }
     })
     $("#box").on('mouseout', '#game .icon', function() {
