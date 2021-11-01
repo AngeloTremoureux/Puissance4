@@ -30,14 +30,11 @@ var jeton =
 
               game.unSelect();
               this.forceAdd(indexHorizontaleClicked, indexVerticale, "red")
-              game.select(event, tailleVerticale);
+              game.select(event.attr('case'));
               
-              isWinner = verifWin(tailleHorizontale, tailleVerticale, "red");
-              if (isWinner) {
-                setWinner(isWinner);
-                $("#game p#tour").text("Tu as gagné !");
-                game.log("Puissance 4", "Gagné ! Bien joué");
-                game.unSelect();
+              let lesPionsGagnants = verifWin(tailleHorizontale, tailleVerticale, "red");
+              if (lesPionsGagnants) {
+                game.setWinner('red', lesPionsGagnants);
               } else {
                 $("#game p#tour").text("Au tour de l'adversaire!");
                 setTimeout(function () {
@@ -46,6 +43,9 @@ var jeton =
                     game.log("Puissance 4", "Perdu ! :(");
                     monTour.set(false);
                     game.unSelect();
+                  } else {
+                    monTour.set(true);
+                    $("#game p#tour").text("A ton tour !");
                   }
                 }, 50);
               }
