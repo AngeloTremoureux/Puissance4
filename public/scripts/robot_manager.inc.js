@@ -88,7 +88,7 @@ function robotPlaceUnPion(tailleHorizontale, tailleVerticale, CouleurPion) {
   });
     
   if (!lesCasesPouvantEtreJouer || lesCasesPouvantEtreJouer.length === 0) {
-    game.setWinner(CouleurPion, null);
+    game.setWinner(null, null);
     return true;
   } else {
     let boucleActive = true;
