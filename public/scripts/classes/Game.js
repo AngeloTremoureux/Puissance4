@@ -35,6 +35,9 @@ var game =
       unSelect: function () {
         $(".row .icon").attr("surbrillance", "");
       },
+      setMessage: function (message) {
+        $("#game p#tour").text(message);
+      },
       export: function() {
         game.log("Puissance 4", "Affichage de l'export...");
         let params = [];
@@ -79,12 +82,12 @@ var game =
           let gagnantJaune = verifWin(this.Px, this.Py, "yellow");
           if (gagnantRouge) {
             setWinner(gagnantRouge);
-            $("#game p#tour").text("Tu as gagné !");
+            this.setMessage("Tu as gagné !");
             game.log("Puissance 4", "Gagné ! Bien joué");
             game.unSelect();
           } else if (gagnantJaune) {
             setWinner(gagnantJaune);
-            $("#game p#tour").text("Tu as perdu la partie !");
+            this.setMessage("Tu as perdu la partie !");
             game.log("Puissance 4", "Perdu ! :(");
             monTour.set(false);
             game.unSelect();
@@ -95,23 +98,21 @@ var game =
         game.log("Puissance 4", "Fin de l'import");
       },
       setWinner: function(couleur, pionsGagnants) {
-        if (pionsGagnants) {
-          let couleur;
-          $("#game .icon").css("opacity", 0.3);
-          
+        game.disable()
+        if (pionsGagnants) {       
           for (i = 0; i < pionsGagnants.length; i++) {
             let indexVerticale = pionsGagnants[i][0]
             let indexHorizontale   = pionsGagnants[i][1]
-            couleur = $("#game .row").eq((indexVerticale - 1)).find(".icon").eq((indexHorizontale - 1))
+            let couleur = $("#game .row").eq((indexVerticale - 1)).find(".icon").eq((indexHorizontale - 1))
             $(couleur).css("opacity", 1)
           }
         }
         if (couleur == 'red') {
-          $("#game p#tour").text("Les rouges ont gagnés");
+          this.setMessage("Les rouges ont gagnés");
         } else if (couleur == 'yellow') {
-          $("#game p#tour").text("Les jaunes ont gagnés");
+          this.setMessage("Les jaunes ont gagnés");
         } else {
-          $("#game p#tour").text("Match nul !");
+          this.setMessage("Match nul !");
         }
       },
       log: function (prefix, message) {

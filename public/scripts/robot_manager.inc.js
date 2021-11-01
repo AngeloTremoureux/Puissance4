@@ -1,6 +1,8 @@
 function lanceUnePartieDeRobots() {
-  $("#game p#tour").text("Robot Vs. Robot");
-  resetGame();
+  game.setMessage("Robot Vs. Robot");
+  resetGame()
+  game.enable()
+  monTour.set(false)
   // On choisis une équipe qui commence aléatoirement
   let color = getCouleurEquipeAleatoire();
   // On lance la partie

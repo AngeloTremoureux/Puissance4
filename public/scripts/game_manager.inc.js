@@ -42,6 +42,7 @@ function clearGame () {
 
 function playGame () {
   resetGame()
+  game.setMessage("A toi de jouer !")
   game.enable()
 }
 
