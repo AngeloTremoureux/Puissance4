@@ -17,8 +17,12 @@ var jeton =
           this.set(1, [positionHorizontale, positionVerticale]);
         }
       },
-      add: function (event, tailleVerticale, tailleHorizontale) {
-        let indexHorizontaleClicked = parseInt($(event).attr("case"));
+      getPositionHorizontale(event) {
+        return $(event).parent().index() + 1;
+      },
+      add: function (indexHorizontaleClicked) {
+        const tailleVerticale = game.getPy()
+        const tailleHorizontale = game.getPx()
         let placeIsNotTaken = true;
         let indexVerticale = tailleVerticale;
         if (monTour.get()) {
@@ -30,22 +34,22 @@ var jeton =
 
               game.unSelect();
               this.forceAdd(indexHorizontaleClicked, indexVerticale, "red")
-              game.select(event.attr('case'));
+              game.select(indexHorizontaleClicked);
               
               let lesPionsGagnants = verifWin(tailleHorizontale, tailleVerticale, "red");
               if (lesPionsGagnants) {
                 game.setWinner('red', lesPionsGagnants);
               } else {
-                $("#game p#tour").text("Au tour de l'adversaire!");
+                game.setMessage("Au tour de l'adversaire!");
                 setTimeout(function () {
                   if (robotPlaceUnPion(tailleHorizontale, tailleVerticale, "yellow")) {
-                    $("#game p#tour").text("Tu as perdu la partie !");
+                    game.setMessage("Tu as perdu la partie !");
                     game.log("Puissance 4", "Perdu ! :(");
                     monTour.set(false);
                     game.unSelect();
                   } else {
                     monTour.set(true);
-                    $("#game p#tour").text("A ton tour !");
+                    game.setMessage("A ton tour !");
                   }
                 }, 50);
               }

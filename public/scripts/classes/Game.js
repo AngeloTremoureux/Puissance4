@@ -18,7 +18,7 @@ var game =
         let indexVerticale = game.getPy();
         while (indexVerticale > 0) {
           let teamColor = getColorOfPionPlaced(indexHorizontale, indexVerticale)
-          if (!teamColor && monTour.get()) {
+          if (!teamColor) {
             let couleur = $("#game .row").eq((indexVerticale - 1)).find(".icon").eq((indexHorizontale - 1))
             couleur.attr("surbrillance", "red");
             return;

@@ -54,12 +54,14 @@ jQuery(document).ready(function ($) {
     });
     $("#box").on('click', '#game .icon', function() {
       if (monTour.get()) {
-        jeton.add($(this), game.getPy(), game.getPx());
+        const positionHorizontale = jeton.getPositionHorizontale($(this))
+        jeton.add(positionHorizontale);
+        game.select(positionHorizontale);
       }
     })
     $("#box").on('mouseover', '#game .icon', function() {
       if (monTour.get()) {
-        game.select($(this).attr('case'));
+        game.select(jeton.getPositionHorizontale($(this)));
       }
     })
     $("#box").on('mouseout', '#game .icon', function() {
