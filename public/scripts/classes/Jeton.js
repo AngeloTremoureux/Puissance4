@@ -34,20 +34,24 @@ var jeton =
 
               game.unSelect();
               this.forceAdd(indexHorizontaleClicked, indexVerticale, "red")
-              game.select(indexHorizontaleClicked);
               
               let lesPionsGagnants = verifWin(tailleHorizontale, tailleVerticale, "red");
               if (lesPionsGagnants) {
                 game.setWinner('red', lesPionsGagnants);
               } else {
+                game.select(indexHorizontaleClicked);
                 game.setMessage("Au tour de l'adversaire!");
                 setTimeout(function () {
                   if (robotPlaceUnPion(tailleHorizontale, tailleVerticale, "yellow")) {
                     game.setMessage("Tu as perdu la partie !");
-                    game.log("Puissance 4", "Perdu ! :(");
+                    game.log("Puissance 4", "Perdu !");
                     monTour.set(false);
                     game.unSelect();
                   } else {
+                    if (getColorOfPionPlaced(indexHorizontaleClicked, indexVerticale+1)) {
+                      // Si le robot a joué sur la même colonne, on actualise la sélection
+                      game.select(indexHorizontaleClicked);
+                    }
                     monTour.set(true);
                     game.setMessage("A ton tour !");
                   }
