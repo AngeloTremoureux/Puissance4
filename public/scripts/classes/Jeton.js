@@ -31,7 +31,6 @@ var jeton =
             if (!couleurDuPion) {
               placeIsNotTaken = false;
               monTour.set(false);
-
               game.unSelect();
               this.forceAdd(indexHorizontaleClicked, indexVerticale, "red")
               
@@ -42,6 +41,8 @@ var jeton =
                 game.select(indexHorizontaleClicked);
                 game.setMessage("Au tour de l'adversaire!");
                 setTimeout(function () {
+                  let audio = new Audio('../../public/audio/pop.mp4');
+                  audio.play();
                   if (robotPlaceUnPion(tailleHorizontale, tailleVerticale, "yellow")) {
                     game.setMessage("Tu as perdu la partie !");
                     game.log("Puissance 4", "Perdu !");

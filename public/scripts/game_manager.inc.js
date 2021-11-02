@@ -41,6 +41,9 @@ function clearGame () {
 }
 
 function playGame () {
+  let audio = new Audio('../public/audio/startGame.mp4');
+  audio.play();
+  audio = null;
   resetGame()
   game.setMessage("A toi de jouer !")
   game.enable()
