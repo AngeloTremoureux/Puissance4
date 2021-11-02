@@ -40,14 +40,13 @@ function getCouleurEquipeAdverse(couleurEquipeActuelle) {
 }
 
 function getLesColonnesNonCompletes() {
-  let liste = [];
-  for (let i = 1; i <= game.getPx(); i++) {
-    let el = $(".row[val=1] .icon[case='" + i + "']").attr("team");
-    if (!el) {
-      liste.push(i);
+  let listeColonnesNonCompletes = [];
+  for (let indexHorizontale = 1; indexHorizontale <= game.getPx(); indexHorizontale++) {
+    if (!getColorOfPionPlaced(indexHorizontale, 1)) {
+      listeColonnesNonCompletes.push(indexHorizontale);
     }
   }
-  return liste;
+  return listeColonnesNonCompletes;
 }
 
 function getLesCasesPouvantEtreJouer() {
