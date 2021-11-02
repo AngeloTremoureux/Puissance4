@@ -23,6 +23,6 @@
     <div class="btn-group mt-4" role="group">
         <a href="#" class="btn btn-secondary" onclick="playGame();"><i class="fas fa-dice"></i> Jouer</a>
         <a href="#" class="btn btn-secondary" onclick="lanceUnePartieDeRobots();"><i class="fas fa-robot"></i> Robot vs Robot</a>
-        <a href="#" class="btn btn-secondary" onclick="openParam()"><i class="fas fa-tools"></i> Paramètres</a>
+        <a href="#" class="btn btn-secondary" onclick="openParam()"><i class="fas fa-tools"></i> Options</a>
     </div>
 </div>
