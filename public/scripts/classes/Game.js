@@ -97,6 +97,9 @@ class Game {
     }
     return listeColonnesNonCompletes;
   }
+  isDraw() {
+    return this.listePionsJaune.length + this.listePionsRouge.length >= this.getTailleHorizontale() * this.getTailleVerticale()
+  }
   getTailleHorizontale() {
     return parseInt(this.tailleHorizontaleDuJeu);
   }
@@ -258,6 +261,8 @@ class Game {
           let lesPionsGagnants = WinnerManager.verifWin(this, "red");
           if (lesPionsGagnants) {
             this.setWinner('red', lesPionsGagnants);
+          } else if (this.isDraw()) {
+            this.setWinner(null, null)
           } else {
             this.select(indexHorizontaleClicked);
             this.setMessage("Au tour de l'adversaire!");
