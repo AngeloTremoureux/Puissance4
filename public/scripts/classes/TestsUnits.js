@@ -9,26 +9,40 @@ class TestsUnits {
   launchTestsUnits () {
     this.defaultTailleHorizontale = this.game.getTailleHorizontale()
     this.defaultTailleVerticale   = this.game.getTailleVerticale()
-    let message = "Opérations des tests unitaires : \n";
-    message += "Test 1 : " + this.testUnit1() + "\n";
-    message += "Test 2 : " + this.testUnit2() + "\n";
-    message += "Test 3 : " + this.testUnit3() + "\n";
-    message += "Test 4 : " + this.testUnit4() + "\n";
-    message += "Test 5 : " + this.testUnit5() + "\n";
-    message += "Test 6 : " + this.testUnit6() + "\n";
-    message += "Test 7 : " + this.testUnit7() + "\n";
-    message += "Test 8 : " + this.testUnit8() + "\n";
-    message += "Test 9 : " + this.testUnit9() + "\n";
-    message += "Test 10 : " + this.testUnit10() + "\n";
-    message += "Test 11 : " + this.testUnit11() + "\n";
+
+    const listsTestsUnits = []
+    listsTestsUnits.push(this.testUnit1())
+    listsTestsUnits.push(this.testUnit2())
+    listsTestsUnits.push(this.testUnit3())
+    listsTestsUnits.push(this.testUnit4())
+    listsTestsUnits.push(this.testUnit5())
+    listsTestsUnits.push(this.testUnit6())
+    listsTestsUnits.push(this.testUnit7())
+    listsTestsUnits.push(this.testUnit8())
+    listsTestsUnits.push(this.testUnit9())
+    listsTestsUnits.push(this.testUnit10())
+    listsTestsUnits.push(this.testUnit11())
+
+    for (let index = 0; index < listsTestsUnits.length; index++) {
+      let color;
+      if (listsTestsUnits[index]) {
+        color = "green";
+      }  else {
+        color = "red";
+      }
+      let message = "Test " + (index + 1) + " : " + listsTestsUnits[index] + "\n";
+      this.game.log("Test", message, color);
+      
+      
+    }
     this.resetTests();
-    game.log("Puissance 4", message);
+    
 
   }
   resetTests() {
-    game.resetGame()
     this.game.tailleHorizontaleDuJeu = this.defaultTailleHorizontale;
     this.game.tailleVerticaleDuJeu   = this.defaultTailleVerticale;
+    game.resetGame()
   }
   testUnit1() {
     game.resetGame()

@@ -1,54 +1,63 @@
 jQuery(document).ready(function ($) {
-    $("html").keydown(function () {
-      let canPlay = game.monTour.get();
-      if (canPlay) {
-        let key = event.keyCode;
-        if ($("#game .row .icon[surbrillance='red']").length) {
-          let id = $("#game .row .icon[surbrillance='red']").attr("case");
-          let caseDuPion = parseInt(id, 10);
-          if (caseDuPion) {
+    $("html").on("keydown", "body", function (e) {
+      if (game.monTour.get()) {
+        const key = event.keyCode;
+        if ($("#game .row .icon[surbrillance='red']").length >= 1 && !game.isDraw()) {
+          const pionEnSurbrillance = $("#game .row .icon[surbrillance='red']");
+          let indexHorizontaleDuPion = parseInt(pionEnSurbrillance.attr("case"));
+          if (indexHorizontaleDuPion) {
+            $("#game .row .icon").mouseout();
             if (key == 39) {
               // flèche droite : simulation à droite
-              caseDuPion++;
-              while (
-                $("#game .row[val='1'] .icon[case='" + caseDuPion + "']").attr(
-                  "team"
-                )
-              ) {
-                caseDuPion++;
+              indexHorizontaleDuPion++;
+              if (indexHorizontaleDuPion >= game.getTailleHorizontale() + 1) {
+                indexHorizontaleDuPion = 1;
               }
-              if (caseDuPion >= game.getPositionHorizontale() + 1) {
-                caseDuPion = 1;
+              while (!game.getLesColonnesNonCompletes().includes(indexHorizontaleDuPion) && !game.isDraw() && indexHorizontaleDuPion <= game.getTailleHorizontale()) {
+                indexHorizontaleDuPion++;
+                if (indexHorizontaleDuPion >= game.getTailleHorizontale() + 1) {
+                  indexHorizontaleDuPion = 1;
+                }
               }
-              $("#game .row .icon").getTailleHorizontale();
-              $(
-                "#game .row[val='1'] .icon[case='" + caseDuPion + "']"
-              ).mouseover();
+              
+              $("#game .row[val='1'] .icon[case='" + indexHorizontaleDuPion + "']").mouseover();
             } else if (key == 37) {
               // flèche gauche : simulation à gauche
-              caseDuPion--;
-              while (
-                $("#game .row[val='1'] .icon[case='" + caseDuPion + "']").attr(
-                  "team"
-                )
-              ) {
-                caseDuPion--;
+              indexHorizontaleDuPion--;
+              if (indexHorizontaleDuPion <= 0) {
+                indexHorizontaleDuPion = game.getTailleHorizontale();
               }
-              if (caseDuPion <= 0) {
-                caseDuPion = game.getTailleHorizontale();
+              console.log(indexHorizontaleDuPion)
+              while (!game.getLesColonnesNonCompletes().includes(indexHorizontaleDuPion) && !game.isDraw() && indexHorizontaleDuPion >= 0) {
+                indexHorizontaleDuPion--;
+                if (indexHorizontaleDuPion <= 0) {
+                  indexHorizontaleDuPion = game.getTailleHorizontale();
+                }
               }
-              $("#game .row .icon").mouseout();
-              $(
-                "#game .row[val='1'] .icon[case='" + caseDuPion + "']"
-              ).mouseover();
+              console.log(indexHorizontaleDuPion)
+              $( "#game .row[val='1'] .icon[case='" + indexHorizontaleDuPion + "']").mouseover();
             } else if (key == 13 || key == 38) {
               // touche entré ou flèche haut : simulation d'un click
-              $("#game .row .icon[surbrillance='red']").click();
+              $(pionEnSurbrillance).click();
+              if (!game.getLesColonnesNonCompletes().includes(indexHorizontaleDuPion)) {
+                indexHorizontaleDuPion++
+                if (indexHorizontaleDuPion >= game.getTailleHorizontale() + 1) {
+                  indexHorizontaleDuPion = 1;
+                }
+                while (!game.getLesColonnesNonCompletes().includes(indexHorizontaleDuPion) && !game.isDraw() && indexHorizontaleDuPion <= game.getTailleHorizontale()) {
+                  indexHorizontaleDuPion++;
+                }
+                $("#game .row[val='1'] .icon[case='" + indexHorizontaleDuPion + "']").mouseover();
+              }
             }
           }
         } else {
           $("#game .row .icon").mouseout();
-          $("#game .row[val='1'] .icon[case='1']").mouseover();
+          indexHorizontaleDuPion = 1;
+          while (!game.getLesColonnesNonCompletes().includes(indexHorizontaleDuPion) && !game.isDraw() && indexHorizontaleDuPion <= game.getTailleHorizontale()) {
+            indexHorizontaleDuPion++;
+          }
+          $("#game .row[val='1'] .icon[case='" + indexHorizontaleDuPion + "']").mouseover();
         }
       }
     });
