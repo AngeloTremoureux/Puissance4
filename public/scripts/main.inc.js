@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
     $("html").keydown(function () {
-      let canPlay = monTour.get();
+      let canPlay = game.monTour.get();
       if (canPlay) {
         let key = event.keyCode;
         if ($("#game .row .icon[surbrillance='red']").length) {
@@ -17,10 +17,10 @@ jQuery(document).ready(function ($) {
               ) {
                 caseDuPion++;
               }
-              if (caseDuPion >= game.getPx() + 1) {
+              if (caseDuPion >= game.getPositionHorizontale() + 1) {
                 caseDuPion = 1;
               }
-              $("#game .row .icon").mouseout();
+              $("#game .row .icon").getTailleHorizontale();
               $(
                 "#game .row[val='1'] .icon[case='" + caseDuPion + "']"
               ).mouseover();
@@ -35,7 +35,7 @@ jQuery(document).ready(function ($) {
                 caseDuPion--;
               }
               if (caseDuPion <= 0) {
-                caseDuPion = game.getPx();
+                caseDuPion = game.getTailleHorizontale();
               }
               $("#game .row .icon").mouseout();
               $(
@@ -53,19 +53,19 @@ jQuery(document).ready(function ($) {
       }
     });
     $("#box").on('click', '#game .icon', function() {
-      if (monTour.get()) {
-        const positionHorizontale = jeton.getPositionHorizontale($(this))
-        jeton.add(positionHorizontale);
+      if (game.monTour.get()) {
+        const positionHorizontale = game.getPositionHorizontale($(this))
+        game.addPion(positionHorizontale);
         game.select(positionHorizontale);
       }
     })
     $("#box").on('mouseover', '#game .icon', function() {
-      if (monTour.get()) {
-        game.select(jeton.getPositionHorizontale($(this)));
+      if (game.monTour.get()) {
+        game.select(game.getPositionHorizontale($(this)));
       }
     })
     $("#box").on('mouseout', '#game .icon', function() {
-      if (monTour.get()) {
+      if (game.monTour.get()) {
         game.unSelect();
       }
     })

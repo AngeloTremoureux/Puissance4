@@ -21,8 +21,8 @@
         ?>
     </div>
     <div class="btn-group mt-4" role="group">
-        <a href="#" class="btn btn-secondary" onclick="playGame();"><i class="fas fa-dice"></i> Jouer</a>
-        <a href="#" class="btn btn-secondary" onclick="lanceUnePartieDeRobots();"><i class="fas fa-robot"></i> Robot vs Robot</a>
-        <a href="#" class="btn btn-secondary" onclick="openParam()"><i class="fas fa-tools"></i> Options</a>
+        <button class="btn btn-secondary" id="playButton" onclick="playGame();" title="Lancer une partie de puissance 4"><i class="fas fa-dice"></i> Jouer</button>
+        <button class="btn btn-secondary" id="robotButton" onclick="lanceUnePartieDeRobots();" title="Un match de robot contre robot"><i class="fas fa-robot"></i> Robot vs Robot</button>
+        <button" class="btn btn-secondary" id="optionsButton" onclick="openParam()" title="Afficher les options et paramètres"><i class="fas fa-tools"></i> Options</button>
     </div>
 </div>

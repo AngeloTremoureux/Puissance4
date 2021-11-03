@@ -1,29 +1,3 @@
-function searchPiece (name, initCase) {
-  const redCircle = $('#preview #red_circle')
-  const yellowCircle = $('#preview #yellow_circle')
-  const defaultCircle = $('#preview #basic_circle')
-  if (initCase) {
-    if (name === 'red') {
-      $(redCircle).children().children().attr('case', initCase)
-      return $(redCircle).html()
-    } else if (name === 'yellow') {
-      $(yellowCircle).children().children().attr('case', initCase)
-      return $(yellowCircle).html()
-    } else {
-      $(defaultCircle).children().children().attr('case', initCase)
-      return $(defaultCircle).html()
-    }
-  } else {
-    if (name === 'red') {
-      return $(redCircle).html()
-    } else if (name === 'yellow') {
-      return $(yellowCircle).html()
-    } else {
-      return $(defaultCircle).html()
-    }
-  }
-}
-
 function ajouteUnPionDansBdd(px, py, color) {
   let gameId = 4;
   $.post("/api/pions/setList/", {
@@ -36,26 +10,13 @@ function ajouteUnPionDansBdd(px, py, color) {
   });
 }
 
-function clearGame () {
-  $('.row').remove()
-}
-
 function playGame () {
-  let audio = new Audio('../public/audio/startGame.mp4');
-  audio.play();
-  audio = null;
-  resetGame()
-  game.setMessage("A toi de jouer !")
-  game.enable()
+  game.playGame()
 }
 
-function resetGame () {
-  const Px = game.getPx()
-  const Py = game.getPy()
-  clearGame()
-  jeton.clear()
-  game.createBackground()
-  game.disable()
+function lanceUnePartieDeRobots() {
+  const robotManager = RobotManager.getRobotManager(game)
+  robotManager.lanceUnePartieDeRobots()
 }
 
 function openParam () {

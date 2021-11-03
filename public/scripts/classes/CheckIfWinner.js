@@ -1,33 +1,36 @@
-const checkIfWinner = {
-  horizontal : function(tailleHorizontale, tailleVerticale, couleurAVerifier) {
-  // Vérification en horizontal
-  let listeDesPionsGagnants = [];
-  let couleurDuPion;
-  let nbPionsGagnants;
-  for (let indexVerticale = 1; indexVerticale <= tailleVerticale; indexVerticale++) {
-    nbPionsGagnants = 0;
-    listeDesPionsGagnants = [];
-    for (let indexHorizontale = 1; indexHorizontale <= tailleHorizontale; indexHorizontale++) {
-      couleurDuPion = getColorOfPionPlaced(indexHorizontale, indexVerticale)
-      if (couleurDuPion == couleurAVerifier) {
-        nbPionsGagnants++;
-        listeDesPionsGagnants.push([indexVerticale, indexHorizontale]);
-        if (nbPionsGagnants >= 4) {
-          return listeDesPionsGagnants;
+class CheckIfWinner {
+  static horizontal(game, couleurAVerifier) {
+    const tailleVerticale   = game.getTailleVerticale()
+    const tailleHorizontale = game.getTailleHorizontale()
+    // Vérification en horizontal
+    let listeDesPionsGagnants = [];
+    let couleurDuPion;
+    let nbPionsGagnants;
+    for (let indexVerticale = 1; indexVerticale <= tailleVerticale; indexVerticale++) {
+      nbPionsGagnants = 0;
+      listeDesPionsGagnants = [];
+      for (let indexHorizontale = 1; indexHorizontale <= tailleHorizontale; indexHorizontale++) {
+        couleurDuPion = game.getColorOfPionPlaced(indexHorizontale, indexVerticale)
+        if (couleurDuPion == couleurAVerifier) {
+          nbPionsGagnants++;
+          listeDesPionsGagnants.push([indexVerticale, indexHorizontale]);
+          if (nbPionsGagnants >= 4) {
+            return listeDesPionsGagnants;
+          }
+        } else {
+          listeDesPionsGagnants = [];
+          nbPionsGagnants = 0;
         }
-      } else {
-        listeDesPionsGagnants = [];
-        nbPionsGagnants = 0;
+      }
+      if (nbPionsGagnants >= 4) {
+        return listeDesPionsGagnants;
       }
     }
-    if (nbPionsGagnants >= 4) {
-      return listeDesPionsGagnants;
-    }
+    return false;
   }
-  return false;
-  },
-
-  vertical : function (tailleHorizontale, tailleVerticale, couleurAVerifier) {
+  static vertical (game, couleurAVerifier) {
+    const tailleVerticale   = game.getTailleVerticale()
+    const tailleHorizontale = game.getTailleHorizontale()
     // Parcours de chaque case horizontale du jeu
     let listeDesPionsGagnants = [];
     let couleurDuPion;
@@ -37,7 +40,7 @@ const checkIfWinner = {
       listeDesPionsGagnants = [];
       // Parcours chaque case verticale de la colonne
       for (let indexVerticale = 1; indexVerticale <= tailleVerticale; indexVerticale++) {
-        couleurDuPion = getColorOfPionPlaced(indexHorizontale, indexVerticale)
+        couleurDuPion = game.getColorOfPionPlaced(indexHorizontale, indexVerticale)
         if (couleurDuPion == couleurAVerifier) {
           listeDesPionsGagnants.push([indexVerticale, indexHorizontale]);
           nbPionsGagnants++;
@@ -54,9 +57,12 @@ const checkIfWinner = {
       }
     }
     return false;
-  },
+  }
 
-  diagonalTopLeft : function (tailleHorizontale, tailleVerticale, couleurAVerifier) {
+  static diagonalTopLeft (game, couleurAVerifier) {
+    const tailleVerticale   = game.getTailleVerticale()
+    const tailleHorizontale = game.getTailleHorizontale()
+
     let couleurDuPion, nbPionsGagnants;
     let indexCourantHorizontale;
     let listeDesPionsGagnants = [];
@@ -70,7 +76,7 @@ const checkIfWinner = {
       
       // Vérifier la ligne en diagonale
       while (indexCourantHorizontale <= tailleHorizontale && indexCourantVerticale >= 1) {
-        couleurDuPion = getColorOfPionPlaced(indexCourantHorizontale, indexCourantVerticale)
+        couleurDuPion = game.getColorOfPionPlaced(indexCourantHorizontale, indexCourantVerticale)
         if (couleurDuPion == couleurAVerifier) {
           listeDesPionsGagnants.push([indexCourantVerticale, indexCourantHorizontale]);
           nbPionsGagnants++;
@@ -96,7 +102,7 @@ const checkIfWinner = {
       indexCourantVerticale = tailleVerticale;
       // Vérifier la ligne en diagonale
       while (indexCourantHorizontale <= tailleHorizontale && indexCourantVerticale >= 1) {
-        couleurDuPion = getColorOfPionPlaced(indexCourantHorizontale, indexCourantVerticale)
+        couleurDuPion = game.getColorOfPionPlaced(indexCourantHorizontale, indexCourantVerticale)
         if (couleurDuPion == couleurAVerifier) {
           listeDesPionsGagnants.push([indexCourantVerticale, indexCourantHorizontale]);
           nbPionsGagnants++;
@@ -113,9 +119,12 @@ const checkIfWinner = {
       
     }
     return false;
-  },
+  }
 
-  diagonalTopRight : function (tailleHorizontale, tailleVerticale, couleurAVerifier) {
+  static diagonalTopRight(game, couleurAVerifier) {
+    const tailleVerticale   = game.getTailleVerticale()
+    const tailleHorizontale = game.getTailleHorizontale()
+
     let couleurDuPion, nbPionsGagnants;
     let indexCourantHorizontale;
     let listeDesPionsGagnants = [];
@@ -125,10 +134,10 @@ const checkIfWinner = {
       nbPionsGagnants = 0;
       listeDesPionsGagnants = [];
       indexCourantHorizontale = tailleHorizontale;
-      indexCourantVerticale = indexVerticale;
+      let indexCourantVerticale = indexVerticale;
       // Vérifier la ligne en diagonale
       while (indexCourantHorizontale >= 1 && indexCourantVerticale >= 1) {
-        couleurDuPion = getColorOfPionPlaced(indexCourantHorizontale, indexCourantVerticale)
+        couleurDuPion = game.getColorOfPionPlaced(indexCourantHorizontale, indexCourantVerticale)
         if (couleurDuPion == couleurAVerifier) {
           listeDesPionsGagnants.push([indexCourantVerticale, indexCourantHorizontale]);
           nbPionsGagnants++;
@@ -150,10 +159,10 @@ const checkIfWinner = {
       nbPionsGagnants = 0;
       listeDesPionsGagnants = [];
       indexCourantHorizontale = indexHorizontale;
-      indexCourantVerticale = tailleVerticale;
+      let indexCourantVerticale = tailleVerticale;
       // Vérifier la ligne en diagonale
       while (indexCourantHorizontale >= 1 && indexCourantVerticale >= 1) {
-        couleurDuPion = getColorOfPionPlaced(indexCourantHorizontale, indexCourantVerticale)
+        couleurDuPion = game.getColorOfPionPlaced(indexCourantHorizontale, indexCourantVerticale)
         if (couleurDuPion == couleurAVerifier) {
           listeDesPionsGagnants.push([indexCourantVerticale, indexCourantHorizontale]);
           nbPionsGagnants++;

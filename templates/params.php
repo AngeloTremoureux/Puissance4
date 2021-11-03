@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    game.init(<?php echo $game->getNbCase('x') . ', ' . $game->getNbCase('y') ?>);
+    const game = Game.getGame(<?php echo $game->getNbCase('x') . ', ' . $game->getNbCase('y') ?>)
 </script>
 
 <div id="preview" style="display: none;">
