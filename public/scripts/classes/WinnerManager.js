@@ -1,23 +1,22 @@
 class WinnerManager {
   static verifWin(game, color) {
-
     let verification = CheckIfWinner.horizontal(game, color);
     if (verification) {
-        return verification;
+      return verification;
     }
     verification = CheckIfWinner.vertical(game, color);
     if (verification) {
-        return verification;
+      return verification;
     }
     verification = CheckIfWinner.diagonalTopLeft(game, color);
     if (verification) {
-        return verification;
+      return verification;
     }
     verification = CheckIfWinner.diagonalTopRight(game, color);
     if (verification) {
-        return verification;
+      return verification;
     } else {
-        return false;
+      return false;
     }
   }
 

@@ -161,7 +161,7 @@ class Game {
     this.log("Puissance 4", "Initialisation des paramètres ...");
     this.tailleHorizontaleDuJeu = gameObject.parametres.x
     this.tailleVerticaleDuJeu = gameObject.parametres.y
-    resetGame()
+    this.resetGame()
     this.log("Puissance 4", "Import des pions ...");
     gameObject.datas.pions.red.forEach(pionRouge => {
       this.forceAddPion(pionRouge[0], pionRouge[1], 'red')
@@ -206,11 +206,14 @@ class Game {
       this.setMessage("Match nul !");
     }
   }
-  log (prefix, message) {
+  log (prefix, message, colorText) {
+    if (!colorText) {
+      colorText = "false"
+    }
     console.log(
       "%c[" + prefix + "] %c" + message,
       "color: purple; font-size: 13px; font-weight: bold;",
-      "font-size: 13px;"
+      "font-size: 13px; color: " + colorText
     );
   }
   disableGame() {

@@ -10,6 +10,11 @@ function ajouteUnPionDansBdd(px, py, color) {
   });
 }
 
+function testsUnits() {
+  lanceTestsUnits = new TestsUnits(game);
+  lanceTestsUnits.launchTestsUnits()
+}
+
 function playGame () {
   game.playGame()
 }
