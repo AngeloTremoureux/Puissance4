@@ -130,9 +130,9 @@ class Game {
     let params = [];
     params['red']    = this.getPions('red')
     params['yellow'] = this.getPions('yellow')
-    red = params['red'];
-    yellow = params['yellow'];
-    let request = $.ajax({
+    const red = params['red'];
+    const yellow = params['yellow'];
+    const request = $.ajax({
       type: 'POST',
       url: "api/export?x=" + this.tailleHorizontaleDuJeu + "&y=" + this.tailleVerticaleDuJeu,
       data: {red:red, yellow:yellow},
