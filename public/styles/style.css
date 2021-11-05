@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand+SC&display=swap');
+
+html {
+    background: radial-gradient(#ffffff, #d6dbff);
+    height: 100%;
+    width: 100%;
+}
+#box {
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    text-align: center;
+}
+#box h2 {
+    text-align: center;
+    font-family: 'Patrick Hand SC', cursive;
+    font-size: 3em;
+    font-style: italic;
+    text-shadow: 1px 8px 16px #0052e8;
+}
+#box input#chrono {
+    font-size: 20px;
+    font-style: italic;
+    background: transparent;
+    border: 0;
+    text-align: center;
+    font-weight: bold;
+}
+#game {
+    background: #6a91ff;
+    text-align: center;
+    padding: 20px;
+    border: 3px black solid;
+    width: max-content;
+    -webkit-animation-name: tada;
+    animation-name: tada;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+
+    margin-bottom: 10px;
+}
+::selection {
+    background: none;
+}
+#game p {
+    font-family: 'Yusei Magic', sans-serif;
+    text-transform: uppercase;
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px black;
+    font-size: 32px;
+}
+#game .icon {
+    height: 60px;
+    width: 60px;
+    margin: 10px 0;
+    stroke-opacity: .5;
+    cursor: pointer;
+}
+
+#game .icon[team='red'] {
+    fill: red;
+}
+#game .icon[team='blue'] {
+    fill: blue;
+}
+#game .icon[surbrillance='red'] {
+    fill: red;
+    opacity: .8;
+    animation: survol .6s ease-in-out infinite;
+    -webkit-animation: survol .6s ease-in-out infinite;
+}
+#game .icon[surbrillance='blue'] {
+    fill: blue;
+    opacity: .8;
+    animation: survol .6s ease-in-out infinite;
+    -webkit-animation: survol .6s ease-in-out infinite;
+}
+
+@keyframes survol {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+    33% {
+        filter: hue-rotate(40deg);
+    }
+    100% {
+        filter: hue-rotate(0deg);
+    }
+}
+
+@-webkit-keyframes load {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes load {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes tada {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+    10%, 20% {
+        -webkit-transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+        transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+    }
+    30%, 50%, 70%, 90% {
+        -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+        transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+    }
+    40%, 60%, 80% {
+        -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+        transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+    }
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+@keyframes tada {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+    10%, 20% {
+        -webkit-transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+        transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+    }
+    30%, 50%, 70%, 90% {
+        -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+        transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+    }
+    40%, 60%, 80% {
+        -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+        transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+    }
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}

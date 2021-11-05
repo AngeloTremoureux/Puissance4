@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule ^pions/(.*)$ rooter.php?route=pions&data=$1 [NC,L]
+RewriteRule ^export$ rooter.php?route=export [NC,L,QSA]
