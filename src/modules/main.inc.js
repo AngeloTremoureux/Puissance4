@@ -1,4 +1,7 @@
+import { Game } from "./Game"
+
 jQuery(document).ready(function ($) {
+  const game = Game.getGame()
     $("html").on("keydown", "body", function (e) {
       if (game.monTour.get()) {
         const key = event.keyCode;

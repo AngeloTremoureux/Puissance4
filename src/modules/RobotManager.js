@@ -1,4 +1,4 @@
-class RobotManager {
+export class RobotManager {
   constructor(game) {
     if (game) {
       this.tailleHorizontaleDuJeu = game.getTailleHorizontale();

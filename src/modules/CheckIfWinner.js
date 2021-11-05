@@ -1,4 +1,4 @@
-class CheckIfWinner {
+export class CheckIfWinner {
   static horizontal(game, couleurAVerifier) {
     const tailleVerticale   = game.getTailleVerticale()
     const tailleHorizontale = game.getTailleHorizontale()

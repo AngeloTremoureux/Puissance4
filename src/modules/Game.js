@@ -1,4 +1,6 @@
-class Game {
+import { MonTour } from "./MonTour"
+
+export class Game {
   constructor(tailleHorizontale, tailleVerticale) {
     this.tailleHorizontaleDuJeu = tailleHorizontale;
     this.tailleVerticaleDuJeu = tailleVerticale;

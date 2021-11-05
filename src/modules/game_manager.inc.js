@@ -1,4 +1,5 @@
-function ajouteUnPionDansBdd(px, py, color) {
+
+export function ajouteUnPionDansBdd(px, py, color) {
   let gameId = 4;
   $.post("/api/pions/setList/", {
       id: gameId,
@@ -10,21 +11,22 @@ function ajouteUnPionDansBdd(px, py, color) {
   });
 }
 
-function testsUnits() {
+export function testsUnits() {
   lanceTestsUnits = new TestsUnits(game);
   lanceTestsUnits.launchTestsUnits()
 }
 
-function playGame () {
+export function playGame (game) {
+  console.log(game)
   game.playGame()
 }
 
-function lanceUnePartieDeRobots() {
+export function lanceUnePartieDeRobots() {
   const robotManager = RobotManager.getRobotManager(game)
   robotManager.lanceUnePartieDeRobots()
 }
 
-function openParam () {
+export function openParam () {
   $('#dialog').removeClass('d-none')
   $("#dialog").dialog({
     resizable: false,
@@ -43,7 +45,7 @@ function openParam () {
   })
 }
 
-function loadParam () {
+export function loadParam () {
   window.location.replace(
     '?x=' + $('#nbCaseX').val() + '&y=' + $('#nbCaseY').val()
   )

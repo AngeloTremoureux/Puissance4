@@ -1,4 +1,4 @@
-class MonTour {
+export class MonTour {
   set(monTour) {
     this.monTour = monTour
   }

@@ -1,4 +1,4 @@
-class TestsUnits {
+export class TestsUnits {
   constructor(game) {
     if (game) {
       this.game = game

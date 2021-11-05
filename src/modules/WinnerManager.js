@@ -1,4 +1,4 @@
-class WinnerManager {
+export class WinnerManager {
   static verifWin(game, color) {
     let verification = CheckIfWinner.horizontal(game, color);
     if (verification) {
