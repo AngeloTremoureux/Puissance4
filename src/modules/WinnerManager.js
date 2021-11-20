@@ -1,3 +1,5 @@
+import { CheckIfWinner } from "./CheckIfWinner";
+
 export class WinnerManager {
   static verifWin(game, color) {
     let verification = CheckIfWinner.horizontal(game, color);

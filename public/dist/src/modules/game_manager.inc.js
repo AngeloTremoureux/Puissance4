@@ -16,7 +16,6 @@ export function testsUnits() {
 }
 export function playGame() {
     var game = Game.getGame();
-    console.log(game);
     game.playGame();
 }
 export function lanceUnePartieDeRobots() {

@@ -1,4 +1,5 @@
 import { MonTour } from "./MonTour";
+import { Utils } from "./Utils";
 var Game = /** @class */ (function () {
     function Game(tailleHorizontale, tailleVerticale) {
         this.tailleHorizontaleDuJeu = tailleHorizontale;
@@ -10,12 +11,56 @@ var Game = /** @class */ (function () {
         this.log("Puissance 4", "Initialisation du jeu en " + this.tailleHorizontaleDuJeu + "x" + this.tailleVerticaleDuJeu);
         Game.game = this;
     }
-    Game.getGame = function (tailleHorizontale, tailleVerticale) {
+    Game.getGame = function () {
         if (Game.game) {
             return Game.game;
         }
         else {
-            return new Game(tailleHorizontale, tailleVerticale);
+            var tailleHorizontaleParsed = this.getTailleHorizontaleFromUrl();
+            var tailleVerticaleParsed = this.getTailleVerticaleFromUrl();
+            return new Game(tailleHorizontaleParsed, tailleVerticaleParsed);
+        }
+    };
+    Game.getTailleHorizontaleFromUrl = function () {
+        var paramsUrl = Utils.parseURLParams(window.location.href);
+        if (typeof paramsUrl !== 'undefined' && paramsUrl.tailleHorizontale !== 'undefined') {
+            var tailleHorizontale = paramsUrl.tailleHorizontale[0];
+            if (parseInt(tailleHorizontale)) {
+                var tailleHorizontaleParsed = parseInt(tailleHorizontale);
+                if (tailleHorizontaleParsed >= 4 && tailleHorizontaleParsed <= 20) {
+                    return tailleHorizontaleParsed;
+                }
+                else {
+                    return 7;
+                }
+            }
+            else {
+                return 7;
+            }
+        }
+        else {
+            return 7;
+        }
+    };
+    Game.getTailleVerticaleFromUrl = function () {
+        var paramsUrl = Utils.parseURLParams(window.location.href);
+        if (typeof paramsUrl !== 'undefined' && paramsUrl.tailleVerticale !== 'undefined') {
+            var tailleVerticale = paramsUrl.tailleVerticale[0];
+            if (parseInt(tailleVerticale)) {
+                var tailleVerticaleParsed = parseInt(tailleVerticale);
+                if (tailleVerticaleParsed >= 4 && tailleVerticaleParsed <= 20) {
+                    return tailleVerticaleParsed;
+                }
+                else {
+                    return 5;
+                }
+            }
+            else {
+                return 5;
+            }
+        }
+        else {
+            return 5;
         }
     };
     Game.prototype.searchPiece = function (couleur, initCase) {
@@ -228,18 +273,15 @@ var Game = /** @class */ (function () {
         this.monTour.set(true);
     };
     Game.prototype.createBackground = function () {
-        console.log($('.row').remove());
         var Px = this.tailleHorizontaleDuJeu;
         var Py = this.tailleVerticaleDuJeu;
         for (var i = 1; i <= this.tailleVerticaleDuJeu; i++) {
             var rowY = '<div class="row" val="' + i + '"></div>';
             $("#game").append(rowY);
             for (var j = 1; j <= this.tailleHorizontaleDuJeu; j++) {
-                console.log("ok");
                 $('.row[val="' + i + '"]').append(this.searchPiece(null, j));
             }
         }
-        console.log($('.row').remove());
     };
     Game.prototype.forceAddPion = function (positionHorizontale, positionVerticale, couleur) {
         $(".row[val='" + positionVerticale + "'] .icon[case='" + positionHorizontale + "']").replaceWith(this.searchPiece(couleur, positionHorizontale));

@@ -1,3 +1,6 @@
+import { Utils } from "./Utils";
+import { WinnerManager } from "./WinnerManager";
+
 export class RobotManager {
   constructor(game) {
     if (game) {

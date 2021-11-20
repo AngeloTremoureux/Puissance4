@@ -21,17 +21,6 @@
         ?>
     </div>
     <div class="btn-group mt-4" role="group">
-        <script type="module">
-            import * as modules from './src/modules/game_manager.inc.js';
-            import { Game } from './src/modules/Game.js';
-            $(document).ready(function() {
-                const game = getGame(Game);
-                $("#playButton").click(function() { modules.playGame(game) })
-                $("#robotButton").click(function() { modules.lanceUnePartieDeRobots() })
-                $("#optionsButton").click(function() { modules.openParam() })
-            })
-            
-        </script>
         <button class="btn btn-secondary" id="playButton" title="Lancer une partie de puissance 4"><i class="fas fa-dice"></i> Jouer</button>
         <button class="btn btn-secondary" id="robotButton" title="Un match de robot contre robot"><i class="fas fa-robot"></i> Robot vs Robot</button>
         <button" class="btn btn-secondary" id="optionsButton" title="Afficher les options et paramètres"><i class="fas fa-tools"></i> Options</button>

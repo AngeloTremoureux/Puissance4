@@ -12,4 +12,13 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" crossorigin="anonymous" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="></script>
 <script src="https://kit.fontawesome.com/f1e20245fc.js"      crossorigin="anonymous"></script>
 
-<script type="text/javascript" src="<?= PATH_TO_DIST ?>/bundle.js"></script>
+<script type="text/javascript" src="<?= PATH_TO_DIST ?>/CheckIfWinner.js"></script>
+<script type="text/javascript" src="<?= PATH_TO_DIST ?>/Game.js"></script>
+<script type="text/javascript" src="<?= PATH_TO_DIST ?>/Jeton.js"></script>
+<script type="text/javascript" src="<?= PATH_TO_DIST ?>/MonTour.js"></script>
+<script type="text/javascript" src="<?= PATH_TO_DIST ?>/RobotManager.js"></script>
+<script type="text/javascript" src="<?= PATH_TO_DIST ?>/TestsUnits.js"></script>
+<script type="text/javascript" src="<?= PATH_TO_DIST ?>/Utils.js"></script>
+<script type="text/javascript" src="<?= PATH_TO_DIST ?>/WinnerManager.js"></script>
+<script type="text/javascript" src="<?= PATH_TO_DIST ?>/main.js"></script>
+<script type="text/javascript" src="<?= PATH_TO_DIST ?>/gameManager.js"></script>
