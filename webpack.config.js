@@ -16,7 +16,7 @@ module.exports = [
         './src/modules/WinnerManager'
       ],
       tests: ['./src/modules/TestsUnits'],
-      util: ['./src/Utils']
+      util: ['./src/modules/Utils']
     },
     devtool: 'inline-source-map',
     module: {

@@ -160,18 +160,19 @@ export class Game {
     return this.tailleVerticaleDuJeu;
   }
   public getLesCasesPouvantEtreJouer(): number[][] {
-    let listeDesCasesPouvantEtreJouer: Array<Array<number>> = [];
+    let listeDesCasesPouvantEtreJouer: number[][] = [];
     let listeColonnesNonCompletes = this.getLesColonnesNonCompletes();
     let aTrouverLePion;
     listeColonnesNonCompletes.forEach(numeroColonneHorizontale => {
       let numeroColonneVerticale = this.getTailleVerticale();
       aTrouverLePion = false;
       while (numeroColonneVerticale > 0 && !aTrouverLePion) {
-        if (!Utils.array2DContainsArray(this.getPions(1), [numeroColonneHorizontale, numeroColonneVerticale])
-          && !Utils.array2DContainsArray(this.getPions(2), [numeroColonneHorizontale, numeroColonneVerticale])) {
+        let tempJeton = new Jeton(numeroColonneHorizontale, numeroColonneVerticale)
+        if (!this.getIndexOfPion('red', tempJeton) && this.getIndexOfPion('yellow', tempJeton)) {
           listeDesCasesPouvantEtreJouer.push([numeroColonneHorizontale, numeroColonneVerticale])
           aTrouverLePion = true;
         }
+        tempJeton = null;
 
         numeroColonneVerticale--;
       }
