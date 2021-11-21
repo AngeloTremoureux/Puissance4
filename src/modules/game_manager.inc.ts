@@ -2,7 +2,7 @@ import { Game } from "./Game"
 import { TestsUnits } from "./TestsUnits"
 import { RobotManager } from "./RobotManager";
 
-export function ajouteUnPionDansBdd(px, py, color) {
+export function ajouteUnPionDansBdd(px: number, py: number, color: string) {
   let gameId = 4;
   $.post("/api/pions/setList/", {
     id: gameId,
@@ -15,8 +15,8 @@ export function ajouteUnPionDansBdd(px, py, color) {
 }
 
 export function testsUnits() {
-  lanceTestsUnits = new TestsUnits(Game.getGame());
-  lanceTestsUnits.launchTestsUnits()
+  let testsUnits = new TestsUnits(Game.getGame());
+  testsUnits.launchTestsUnits()
 }
 
 export function playGame() {
@@ -29,19 +29,19 @@ export function lanceUnePartieDeRobots() {
 }
 
 export function openParam() {
-  $('#dialog').removeClass('d-none')
-  $("#dialog").dialog({
+  $('#dialog').removeClass('d-none');
+  (<any>$("#dialog")).dialog({
     resizable: false,
     height: "auto",
     width: 400,
     modal: true,
     buttons: {
       "Valider": function () {
-        $("#parametersValues").submit()
-        $(this).dialog("close")
+        $("#parametersValues").submit();
+        (<any>$(this)).dialog("close")
       },
       "Fermer": function () {
-        $(this).dialog("close")
+        (<any>$(this)).dialog("close")
       }
     }
   })

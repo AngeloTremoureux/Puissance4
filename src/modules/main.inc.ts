@@ -11,7 +11,7 @@ jQuery(document).ready(function ($) {
   })
   $("html").on("keydown", "body", function (e) {
     if (game.monTour.get()) {
-      const key = event.keyCode;
+      const key = (<any>event).keyCode;
       if ($("#game .row .icon[surbrillance='red']").length >= 1 && !game.isDraw()) {
         const pionEnSurbrillance = $("#game .row .icon[surbrillance='red']");
         let indexHorizontaleDuPion = parseInt(pionEnSurbrillance.attr("case"));
@@ -63,7 +63,7 @@ jQuery(document).ready(function ($) {
         }
       } else {
         $("#game .row .icon").mouseout();
-        indexHorizontaleDuPion = 1;
+        let indexHorizontaleDuPion = 1;
         while (!game.getLesColonnesNonCompletes().includes(indexHorizontaleDuPion) && !game.isDraw() && indexHorizontaleDuPion <= game.getTailleHorizontale()) {
           indexHorizontaleDuPion++;
         }

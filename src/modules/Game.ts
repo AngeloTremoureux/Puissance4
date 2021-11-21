@@ -11,7 +11,7 @@ export class Game {
   private tailleVerticaleDuJeu: number;
   private listePionsRouge: Array<Jeton>;
   private listePionsJaune: Array<Jeton>;
-  private monTour: MonTour;
+  public monTour: MonTour;
   private static game: Game;
 
   private constructor(tailleHorizontale: number, tailleVerticale: number) {
@@ -290,12 +290,11 @@ export class Game {
       this.setPion(1, new Jeton(positionHorizontale, positionVerticale));
     }
   }
-  public getPositionHorizontale(event: string) {
+  public getPositionHorizontale(event: string|JQuery<any>) {
     return $(event).parent().index() + 1;
   }
   public addPion(indexHorizontaleClicked: number) {
     const tailleVerticale = this.getTailleVerticale()
-    const tailleHorizontale = this.getTailleHorizontale()
     let placeIsNotTaken = true;
     let indexVerticale = tailleVerticale;
     if (this.monTour.get()) {

@@ -3,7 +3,27 @@ const path = require('path');
 module.exports = [
   {
     mode: 'none',
-    entry: './src/modules/CheckIfWinner.js',
+    entry: './src/modules/Game',
+    devtool: 'inline-source-map',
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          loader: 'ts-loader'
+        },
+      ],
+    },
+    resolve: {
+      extensions: [".ts", ".tsx", ".js"],
+    },
+    output: {
+      filename: 'Game.js',
+      path: path.resolve(__dirname, 'public/dist'),
+    }
+  },
+  {
+    mode: 'none',
+    entry: './src/modules/CheckIfWinner',
     devtool: 'inline-source-map',
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
@@ -15,19 +35,7 @@ module.exports = [
   },
   {
     mode: 'none',
-    entry: './src/modules/Game.js',
-    devtool: 'inline-source-map',
-    resolve: {
-      extensions: ['.tsx', '.ts', '.js'],
-    },
-    output: {
-      filename: 'Game.js',
-      path: path.resolve(__dirname, 'public/dist'),
-    }
-  },
-  {
-    mode: 'none',
-    entry: './src/modules/Jeton.js',
+    entry: './src/modules/Jeton',
     devtool: 'inline-source-map',
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
@@ -39,7 +47,7 @@ module.exports = [
   },
   {
     mode: 'none',
-    entry: './src/modules/MonTour.js',
+    entry: './src/modules/MonTour',
     devtool: 'inline-source-map',
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
@@ -51,7 +59,7 @@ module.exports = [
   },
   {
     mode: 'none',
-    entry: './src/modules/RobotManager.js',
+    entry: './src/modules/RobotManager',
     devtool: 'inline-source-map',
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
@@ -63,7 +71,7 @@ module.exports = [
   },
   {
     mode: 'none',
-    entry: './src/modules/TestsUnits.js',
+    entry: './src/modules/TestsUnits',
     devtool: 'inline-source-map',
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
@@ -75,7 +83,7 @@ module.exports = [
   },
   {
     mode: 'none',
-    entry: './src/modules/Utils.js',
+    entry: './src/modules/Utils',
     devtool: 'inline-source-map',
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
@@ -87,7 +95,7 @@ module.exports = [
   },
   {
     mode: 'none',
-    entry: './src/modules/WinnerManager.js',
+    entry: './src/modules/WinnerManager',
     devtool: 'inline-source-map',
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
@@ -99,8 +107,16 @@ module.exports = [
   },
   {
     mode: 'none',
-    entry: './src/modules/game_manager.inc.js',
+    entry: './src/modules/game_manager.inc',
     devtool: 'inline-source-map',
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          loader: 'ts-loader'
+        },
+      ],
+    },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
     },
@@ -111,8 +127,16 @@ module.exports = [
   },
   {
     mode: 'none',
-    entry: './src/modules/main.inc.js',
+    entry: './src/modules/main.inc',
     devtool: 'inline-source-map',
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          loader: 'ts-loader'
+        },
+      ],
+    },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
     },
