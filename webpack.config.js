@@ -107,7 +107,7 @@ module.exports = [
   },
   {
     mode: 'none',
-    entry: './src/modules/game_manager.inc',
+    entry: './src/modules/gameManager.inc',
     devtool: 'inline-source-map',
     module: {
       rules: [
@@ -127,7 +127,7 @@ module.exports = [
   },
   {
     mode: 'none',
-    entry: './src/modules/main.inc',
+    entry: './src/modules/main',
     devtool: 'inline-source-map',
     module: {
       rules: [
