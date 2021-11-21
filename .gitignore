@@ -3,3 +3,4 @@
 /config/
 node_modules/
 /nbproject/private/
+/public/dist/
