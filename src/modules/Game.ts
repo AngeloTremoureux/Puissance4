@@ -285,7 +285,6 @@ export class Game {
     $(".row[val='" + positionVerticale + "'] .icon[case='" + positionHorizontale + "']").replaceWith(this.searchPiece(couleur, positionHorizontale));
     $(".row[val='" + positionVerticale + "'] .icon[case='" + positionHorizontale + "']").attr("team", couleur);
     if (couleur == 'yellow') {
-      console.log("ajout : " + positionHorizontale + ", "+ positionVerticale)
       this.setPion(2, new Jeton(positionHorizontale, positionVerticale));
     } else {
       this.setPion(1, new Jeton(positionHorizontale, positionVerticale));
@@ -346,11 +345,7 @@ export class Game {
   public setPion(team: string | number, value: Jeton): void {
     if (team == 1 || team == 'red') {
       this.listePionsRouge.push(value);
-      console.log(this.listePionsRouge);
     } else if (team == 2 || team == 'yellow') {
-      console.log("NEW PION:");
-      console.log(value);
-      console.log(this.listePionsJaune);
       this.listePionsJaune.push(value);
     } else {
       throw new Error("Le joueur est introuvable");
@@ -382,10 +377,8 @@ export class Game {
   }
   public getPions(team: string | number): Jeton[] {
     if (team == 1 || team == 'red') {
-      console.log(this.listePionsRouge);
       return this.listePionsRouge;
     } else if (team == 2 || team == 'yellow') {
-      console.log(this.listePionsJaune);
       return this.listePionsJaune;
     } else {
       throw "Le joueur est introuvable";
