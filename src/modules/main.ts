@@ -1,11 +1,11 @@
 import { Game } from "./Game"
 import * as modules from './gameManager';
 
-$(function() {
+$(function () {
   const game = Game.getGame()
-  $("#playButton").on( "click", function() { game.playGame() })
-  $("#robotButton").on( "click", function() { modules.lanceUnePartieDeRobots() })
-  $("#optionsButton").on( "click", function() { modules.openParam() })
+  $("#playButton").on("click", function () { game.playGame() })
+  $("#robotButton").on("click", function () { modules.lanceUnePartieDeRobots() })
+  $("#optionsButton").on("click", function () { modules.openParam() })
   $("html").on("keydown", "body", function (event) {
     if (game.monTour.get()) {
       const key = event.keyCode;

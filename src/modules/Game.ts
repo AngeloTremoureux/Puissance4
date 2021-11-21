@@ -290,7 +290,7 @@ export class Game {
       this.setPion(1, new Jeton(positionHorizontale, positionVerticale));
     }
   }
-  public getPositionHorizontale(event: string|JQuery<any>) {
+  public getPositionHorizontale(event: string | JQuery<any>) {
     return $(event).parent().index() + 1;
   }
   public addPion(indexHorizontaleClicked: number) {
@@ -342,7 +342,7 @@ export class Game {
       );
     }
   }
-  public setPion(team: string|number, value: Jeton) {
+  public setPion(team: string | number, value: Jeton) {
     if (team == 1 || team == 'red') {
       this.listePionsRouge.push(value);
     } else if (team == 2 || team == 'yellow') {
@@ -351,7 +351,7 @@ export class Game {
       throw new Error("Le joueur est introuvable");
     }
   }
-  public removePion(team: string|number, value: Jeton) {
+  public removePion(team: string | number, value: Jeton) {
     let index;
     if (team == 1 || team == 'red') {
       index = Utils.getIndexOf2DArray(this.listePionsRouge, value)
@@ -368,7 +368,7 @@ export class Game {
     this.listePionsJaune = [];
     this.log("Puissance 4", "Les données des pions ont été effacés");
   }
-  public getPions(team: string|number) {
+  public getPions(team: string | number) {
     if (team == 1 || team == 'red') {
       return this.listePionsRouge;
     } else if (team == 2 || team == 'yellow') {

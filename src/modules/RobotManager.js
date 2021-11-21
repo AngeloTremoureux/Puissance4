@@ -5,13 +5,13 @@ export class RobotManager {
   constructor(game) {
     if (game) {
       this.tailleHorizontaleDuJeu = game.getTailleHorizontale();
-      this.tailleVerticaleDuJeu   = game.getTailleVerticale();
+      this.tailleVerticaleDuJeu = game.getTailleVerticale();
       this.game = game
       RobotManager.robotManager = this
     } else {
       throw new Error("Aucune partie définit")
     }
-    
+
   }
 
   static getRobotManager(game) {
@@ -36,8 +36,7 @@ export class RobotManager {
   robotVsRobot(color) {
     // Si la partie n'est pas terminé
     const that = this;
-    if (!this.robotPlaceUnPion(color))
-    {
+    if (!this.robotPlaceUnPion(color)) {
       // On fais jouer l'équipe adverse
       setTimeout(function () {
         that.robotVsRobot(Utils.getCouleurEquipeAdverse(color))
@@ -51,10 +50,10 @@ export class RobotManager {
     // colonnes complétés.
     const listeColonnesNonCompletes = game.getLesColonnesNonCompletes();
     let colonneChoisitAleatoirement = Utils.getElementAleatoire(listeColonnesNonCompletes);
-    const lesCasesPouvantEtreJouer  = game.getLesCasesPouvantEtreJouer();
+    const lesCasesPouvantEtreJouer = game.getLesCasesPouvantEtreJouer();
     lesCasesPouvantEtreJouer.forEach(casePouvantEtreJouer => {
       let indiceHorizontale = casePouvantEtreJouer[0];
-      let indiceVerticale   = casePouvantEtreJouer[1];
+      let indiceVerticale = casePouvantEtreJouer[1];
       if (WinnerManager.verifIfPionPlacedGiveWin(game, indiceHorizontale, indiceVerticale, color)) {
         colonneChoisitAleatoirement = indiceHorizontale;
       }
@@ -62,7 +61,7 @@ export class RobotManager {
         colonneChoisitAleatoirement = indiceHorizontale;
       }
     });
-      
+
     if (!lesCasesPouvantEtreJouer || lesCasesPouvantEtreJouer.length === 0) {
       this.game.setWinner(null, null);
       return true;
