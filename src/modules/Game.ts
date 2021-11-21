@@ -27,7 +27,7 @@ export class Game {
     );
     Game.game = this;
   }
-  public static getGame() {
+  public static getGame(): Game {
     if (Game.game) {
       return Game.game
     } else {
@@ -37,7 +37,7 @@ export class Game {
 
     }
   }
-  public static getTailleHorizontaleFromUrl() {
+  public static getTailleHorizontaleFromUrl(): number {
     const paramsUrl: any = Utils.parseURLParams(window.location.href)
     if (typeof paramsUrl !== 'undefined' && paramsUrl.tailleHorizontale !== 'undefined') {
       const tailleHorizontale = paramsUrl.tailleHorizontale[0];
@@ -55,7 +55,7 @@ export class Game {
       return 7;
     }
   }
-  public static getTailleVerticaleFromUrl() {
+  public static getTailleVerticaleFromUrl(): number {
     const paramsUrl: any = Utils.parseURLParams(window.location.href)
     if (typeof paramsUrl !== 'undefined' && paramsUrl.tailleVerticale !== 'undefined') {
       const tailleVerticale = paramsUrl.tailleVerticale[0];
@@ -98,30 +98,30 @@ export class Game {
       }
     }
   }
-  public getColorOfPionPlaced(indexHorizontale: number, indexVerticale: number) {
-    const listePionsRouge = this.getPions(1)
-    const listePionsJaune = this.getPions(2)
+  public getColorOfPionPlaced(indexHorizontale: number, indexVerticale: number): string|boolean {
+    this.getPions(1).forEach(jeton => {
+      if (jeton.getPosition() == [indexHorizontale, indexVerticale]) {
+        return 'red';
+      }
+    });
+    this.getPions(2).forEach(jeton => {
+      if (jeton.getPosition() == [indexHorizontale, indexVerticale]) {
+        return 'red';
+      }
+    });
 
-    if (Utils.array2DContainsArray(listePionsRouge, [indexHorizontale, indexVerticale])) {
-      return 'red';
-    }
-    else if (Utils.array2DContainsArray(listePionsJaune, [indexHorizontale, indexVerticale])) {
-      return 'yellow';
-    }
-    else {
-      return false;
-    }
+    return false;
   }
-  public clearGame() {
+  public clearGame(): void {
     $('.row').remove()
   }
-  public resetGame() {
+  public resetGame(): void {
     this.clearGame()
     this.clearPions()
     this.createBackground()
     this.disableGame()
   }
-  public playGame() {
+  public playGame(): void {
     let audio = new Audio('../public/audio/startGame.mp4');
     audio.play();
     audio = null;
@@ -129,7 +129,7 @@ export class Game {
     this.setMessage("A toi de jouer !")
     this.enableGame()
   }
-  public select(indexHorizontale: number) {
+  public select(indexHorizontale: number): void {
     let indexVerticale = this.getTailleVerticale();
     while (indexVerticale > 0) {
       let teamColor = this.getColorOfPionPlaced(indexHorizontale, indexVerticale)
@@ -141,7 +141,7 @@ export class Game {
       indexVerticale--;
     }
   }
-  public getLesColonnesNonCompletes() {
+  public getLesColonnesNonCompletes(): number[] {
     let listeColonnesNonCompletes = [];
     for (let indexHorizontale = 1; indexHorizontale <= this.tailleHorizontaleDuJeu; indexHorizontale++) {
       if (!this.getColorOfPionPlaced(indexHorizontale, 1)) {
@@ -150,17 +150,17 @@ export class Game {
     }
     return listeColonnesNonCompletes;
   }
-  public isDraw() {
+  public isDraw(): boolean {
     return this.listePionsJaune.length + this.listePionsRouge.length >= this.getTailleHorizontale() * this.getTailleVerticale()
   }
-  public getTailleHorizontale() {
+  public getTailleHorizontale(): number {
     return this.tailleHorizontaleDuJeu;
   }
-  public getTailleVerticale() {
+  public getTailleVerticale(): number {
     return this.tailleVerticaleDuJeu;
   }
-  public getLesCasesPouvantEtreJouer() {
-    let listeDesCasesPouvantEtreJouer: Array<Array<Number>> = [];
+  public getLesCasesPouvantEtreJouer(): number[][] {
+    let listeDesCasesPouvantEtreJouer: Array<Array<number>> = [];
     let listeColonnesNonCompletes = this.getLesColonnesNonCompletes();
     let aTrouverLePion;
     listeColonnesNonCompletes.forEach(numeroColonneHorizontale => {
@@ -178,7 +178,7 @@ export class Game {
     });
     return listeDesCasesPouvantEtreJouer;
   }
-  public export() {
+  public export(): void {
     this.log("Puissance 4", "Affichage de l'export...");
     let params: { [key: string]: Jeton[] } = {};
     params['red'] = this.getPions('red')
@@ -203,13 +203,13 @@ export class Game {
       this.log("Puissance 4", "Echec lors de l'export (" + code + ")");
     });
   }
-  public unSelect() {
+  public unSelect(): void {
     $(".row .icon").attr("surbrillance", "");
   }
-  public setMessage(message: string) {
+  public setMessage(message: string): void {
     $("#game p#tour").text(message);
   }
-  public import(gameObject: Interface.GameObject, parameters: boolean = false) {
+  public import(gameObject: Interface.GameObject, parameters: boolean = false): void {
     this.log("Puissance 4", "Début de l'import ...");
     this.log("Puissance 4", "Initialisation des paramètres ...");
     this.tailleHorizontaleDuJeu = parseInt(gameObject.parametres.x)
@@ -237,7 +237,7 @@ export class Game {
     }
     this.log("Puissance 4", "Fin de l'import");
   }
-  public setWinner(couleur: string, pionsGagnants: number[][] = null) {
+  public setWinner(couleur: string, pionsGagnants: number[][] = null): void {
     this.disableGame()
     if (pionsGagnants) {
       for (let i = 0; i < pionsGagnants.length; i++) {
@@ -255,22 +255,22 @@ export class Game {
       this.setMessage("Match nul !");
     }
   }
-  public log(prefix: string, message: string, colorText: string = 'false') {
+  public log(prefix: string, message: string, colorText: string = 'false'): void {
     console.log(
       "%c[" + prefix + "] %c" + message,
       "color: purple; font-size: 13px; font-weight: bold;",
       "font-size: 13px; color: " + colorText
     );
   }
-  public disableGame() {
+  public disableGame(): void {
     $("#game .icon").css("opacity", 0.3)
     this.monTour.set(false)
   }
-  public enableGame() {
+  public enableGame(): void {
     $("#game .icon").css("opacity", 1)
     this.monTour.set(true)
   }
-  public createBackground() {
+  public createBackground(): void {
     let Px = this.tailleHorizontaleDuJeu;
     let Py = this.tailleVerticaleDuJeu;
     for (let i = 1; i <= this.tailleVerticaleDuJeu; i++) {
@@ -281,7 +281,7 @@ export class Game {
       }
     }
   }
-  public forceAddPion(positionHorizontale: number, positionVerticale: number, couleur: string) {
+  public forceAddPion(positionHorizontale: number, positionVerticale: number, couleur: string): void {
     $(".row[val='" + positionVerticale + "'] .icon[case='" + positionHorizontale + "']").replaceWith(this.searchPiece(couleur, positionHorizontale));
     $(".row[val='" + positionVerticale + "'] .icon[case='" + positionHorizontale + "']").attr("team", couleur);
     if (couleur == 'yellow') {
@@ -293,7 +293,7 @@ export class Game {
   public getPositionHorizontale(event: string | JQuery<any>) {
     return $(event).parent().index() + 1;
   }
-  public addPion(indexHorizontaleClicked: number) {
+  public addPion(indexHorizontaleClicked: number): void {
     const tailleVerticale = this.getTailleVerticale()
     let placeIsNotTaken = true;
     let indexVerticale = tailleVerticale;
@@ -342,7 +342,7 @@ export class Game {
       );
     }
   }
-  public setPion(team: string | number, value: Jeton) {
+  public setPion(team: string | number, value: Jeton): void {
     if (team == 1 || team == 'red') {
       this.listePionsRouge.push(value);
     } else if (team == 2 || team == 'yellow') {
@@ -351,7 +351,7 @@ export class Game {
       throw new Error("Le joueur est introuvable");
     }
   }
-  public removePion(team: string | number, value: Jeton) {
+  public removePion(team: string | number, value: Jeton): void {
     let index;
     if (team == 1 || team == 'red') {
       index = Utils.getIndexOf2DArray(this.listePionsRouge, value)
@@ -363,12 +363,12 @@ export class Game {
       throw "Le joueur est introuvable";
     }
   }
-  public clearPions() {
+  public clearPions(): void {
     this.listePionsRouge = [];
     this.listePionsJaune = [];
     this.log("Puissance 4", "Les données des pions ont été effacés");
   }
-  public getPions(team: string | number) {
+  public getPions(team: string | number): Jeton[] {
     if (team == 1 || team == 'red') {
       return this.listePionsRouge;
     } else if (team == 2 || team == 'yellow') {
