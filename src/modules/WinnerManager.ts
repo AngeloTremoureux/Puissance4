@@ -1,7 +1,9 @@
 import { CheckIfWinner } from "./CheckIfWinner";
+import { Game } from "./Game";
+import { Jeton } from "./Jeton";
 
 export class WinnerManager {
-  static verifWin(game, color) {
+  static verifWin(game: Game, color: string) {
     let verification = CheckIfWinner.horizontal(game, color);
     if (verification) {
       return verification;
@@ -22,10 +24,11 @@ export class WinnerManager {
     }
   }
 
-  static verifIfPionPlacedGiveWin(game, numeroColonneHorizontale, numeroColonneVerticale, couleurPion) {
-    game.setPion(couleurPion, [numeroColonneHorizontale, numeroColonneVerticale])
+  static verifIfPionPlacedGiveWin(game: Game, numeroColonneHorizontale: number, numeroColonneVerticale: number, couleurPion: string): boolean|number[][] {
+    let jeton = new Jeton(numeroColonneHorizontale, numeroColonneVerticale);
+    game.setPion(couleurPion, jeton)
     const isWinner = WinnerManager.verifWin(game, couleurPion)
-    game.removePion(couleurPion, [numeroColonneHorizontale, numeroColonneVerticale])
+    game.removePion(couleurPion, jeton)
     return isWinner;
   }
 

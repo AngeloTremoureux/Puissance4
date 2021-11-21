@@ -1,5 +1,7 @@
+import { Game } from "./Game";
+
 export class CheckIfWinner {
-  static horizontal(game, couleurAVerifier) {
+  static horizontal(game: Game, couleurAVerifier: string) {
     const tailleVerticale = game.getTailleVerticale()
     const tailleHorizontale = game.getTailleHorizontale()
     // Vérification en horizontal
@@ -28,7 +30,7 @@ export class CheckIfWinner {
     }
     return false;
   }
-  static vertical(game, couleurAVerifier) {
+  static vertical(game: Game, couleurAVerifier: string) {
     const tailleVerticale = game.getTailleVerticale()
     const tailleHorizontale = game.getTailleHorizontale()
     // Parcours de chaque case horizontale du jeu
@@ -59,7 +61,7 @@ export class CheckIfWinner {
     return false;
   }
 
-  static diagonalTopLeft(game, couleurAVerifier) {
+  static diagonalTopLeft(game: Game, couleurAVerifier: string) {
     const tailleVerticale = game.getTailleVerticale()
     const tailleHorizontale = game.getTailleHorizontale()
 
@@ -121,7 +123,7 @@ export class CheckIfWinner {
     return false;
   }
 
-  static diagonalTopRight(game, couleurAVerifier) {
+  static diagonalTopRight(game: Game, couleurAVerifier: string) {
     const tailleVerticale = game.getTailleVerticale()
     const tailleHorizontale = game.getTailleHorizontale()
 

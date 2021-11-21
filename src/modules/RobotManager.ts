@@ -1,8 +1,15 @@
+import { Game } from "./Game";
 import { Utils } from "./Utils";
 import { WinnerManager } from "./WinnerManager";
 
 export class RobotManager {
-  constructor(game) {
+  
+  private tailleHorizontaleDuJeu: number;
+  private tailleVerticaleDuJeu: number;
+  private game: Game;
+  private static robotManager: RobotManager;
+
+  private constructor(game: Game) {
     if (game) {
       this.tailleHorizontaleDuJeu = game.getTailleHorizontale();
       this.tailleVerticaleDuJeu = game.getTailleVerticale();
@@ -11,10 +18,9 @@ export class RobotManager {
     } else {
       throw new Error("Aucune partie définit")
     }
-
   }
 
-  static getRobotManager(game) {
+  public static getRobotManager(game: Game) {
     if (RobotManager.robotManager) {
       return RobotManager.robotManager
     } else {
@@ -22,7 +28,7 @@ export class RobotManager {
     }
   }
 
-  lanceUnePartieDeRobots() {
+  public lanceUnePartieDeRobots() {
     this.game.setMessage("Robot Vs. Robot");
     this.game.resetGame()
     this.game.enableGame()
@@ -33,7 +39,7 @@ export class RobotManager {
     this.robotVsRobot(color);
   }
 
-  robotVsRobot(color) {
+  private robotVsRobot(color: string) {
     // Si la partie n'est pas terminé
     const that = this;
     if (!this.robotPlaceUnPion(color)) {
@@ -44,7 +50,7 @@ export class RobotManager {
     }
   }
 
-  robotPlaceUnPion(color) {
+  public robotPlaceUnPion(color: string) {
     const game = this.game;
     // On récupère la liste des colonnes qui n'ont pas leurs
     // colonnes complétés.

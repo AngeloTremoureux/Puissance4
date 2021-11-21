@@ -40,6 +40,14 @@ module.exports = [
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
     },
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          loader: 'ts-loader'
+        },
+      ],
+    },
     output: {
       filename: 'Jeton.js',
       path: path.resolve(__dirname, 'public/dist'),
@@ -107,7 +115,7 @@ module.exports = [
   },
   {
     mode: 'none',
-    entry: './src/modules/gameManager.inc',
+    entry: './src/modules/gameManager',
     devtool: 'inline-source-map',
     module: {
       rules: [

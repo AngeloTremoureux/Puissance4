@@ -1,15 +1,15 @@
 export class Utils {
-  static getEntierAleatoire(min, max) {
+  static getEntierAleatoire(min: number, max: number) {
     return Math.floor(Math.random() * (max - min) + min);
   }
 
-  static getElementAleatoire(liste) {
+  static getElementAleatoire(liste: Array<number>): number {
     let longueurListe = liste.length;
     let entierAleatoireIndexeParListe = Utils.getEntierAleatoire(0, longueurListe);
     return liste[entierAleatoireIndexeParListe];
   }
 
-  static array2DContainsArray(array2D, arraySearch) {
+  static array2DContainsArray(array2D: number[][], arraySearch: number[]): boolean {
     let itemString = JSON.stringify(arraySearch);
     let contains = array2D.some(function (element) {
       return JSON.stringify(element) === itemString;
@@ -17,10 +17,10 @@ export class Utils {
     return contains;
   }
 
-  static getIndexOf2DArray(array2D, index) {
+  static getIndexOf2DArray(array2D: number[][], element: number[]): number {
     for (var i = 0; i < array2D.length; i++) {
       var currentArray = array2D[i];
-      if (currentArray[0] == index[0] && currentArray[1] == index[1]) {
+      if (currentArray[0] == element[0] && currentArray[1] == element[1]) {
         return i;
       }
     }
@@ -32,7 +32,7 @@ export class Utils {
     return listeDeCouleurs[nombreAleatoire];
   }
 
-  static getCouleurEquipeAdverse(couleurEquipeActuelle) {
+  static getCouleurEquipeAdverse(couleurEquipeActuelle: string) {
     if (couleurEquipeActuelle == 'red') {
       return 'yellow';
     } else {
@@ -40,12 +40,12 @@ export class Utils {
     }
   }
 
-  static parseURLParams(url) {
+  static parseURLParams(url: string) {
     var queryStart = url.indexOf("?") + 1,
       queryEnd = url.indexOf("#") + 1 || url.length + 1,
       query = url.slice(queryStart, queryEnd - 1),
       pairs = query.replace(/\+/g, " ").split("&"),
-      parms = {}, i, n, v, nv;
+      parms: any = {}, i, n, v, nv;
 
     if (query === url || query === "") return;
 

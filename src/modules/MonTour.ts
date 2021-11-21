@@ -1,5 +1,6 @@
 export class MonTour {
-  set(monTour) {
+  private monTour: boolean;
+  set(monTour: boolean) {
     this.monTour = monTour
   }
   get() {

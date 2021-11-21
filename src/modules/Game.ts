@@ -106,7 +106,7 @@ export class Game {
     });
     this.getPions(2).forEach(jeton => {
       if (jeton.getPosition() == [indexHorizontale, indexVerticale]) {
-        return 'red';
+        return 'yellow';
       }
     });
 
@@ -285,6 +285,7 @@ export class Game {
     $(".row[val='" + positionVerticale + "'] .icon[case='" + positionHorizontale + "']").replaceWith(this.searchPiece(couleur, positionHorizontale));
     $(".row[val='" + positionVerticale + "'] .icon[case='" + positionHorizontale + "']").attr("team", couleur);
     if (couleur == 'yellow') {
+      console.log("ajout : " + positionHorizontale + ", "+ positionVerticale)
       this.setPion(2, new Jeton(positionHorizontale, positionVerticale));
     } else {
       this.setPion(1, new Jeton(positionHorizontale, positionVerticale));
@@ -345,20 +346,31 @@ export class Game {
   public setPion(team: string | number, value: Jeton): void {
     if (team == 1 || team == 'red') {
       this.listePionsRouge.push(value);
+      console.log(this.listePionsRouge);
     } else if (team == 2 || team == 'yellow') {
+      console.log("NEW PION:");
+      console.log(value);
+      console.log(this.listePionsJaune);
       this.listePionsJaune.push(value);
     } else {
       throw new Error("Le joueur est introuvable");
     }
   }
+  private getIndexOfPion(team: string, pion: Jeton): number {
+    this.getPions(team).forEach(unPion => {
+      if (unPion.getPosition() == pion.getPosition()) {
+        return this.getPions(team).indexOf(unPion);
+      }
+    });
+    return null;
+  }
   public removePion(team: string | number, value: Jeton): void {
-    let index;
     if (team == 1 || team == 'red') {
-      index = Utils.getIndexOf2DArray(this.listePionsRouge, value)
-      this.listePionsRouge.splice(index, 1)
+      let indexOfPion = this.getIndexOfPion('red', value);
+      this.listePionsRouge.splice(indexOfPion, 1)
     } else if (team == 2 || team == 'yellow') {
-      index = Utils.getIndexOf2DArray(this.listePionsJaune, value)
-      this.listePionsJaune.splice(index, 1)
+      let indexOfPion = this.getIndexOfPion('yellow', value);
+      this.listePionsJaune.splice(indexOfPion, 1)
     } else {
       throw "Le joueur est introuvable";
     }
@@ -370,8 +382,10 @@ export class Game {
   }
   public getPions(team: string | number): Jeton[] {
     if (team == 1 || team == 'red') {
+      console.log(this.listePionsRouge);
       return this.listePionsRouge;
     } else if (team == 2 || team == 'yellow') {
+      console.log(this.listePionsJaune);
       return this.listePionsJaune;
     } else {
       throw "Le joueur est introuvable";
