@@ -9,5 +9,10 @@
     "watch": true,
     "allowJs": true,
     "moduleResolution": "node"
+  },
+  "watchOptions": {
+    "watchDirectory": "useFsEvents",
+    "fallbackPolling": "dynamicPriority",
+    "excludeDirectories": ["**/node_modules", "_build"],
   }
 }

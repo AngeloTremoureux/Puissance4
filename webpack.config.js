@@ -3,6 +3,10 @@ const path = require('path');
 module.exports = [
   {
     mode: 'none',
+    watch: true,
+    watchOptions: {
+      ignored: /node_modules/,
+    },
     entry: {
       puissance4: [
         './src/modules/Game',
