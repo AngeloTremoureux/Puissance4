@@ -14,7 +14,7 @@ export function ajouteUnPionDansBdd(px: number, py: number, color: string) {
     });
 }
 
-export function testsUnits() {
+function testsUnits() {
   let testsUnits = new TestsUnits(Game.getGame());
   testsUnits.launchTestsUnits()
 }
