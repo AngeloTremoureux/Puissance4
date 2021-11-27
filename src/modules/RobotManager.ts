@@ -1,17 +1,26 @@
-class RobotManager {
-  constructor(game) {
+import { Game } from "./Game";
+import { Utils } from "./Utils";
+import { WinnerManager } from "./WinnerManager";
+
+export class RobotManager {
+  
+  private tailleHorizontaleDuJeu: number;
+  private tailleVerticaleDuJeu: number;
+  private game: Game;
+  private static robotManager: RobotManager;
+
+  private constructor(game: Game) {
     if (game) {
       this.tailleHorizontaleDuJeu = game.getTailleHorizontale();
-      this.tailleVerticaleDuJeu   = game.getTailleVerticale();
+      this.tailleVerticaleDuJeu = game.getTailleVerticale();
       this.game = game
       RobotManager.robotManager = this
     } else {
       throw new Error("Aucune partie définit")
     }
-    
   }
 
-  static getRobotManager(game) {
+  public static getRobotManager(game: Game) {
     if (RobotManager.robotManager) {
       return RobotManager.robotManager
     } else {
@@ -19,7 +28,7 @@ class RobotManager {
     }
   }
 
-  lanceUnePartieDeRobots() {
+  public lanceUnePartieDeRobots() {
     this.game.setMessage("Robot Vs. Robot");
     this.game.resetGame()
     this.game.enableGame()
@@ -30,11 +39,10 @@ class RobotManager {
     this.robotVsRobot(color);
   }
 
-  robotVsRobot(color) {
+  private robotVsRobot(color: string) {
     // Si la partie n'est pas terminé
     const that = this;
-    if (!this.robotPlaceUnPion(color))
-    {
+    if (!this.robotPlaceUnPion(color)) {
       // On fais jouer l'équipe adverse
       setTimeout(function () {
         that.robotVsRobot(Utils.getCouleurEquipeAdverse(color))
@@ -42,16 +50,16 @@ class RobotManager {
     }
   }
 
-  robotPlaceUnPion(color) {
+  public robotPlaceUnPion(color: string) {
     const game = this.game;
     // On récupère la liste des colonnes qui n'ont pas leurs
     // colonnes complétés.
     const listeColonnesNonCompletes = game.getLesColonnesNonCompletes();
     let colonneChoisitAleatoirement = Utils.getElementAleatoire(listeColonnesNonCompletes);
-    const lesCasesPouvantEtreJouer  = game.getLesCasesPouvantEtreJouer();
+    const lesCasesPouvantEtreJouer = game.getLesCasesPouvantEtreJouer();
     lesCasesPouvantEtreJouer.forEach(casePouvantEtreJouer => {
       let indiceHorizontale = casePouvantEtreJouer[0];
-      let indiceVerticale   = casePouvantEtreJouer[1];
+      let indiceVerticale = casePouvantEtreJouer[1];
       if (WinnerManager.verifIfPionPlacedGiveWin(game, indiceHorizontale, indiceVerticale, color)) {
         colonneChoisitAleatoirement = indiceHorizontale;
       }
@@ -59,7 +67,7 @@ class RobotManager {
         colonneChoisitAleatoirement = indiceHorizontale;
       }
     });
-      
+
     if (!lesCasesPouvantEtreJouer || lesCasesPouvantEtreJouer.length === 0) {
       this.game.setWinner(null, null);
       return true;

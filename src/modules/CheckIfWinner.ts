@@ -1,6 +1,8 @@
-class CheckIfWinner {
-  static horizontal(game, couleurAVerifier) {
-    const tailleVerticale   = game.getTailleVerticale()
+import { Game } from "./Game";
+
+export class CheckIfWinner {
+  static horizontal(game: Game, couleurAVerifier: string) {
+    const tailleVerticale = game.getTailleVerticale()
     const tailleHorizontale = game.getTailleHorizontale()
     // Vérification en horizontal
     let listeDesPionsGagnants = [];
@@ -28,8 +30,8 @@ class CheckIfWinner {
     }
     return false;
   }
-  static vertical (game, couleurAVerifier) {
-    const tailleVerticale   = game.getTailleVerticale()
+  static vertical(game: Game, couleurAVerifier: string) {
+    const tailleVerticale = game.getTailleVerticale()
     const tailleHorizontale = game.getTailleHorizontale()
     // Parcours de chaque case horizontale du jeu
     let listeDesPionsGagnants = [];
@@ -59,8 +61,8 @@ class CheckIfWinner {
     return false;
   }
 
-  static diagonalTopLeft (game, couleurAVerifier) {
-    const tailleVerticale   = game.getTailleVerticale()
+  static diagonalTopLeft(game: Game, couleurAVerifier: string) {
+    const tailleVerticale = game.getTailleVerticale()
     const tailleHorizontale = game.getTailleHorizontale()
 
     let couleurDuPion, nbPionsGagnants;
@@ -73,7 +75,7 @@ class CheckIfWinner {
       nbPionsGagnants = 0;
       listeDesPionsGagnants = [];
       indexCourantHorizontale = 1;
-      
+
       // Vérifier la ligne en diagonale
       while (indexCourantHorizontale <= tailleHorizontale && indexCourantVerticale >= 1) {
         couleurDuPion = game.getColorOfPionPlaced(indexCourantHorizontale, indexCourantVerticale)
@@ -95,7 +97,7 @@ class CheckIfWinner {
 
     listeDesPionsGagnants = [];
 
-    for (let indexHorizontale = 2; indexHorizontale <= (tailleHorizontale-4); indexHorizontale++) {
+    for (let indexHorizontale = 2; indexHorizontale <= (tailleHorizontale - 4); indexHorizontale++) {
       nbPionsGagnants = 0;
       listeDesPionsGagnants = [];
       indexCourantHorizontale = indexHorizontale;
@@ -116,13 +118,13 @@ class CheckIfWinner {
         indexCourantVerticale--;
         indexCourantHorizontale++;
       }
-      
+
     }
     return false;
   }
 
-  static diagonalTopRight(game, couleurAVerifier) {
-    const tailleVerticale   = game.getTailleVerticale()
+  static diagonalTopRight(game: Game, couleurAVerifier: string) {
+    const tailleVerticale = game.getTailleVerticale()
     const tailleHorizontale = game.getTailleHorizontale()
 
     let couleurDuPion, nbPionsGagnants;
@@ -151,7 +153,7 @@ class CheckIfWinner {
         indexCourantHorizontale--;
         indexCourantVerticale--;
       }
-      
+
     }
 
     listeDesPionsGagnants = [];

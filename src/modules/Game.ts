@@ -1,9 +1,24 @@
-class Game {
-  constructor(tailleHorizontale, tailleVerticale) {
+import { MonTour } from "./MonTour"
+import { Utils } from "./Utils";
+import { WinnerManager } from "./WinnerManager";
+import { RobotManager } from "./RobotManager";
+import { Jeton } from "./Jeton";
+import * as Interface from "./Interfaces";
+
+export class Game {
+
+  private tailleHorizontaleDuJeu: number;
+  private tailleVerticaleDuJeu: number;
+  private listePionsRouge: Jeton[];
+  private listePionsJaune: Jeton[];
+  public monTour: MonTour;
+  private static game: Game;
+
+  private constructor(tailleHorizontale: number, tailleVerticale: number) {
     this.tailleHorizontaleDuJeu = tailleHorizontale;
     this.tailleVerticaleDuJeu = tailleVerticale;
-    this.listePionsRouge = new Array();
-    this.listePionsJaune = new Array();
+    this.listePionsRouge = [];
+    this.listePionsJaune = [];
     this.monTour = new MonTour()
     this.disableGame()
     this.log(
@@ -12,14 +27,52 @@ class Game {
     );
     Game.game = this;
   }
-  static getGame(tailleHorizontale, tailleVerticale) {
+  public static getGame(): Game {
     if (Game.game) {
       return Game.game
     } else {
-      return new Game(tailleHorizontale, tailleVerticale)
+      let tailleHorizontaleParsed = this.getTailleHorizontaleFromUrl()
+      let tailleVerticaleParsed = this.getTailleVerticaleFromUrl()
+      return new Game(tailleHorizontaleParsed, tailleVerticaleParsed)
     }
   }
-  searchPiece(couleur, initCase) {
+  public static getTailleHorizontaleFromUrl(): number {
+    const paramsUrl: any = Utils.parseURLParams(window.location.href)
+    if (typeof paramsUrl !== 'undefined' && paramsUrl.tailleHorizontale !== 'undefined') {
+      const tailleHorizontale = paramsUrl.tailleHorizontale[0];
+      if (parseInt(tailleHorizontale)) {
+        const tailleHorizontaleParsed = parseInt(tailleHorizontale)
+        if (tailleHorizontaleParsed >= 4 && tailleHorizontaleParsed <= 20) {
+          return tailleHorizontaleParsed
+        } else {
+          return 7;
+        }
+      } else {
+        return 7;
+      }
+    } else {
+      return 7;
+    }
+  }
+  public static getTailleVerticaleFromUrl(): number {
+    const paramsUrl: any = Utils.parseURLParams(window.location.href)
+    if (typeof paramsUrl !== 'undefined' && paramsUrl.tailleVerticale !== 'undefined') {
+      const tailleVerticale = paramsUrl.tailleVerticale[0];
+      if (parseInt(tailleVerticale)) {
+        const tailleVerticaleParsed = parseInt(tailleVerticale)
+        if (tailleVerticaleParsed >= 4 && tailleVerticaleParsed <= 20) {
+          return tailleVerticaleParsed
+        } else {
+          return 5;
+        }
+      } else {
+        return 5;
+      }
+    } else {
+      return 5;
+    }
+  }
+  public searchPiece(couleur: string, initCase: number) {
     const redCircle = $('#preview #red_circle')
     const yellowCircle = $('#preview #yellow_circle')
     const defaultCircle = $('#preview #basic_circle')
@@ -44,30 +97,31 @@ class Game {
       }
     }
   }
-  getColorOfPionPlaced(indexHorizontale, indexVerticale) {
-    const listePionsRouge  = this.getPions(1)
-    const listePionsJaune  = this.getPions(2)
-  
-    if (Utils.array2DContainsArray(listePionsRouge, [indexHorizontale, indexVerticale])) {
-      return 'red';
-    }
-    else if (Utils.array2DContainsArray(listePionsJaune, [indexHorizontale, indexVerticale])) {
-      return 'yellow';
-    }
-    else {
-      return false;
-    }
+  public getColorOfPionPlaced(indexHorizontale: number, indexVerticale: number): string|boolean {
+    let couleurARetourner = '';
+    let jetonCible = new Jeton(indexHorizontale, indexVerticale);
+    this.getPions(1).forEach(jeton => {
+      if (jeton.aPositionEgale(jetonCible)) {
+        couleurARetourner = 'red';
+      }
+    });
+    this.getPions(2).forEach(jeton => {
+      if (jeton.aPositionEgale(jetonCible)) {
+        couleurARetourner = 'yellow';
+      }
+    });
+    return (couleurARetourner == '' ? false : couleurARetourner);
   }
-  clearGame() {
+  public clearGame(): void {
     $('.row').remove()
   }
-  resetGame() {
+  public resetGame(): void {
     this.clearGame()
     this.clearPions()
     this.createBackground()
     this.disableGame()
   }
-  playGame()  {
+  public playGame(): void {
     let audio = new Audio('../public/audio/startGame.mp4');
     audio.play();
     audio = null;
@@ -75,20 +129,19 @@ class Game {
     this.setMessage("A toi de jouer !")
     this.enableGame()
   }
-  select(indexHorizontale) {
-    indexHorizontale = parseInt(indexHorizontale)
+  public select(indexHorizontale: number): void {
     let indexVerticale = this.getTailleVerticale();
     while (indexVerticale > 0) {
       let teamColor = this.getColorOfPionPlaced(indexHorizontale, indexVerticale)
       if (!teamColor) {
-        let couleur = $("#game .row").eq((indexVerticale - 1)).find(".icon").eq((indexHorizontale - 1))
+        let couleur = $("#game .row").eq((indexVerticale - 1)).find(".icon").eq(indexHorizontale - 1)
         couleur.attr("surbrillance", "red");
         return;
       }
       indexVerticale--;
     }
   }
-  getLesColonnesNonCompletes() {
+  public getLesColonnesNonCompletes(): number[] {
     let listeColonnesNonCompletes = [];
     for (let indexHorizontale = 1; indexHorizontale <= this.tailleHorizontaleDuJeu; indexHorizontale++) {
       if (!this.getColorOfPionPlaced(indexHorizontale, 1)) {
@@ -97,45 +150,46 @@ class Game {
     }
     return listeColonnesNonCompletes;
   }
-  isDraw() {
+  public isDraw(): boolean {
     return this.listePionsJaune.length + this.listePionsRouge.length >= this.getTailleHorizontale() * this.getTailleVerticale()
   }
-  getTailleHorizontale() {
-    return parseInt(this.tailleHorizontaleDuJeu);
+  public getTailleHorizontale(): number {
+    return this.tailleHorizontaleDuJeu;
   }
-  getTailleVerticale() {
-    return parseInt(this.tailleVerticaleDuJeu);
+  public getTailleVerticale(): number {
+    return this.tailleVerticaleDuJeu;
   }
-  getLesCasesPouvantEtreJouer() {
-    let listeDesCasesPouvantEtreJouer = [];
+  public getLesCasesPouvantEtreJouer(): number[][] {
+    let listeDesCasesPouvantEtreJouer: number[][] = [];
     let listeColonnesNonCompletes = this.getLesColonnesNonCompletes();
     let aTrouverLePion;
     listeColonnesNonCompletes.forEach(numeroColonneHorizontale => {
       let numeroColonneVerticale = this.getTailleVerticale();
       aTrouverLePion = false;
       while (numeroColonneVerticale > 0 && !aTrouverLePion) {
-        if (!Utils.array2DContainsArray(this.getPions(1), [numeroColonneHorizontale, numeroColonneVerticale])
-          && !Utils.array2DContainsArray(this.getPions(2), [numeroColonneHorizontale, numeroColonneVerticale])) {
-            listeDesCasesPouvantEtreJouer.push([numeroColonneHorizontale, numeroColonneVerticale])
-            aTrouverLePion = true;
-          }
+        let tempJeton = new Jeton(numeroColonneHorizontale, numeroColonneVerticale)
+        if (this.getIndexOfPion('red', tempJeton) === -1 && this.getIndexOfPion('yellow', tempJeton) === -1) {
+          listeDesCasesPouvantEtreJouer.push([numeroColonneHorizontale, numeroColonneVerticale])
+          aTrouverLePion = true;
+        }
+        tempJeton = null;
 
         numeroColonneVerticale--;
       }
     });
     return listeDesCasesPouvantEtreJouer;
   }
-  export() {
+  public export(): void {
     this.log("Puissance 4", "Affichage de l'export...");
-    let params = [];
-    params['red']    = this.getPions('red')
+    let params: { [key: string]: Jeton[] } = {};
+    params['red'] = this.getPions('red')
     params['yellow'] = this.getPions('yellow')
     const red = params['red'];
     const yellow = params['yellow'];
     const request = $.ajax({
       type: 'POST',
       url: "api/export?x=" + this.tailleHorizontaleDuJeu + "&y=" + this.tailleVerticaleDuJeu,
-      data: {red:red, yellow:yellow},
+      data: { red: red, yellow: yellow },
       cache: false,
       timeout: 120000
     })
@@ -147,20 +201,20 @@ class Game {
       let server_msg = http_error.responseText;
       let code = http_error.status;
       let code_label = http_error.statusText;
-      this.log("Puissance 4", "Echec lors de l'export ("+code+")");
+      this.log("Puissance 4", "Echec lors de l'export (" + code + ")");
     });
   }
-  unSelect() {
+  public unSelect(): void {
     $(".row .icon").attr("surbrillance", "");
   }
-  setMessage(message) {
+  public setMessage(message: string): void {
     $("#game p#tour").text(message);
   }
-  import (gameObject, parameters) {
+  public import(gameObject: Interface.GameObject, parameters: boolean = false): void {
     this.log("Puissance 4", "Début de l'import ...");
     this.log("Puissance 4", "Initialisation des paramètres ...");
-    this.tailleHorizontaleDuJeu = gameObject.parametres.x
-    this.tailleVerticaleDuJeu = gameObject.parametres.y
+    this.tailleHorizontaleDuJeu = parseInt(gameObject.parametres.x)
+    this.tailleVerticaleDuJeu = parseInt(gameObject.parametres.y)
     this.resetGame()
     this.log("Puissance 4", "Import des pions ...");
     gameObject.datas.pions.red.forEach(pionRouge => {
@@ -174,28 +228,24 @@ class Game {
       let gagnantRouge = WinnerManager.verifWin(this, "red");
       let gagnantJaune = WinnerManager.verifWin(this, "yellow");
       if (gagnantRouge) {
-        this.setWinner(gagnantRouge);
-        this.setMessage("Tu as gagné !");
-        this.log("Puissance 4", "Gagné ! Bien joué");
+        this.setWinner('red', gagnantRouge);
         this.unSelect();
       } else if (gagnantJaune) {
-        this.setWinner(gagnantJaune);
-        this.setMessage("Tu as perdu la partie !");
-        this.log("Puissance 4", "Perdu ! :(");
+        this.setWinner('yellow', gagnantJaune);
         this.monTour.set(false);
         this.unSelect();
       }
     }
     this.log("Puissance 4", "Fin de l'import");
   }
-  setWinner(couleur, pionsGagnants) {
+  public setWinner(couleur: string, pionsGagnants: number[][] = null): void {
     this.disableGame()
-    if (pionsGagnants) {       
+    if (pionsGagnants) {
       for (let i = 0; i < pionsGagnants.length; i++) {
         let indexVerticale = pionsGagnants[i][0]
-        let indexHorizontale   = pionsGagnants[i][1]
-        let couleur = $("#game .row").eq((indexVerticale - 1)).find(".icon").eq((indexHorizontale - 1))
-        $(couleur).css("opacity", 1)
+        let indexHorizontale = pionsGagnants[i][1]
+        let surbrillanceRecherche = $("#game .row").eq((indexVerticale - 1)).find(".icon").eq((indexHorizontale - 1))
+        $(surbrillanceRecherche).css("opacity", 1)
       }
     }
     if (couleur == 'red') {
@@ -206,25 +256,22 @@ class Game {
       this.setMessage("Match nul !");
     }
   }
-  log (prefix, message, colorText) {
-    if (!colorText) {
-      colorText = "false"
-    }
+  public log(prefix: string, message: string, colorText: string = 'false'): void {
     console.log(
       "%c[" + prefix + "] %c" + message,
       "color: purple; font-size: 13px; font-weight: bold;",
       "font-size: 13px; color: " + colorText
     );
   }
-  disableGame() {
+  public disableGame(): void {
     $("#game .icon").css("opacity", 0.3)
     this.monTour.set(false)
   }
-  enableGame() {
+  public enableGame(): void {
     $("#game .icon").css("opacity", 1)
     this.monTour.set(true)
   }
-  createBackground() {
+  public createBackground(): void {
     let Px = this.tailleHorizontaleDuJeu;
     let Py = this.tailleVerticaleDuJeu;
     for (let i = 1; i <= this.tailleVerticaleDuJeu; i++) {
@@ -235,21 +282,20 @@ class Game {
       }
     }
   }
-  forceAddPion(positionHorizontale, positionVerticale, couleur) {
+  public forceAddPion(positionHorizontale: number, positionVerticale: number, couleur: string): void {
     $(".row[val='" + positionVerticale + "'] .icon[case='" + positionHorizontale + "']").replaceWith(this.searchPiece(couleur, positionHorizontale));
-    $(".row[val='" + positionVerticale + "'] .icon[case='" + positionHorizontale + "']").attr("team",couleur);
+    $(".row[val='" + positionVerticale + "'] .icon[case='" + positionHorizontale + "']").attr("team", couleur);
     if (couleur == 'yellow') {
-      this.setPion(2, [positionHorizontale, positionVerticale]);
+      this.setPion(2, positionHorizontale, positionVerticale);
     } else {
-      this.setPion(1, [positionHorizontale, positionVerticale]);
+      this.setPion(1, positionHorizontale, positionVerticale);
     }
   }
-  getPositionHorizontale(event) {
+  public getPositionHorizontale(event: string | JQuery<any>) {
     return $(event).parent().index() + 1;
   }
-  addPion(indexHorizontaleClicked) {
+  public addPion(indexHorizontaleClicked: number): void {
     const tailleVerticale = this.getTailleVerticale()
-    const tailleHorizontale = this.getTailleHorizontale()
     let placeIsNotTaken = true;
     let indexVerticale = tailleVerticale;
     if (this.monTour.get()) {
@@ -260,7 +306,6 @@ class Game {
           this.monTour.set(false);
           this.unSelect();
           this.forceAddPion(indexHorizontaleClicked, indexVerticale, "red")
-          
           let lesPionsGagnants = WinnerManager.verifWin(this, "red");
           if (lesPionsGagnants) {
             this.setWinner('red', lesPionsGagnants);
@@ -280,7 +325,7 @@ class Game {
                 game.monTour.set(false);
                 game.unSelect();
               } else {
-                if (game.getColorOfPionPlaced(indexHorizontaleClicked, indexVerticale+1)) {
+                if (game.getColorOfPionPlaced(indexHorizontaleClicked, indexVerticale + 1)) {
                   // Si le robot a joué sur la même colonne, on actualise la sélection
                   game.select(indexHorizontaleClicked);
                 }
@@ -298,33 +343,44 @@ class Game {
       );
     }
   }
-  setPion(team, value) {
+  public setPion(team: string | number, positionHorizontale: number, positionVerticale: number): void {
+    let jeton = new Jeton(positionHorizontale, positionVerticale);
     if (team == 1 || team == 'red') {
-      this.listePionsRouge.push(value);
+      this.listePionsRouge.push(jeton);
     } else if (team == 2 || team == 'yellow') {
-      this.listePionsJaune.push(value);
+      this.listePionsJaune.push(jeton);
     } else {
       throw new Error("Le joueur est introuvable");
     }
+    
   }
-  removePion (team, value) {
-    let index;
+  private getIndexOfPion(team: string, pion: Jeton): number {
+    let index = -1;
+    this.getPions(team).forEach(unPion => {
+      if (unPion.aPositionEgale(pion)) {
+        index = this.getPions(team).indexOf(unPion);
+      }
+    });
+    return index;
+  }
+  public removePion(team: string | number, numeroColonneHorizontale: number, numeroColonneVerticale: number): void {
+    let jeton = new Jeton(numeroColonneHorizontale, numeroColonneVerticale);
     if (team == 1 || team == 'red') {
-      index = Utils.getIndexOf2DArray(this.listePionsRouge, value)
-      this.listePionsRouge.splice(index, 1)
+      let indexOfPion = this.getIndexOfPion('red', jeton);
+      this.listePionsRouge.splice(indexOfPion, 1)
     } else if (team == 2 || team == 'yellow') {
-      index = Utils.getIndexOf2DArray(this.listePionsJaune, value)
-      this.listePionsJaune.splice(index, 1)
+      let indexOfPion = this.getIndexOfPion('yellow', jeton);
+      this.listePionsJaune.splice(indexOfPion, 1)
     } else {
       throw "Le joueur est introuvable";
     }
   }
-  clearPions () {
+  public clearPions(): void {
     this.listePionsRouge = [];
     this.listePionsJaune = [];
     this.log("Puissance 4", "Les données des pions ont été effacés");
   }
-  getPions (team) {
+  public getPions(team: string | number): Jeton[] {
     if (team == 1 || team == 'red') {
       return this.listePionsRouge;
     } else if (team == 2 || team == 'yellow') {
