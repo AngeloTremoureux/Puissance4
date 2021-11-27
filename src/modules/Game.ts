@@ -9,16 +9,16 @@ export class Game {
 
   private tailleHorizontaleDuJeu: number;
   private tailleVerticaleDuJeu: number;
-  private listePionsRouge: Array<Jeton>;
-  private listePionsJaune: Array<Jeton>;
+  private listePionsRouge: Jeton[];
+  private listePionsJaune: Jeton[];
   public monTour: MonTour;
   private static game: Game;
 
   private constructor(tailleHorizontale: number, tailleVerticale: number) {
     this.tailleHorizontaleDuJeu = tailleHorizontale;
     this.tailleVerticaleDuJeu = tailleVerticale;
-    this.listePionsRouge = new Array();
-    this.listePionsJaune = new Array();
+    this.listePionsRouge = [];
+    this.listePionsJaune = [];
     this.monTour = new MonTour()
     this.disableGame()
     this.log(
@@ -34,7 +34,6 @@ export class Game {
       let tailleHorizontaleParsed = this.getTailleHorizontaleFromUrl()
       let tailleVerticaleParsed = this.getTailleVerticaleFromUrl()
       return new Game(tailleHorizontaleParsed, tailleVerticaleParsed)
-
     }
   }
   public static getTailleHorizontaleFromUrl(): number {
@@ -99,18 +98,19 @@ export class Game {
     }
   }
   public getColorOfPionPlaced(indexHorizontale: number, indexVerticale: number): string|boolean {
+    let couleurARetourner = '';
+    let jetonCible = new Jeton(indexHorizontale, indexVerticale);
     this.getPions(1).forEach(jeton => {
-      if (jeton.getPosition() == [indexHorizontale, indexVerticale]) {
-        return 'red';
+      if (jeton.aPositionEgale(jetonCible)) {
+        couleurARetourner = 'red';
       }
     });
     this.getPions(2).forEach(jeton => {
-      if (jeton.getPosition() == [indexHorizontale, indexVerticale]) {
-        return 'yellow';
+      if (jeton.aPositionEgale(jetonCible)) {
+        couleurARetourner = 'yellow';
       }
     });
-
-    return false;
+    return (couleurARetourner == '' ? false : couleurARetourner);
   }
   public clearGame(): void {
     $('.row').remove()
@@ -168,7 +168,7 @@ export class Game {
       aTrouverLePion = false;
       while (numeroColonneVerticale > 0 && !aTrouverLePion) {
         let tempJeton = new Jeton(numeroColonneHorizontale, numeroColonneVerticale)
-        if (!this.getIndexOfPion('red', tempJeton) && this.getIndexOfPion('yellow', tempJeton)) {
+        if (this.getIndexOfPion('red', tempJeton) === -1 && this.getIndexOfPion('yellow', tempJeton) === -1) {
           listeDesCasesPouvantEtreJouer.push([numeroColonneHorizontale, numeroColonneVerticale])
           aTrouverLePion = true;
         }
@@ -286,9 +286,9 @@ export class Game {
     $(".row[val='" + positionVerticale + "'] .icon[case='" + positionHorizontale + "']").replaceWith(this.searchPiece(couleur, positionHorizontale));
     $(".row[val='" + positionVerticale + "'] .icon[case='" + positionHorizontale + "']").attr("team", couleur);
     if (couleur == 'yellow') {
-      this.setPion(2, new Jeton(positionHorizontale, positionVerticale));
+      this.setPion(2, positionHorizontale, positionVerticale);
     } else {
-      this.setPion(1, new Jeton(positionHorizontale, positionVerticale));
+      this.setPion(1, positionHorizontale, positionVerticale);
     }
   }
   public getPositionHorizontale(event: string | JQuery<any>) {
@@ -343,29 +343,33 @@ export class Game {
       );
     }
   }
-  public setPion(team: string | number, value: Jeton): void {
+  public setPion(team: string | number, positionHorizontale: number, positionVerticale: number): void {
+    let jeton = new Jeton(positionHorizontale, positionVerticale);
     if (team == 1 || team == 'red') {
-      this.listePionsRouge.push(value);
+      this.listePionsRouge.push(jeton);
     } else if (team == 2 || team == 'yellow') {
-      this.listePionsJaune.push(value);
+      this.listePionsJaune.push(jeton);
     } else {
       throw new Error("Le joueur est introuvable");
     }
+    
   }
   private getIndexOfPion(team: string, pion: Jeton): number {
+    let index = -1;
     this.getPions(team).forEach(unPion => {
-      if (unPion.getPosition() == pion.getPosition()) {
-        return this.getPions(team).indexOf(unPion);
+      if (unPion.aPositionEgale(pion)) {
+        index = this.getPions(team).indexOf(unPion);
       }
     });
-    return null;
+    return index;
   }
-  public removePion(team: string | number, value: Jeton): void {
+  public removePion(team: string | number, numeroColonneHorizontale: number, numeroColonneVerticale: number): void {
+    let jeton = new Jeton(numeroColonneHorizontale, numeroColonneVerticale);
     if (team == 1 || team == 'red') {
-      let indexOfPion = this.getIndexOfPion('red', value);
+      let indexOfPion = this.getIndexOfPion('red', jeton);
       this.listePionsRouge.splice(indexOfPion, 1)
     } else if (team == 2 || team == 'yellow') {
-      let indexOfPion = this.getIndexOfPion('yellow', value);
+      let indexOfPion = this.getIndexOfPion('yellow', jeton);
       this.listePionsJaune.splice(indexOfPion, 1)
     } else {
       throw "Le joueur est introuvable";

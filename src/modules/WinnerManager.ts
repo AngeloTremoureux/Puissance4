@@ -25,10 +25,9 @@ export class WinnerManager {
   }
 
   static verifIfPionPlacedGiveWin(game: Game, numeroColonneHorizontale: number, numeroColonneVerticale: number, couleurPion: string): boolean|number[][] {
-    let jeton = new Jeton(numeroColonneHorizontale, numeroColonneVerticale);
-    game.setPion(couleurPion, jeton)
+    game.setPion(couleurPion, numeroColonneHorizontale, numeroColonneVerticale)
     const isWinner = WinnerManager.verifWin(game, couleurPion)
-    game.removePion(couleurPion, jeton)
+    game.removePion(couleurPion, numeroColonneHorizontale, numeroColonneVerticale)
     return isWinner;
   }
 
