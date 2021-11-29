@@ -4,6 +4,7 @@ import { WinnerManager } from "./WinnerManager";
 import { RobotManager } from "./RobotManager";
 import { Jeton } from "./Jeton";
 import * as Interface from "./Interfaces";
+var $ = require( "jquery" );
 
 export class Game {
 
@@ -193,11 +194,11 @@ export class Game {
       cache: false,
       timeout: 120000
     })
-    request.done(function (output_success) {
+    request.done(function (output_success: any) {
       console.log(output_success)
       this.log("Puissance 4", "L'export s'est correctement terminé");
     })
-    request.fail(function (http_error) {
+    request.fail(function (http_error: any) {
       let server_msg = http_error.responseText;
       let code = http_error.status;
       let code_label = http_error.statusText;

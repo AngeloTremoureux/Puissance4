@@ -1,4 +1,6 @@
-export class TestsUnits {
+import { WinnerManager } from '../src/modules/WinnerManager';
+
+class TestsUnits {
   constructor(game) {
     if (game) {
       this.game = game
@@ -6,47 +8,12 @@ export class TestsUnits {
       throw new Error("Aucune partie fournit")
     }
   }
-  launchTestsUnits() {
-    this.defaultTailleHorizontale = this.game.getTailleHorizontale()
-    this.defaultTailleVerticale = this.game.getTailleVerticale()
-
-    const listsTestsUnits = []
-    listsTestsUnits.push(this.testUnit1())
-    listsTestsUnits.push(this.testUnit2())
-    listsTestsUnits.push(this.testUnit3())
-    listsTestsUnits.push(this.testUnit4())
-    listsTestsUnits.push(this.testUnit5())
-    listsTestsUnits.push(this.testUnit6())
-    listsTestsUnits.push(this.testUnit7())
-    listsTestsUnits.push(this.testUnit8())
-    listsTestsUnits.push(this.testUnit9())
-    listsTestsUnits.push(this.testUnit10())
-    listsTestsUnits.push(this.testUnit11())
-
-    for (let index = 0; index < listsTestsUnits.length; index++) {
-      let color;
-      if (listsTestsUnits[index]) {
-        color = "green";
-      } else {
-        color = "red";
-      }
-      let message = "Test " + (index + 1) + " : " + listsTestsUnits[index] + "\n";
-      this.game.log("Test", message, color);
-
-
-    }
-    this.resetTests();
-
-
-  }
-  resetTests() {
-    this.game.tailleHorizontaleDuJeu = this.defaultTailleHorizontale;
-    this.game.tailleVerticaleDuJeu = this.defaultTailleVerticale;
-    game.resetGame()
-  }
   testUnit1() {
-    game.resetGame()
-    let gameExport = { "parametres": { "x": "7", "y": "5" }, "datas": { "pions": { "red": [
+    let gameExport = {
+      "parametres": { "x": "7", "y": "5" },
+      "datas": {
+        "pions": {
+          "red": [
             [4, 5],
             [3, 5],
             [2, 5],
@@ -63,7 +30,8 @@ export class TestsUnits {
             [2, 1],
             [7, 2],
             [5, 2]
-          ], "yellow": [
+          ],
+          "yellow": [
             [1, 5],
             [6, 5],
             [5, 5],
@@ -79,8 +47,11 @@ export class TestsUnits {
             [2, 2],
             [7, 1],
             [5, 3]
-          ] } } }
-    game.import(gameExport)
+          ]
+        }
+      }
+    }
+    this.game.import(gameExport)
 
     let valeurAttendu = [
       [5, 2],
@@ -91,8 +62,11 @@ export class TestsUnits {
     return (!WinnerManager.verifWin(this.game, 'yellow') && JSON.stringify(WinnerManager.verifWin(this.game, 'red')) === JSON.stringify(valeurAttendu))
   }
   testUnit2() {
-    game.resetGame()
-    let gameExport = { "parametres": { "x": "7", "y": "5" }, "datas": { "pions": { "red": [
+    let gameExport = {
+      "parametres": { "x": "7", "y": "5" },
+      "datas": {
+        "pions": {
+          "red": [
             [1, 5],
             [3, 5],
             [2, 5],
@@ -101,7 +75,8 @@ export class TestsUnits {
             [7, 4],
             [2, 1],
             [5, 4]
-          ], "yellow": [
+          ],
+          "yellow": [
             [7, 5],
             [4, 5],
             [2, 4],
@@ -110,8 +85,11 @@ export class TestsUnits {
             [2, 2],
             [4, 4],
             [1, 4]
-          ] } } }
-    game.import(gameExport)
+          ]
+        }
+      }
+    }
+    this.game.import(gameExport)
 
     let valeurAttendu = [
       [4, 1],
@@ -122,8 +100,11 @@ export class TestsUnits {
     return (!WinnerManager.verifWin(this.game, 'red') && JSON.stringify(WinnerManager.verifWin(this.game, 'yellow')) === JSON.stringify(valeurAttendu))
   }
   testUnit3() {
-    game.resetGame()
-    let gameExport = { "parametres": { "x": "7", "y": "5" }, "datas": { "pions": { "red": [
+    let gameExport = {
+      "parametres": { "x": "7", "y": "5" },
+      "datas": {
+        "pions": {
+          "red": [
             [3, 5],
             [7, 5],
             [1, 5],
@@ -138,7 +119,8 @@ export class TestsUnits {
             [3, 3],
             [1, 3],
             [6, 4]
-          ], "yellow": [
+          ],
+          "yellow": [
             [4, 5],
             [5, 5],
             [3, 4],
@@ -154,8 +136,11 @@ export class TestsUnits {
             [2, 1],
             [1, 2],
             [6, 3]
-          ] } } }
-    game.import(gameExport)
+          ]
+        }
+      }
+    }
+    this.game.import(gameExport)
 
     let valeurAttendu = [
       [3, 4],
@@ -166,8 +151,11 @@ export class TestsUnits {
     return (!WinnerManager.verifWin(this.game, 'red') && JSON.stringify(WinnerManager.verifWin(this.game, 'yellow')) === JSON.stringify(valeurAttendu))
   }
   testUnit4() {
-    game.resetGame()
-    let gameExport = { "parametres": { "x": "7", "y": "5" }, "datas": { "pions": { "red": [
+    let gameExport = {
+      "parametres": { "x": "7", "y": "5" },
+      "datas": {
+        "pions": {
+          "red": [
             [5, 5],
             [5, 4],
             [3, 5],
@@ -186,7 +174,8 @@ export class TestsUnits {
             [2, 1],
             [3, 4],
             [3, 3]
-          ], "yellow": [
+          ],
+          "yellow": [
             [7, 5],
             [6, 5],
             [6, 4],
@@ -204,14 +193,20 @@ export class TestsUnits {
             [1, 1],
             [3, 2],
             [3, 1]
-          ] } } }
-    game.import(gameExport)
+          ]
+        }
+      }
+    }
+    this.game.import(gameExport)
 
     return (!WinnerManager.verifWin(this.game, 'red') && !WinnerManager.verifWin(this.game, 'yellow'))
   }
   testUnit5() {
-    game.resetGame()
-    let gameExport = { "parametres": { "x": "7", "y": "5" }, "datas": { "pions": { "red": [
+    let gameExport = {
+      "parametres": { "x": "7", "y": "5" },
+      "datas": {
+        "pions": {
+          "red": [
             [3, 5],
             [4, 5],
             [1, 5],
@@ -230,7 +225,8 @@ export class TestsUnits {
             [7, 1],
             [1, 2],
             [1, 1]
-          ], "yellow": [
+          ],
+          "yellow": [
             [6, 5],
             [6, 4],
             [2, 5],
@@ -248,14 +244,20 @@ export class TestsUnits {
             [4, 1],
             [2, 1],
             [5, 1]
-          ] } } }
-    game.import(gameExport)
+          ]
+        }
+      }
+    }
+    this.game.import(gameExport)
 
     return (!WinnerManager.verifWin(this.game, 'red') && !WinnerManager.verifWin(this.game, 'yellow'))
   }
   testUnit6() {
-    game.resetGame()
-    let gameExport = { "parametres": { "x": "7", "y": "5" }, "datas": { "pions": { "red": [
+    let gameExport = {
+      "parametres": { "x": "7", "y": "5" },
+      "datas": {
+        "pions": {
+          "red": [
             [3, 5],
             [7, 4],
             [4, 5],
@@ -267,7 +269,8 @@ export class TestsUnits {
             [3, 3],
             [5, 2],
             [6, 4]
-          ], "yellow": [
+          ],
+          "yellow": [
             [7, 5],
             [5, 5],
             [7, 3],
@@ -279,8 +282,11 @@ export class TestsUnits {
             [4, 2],
             [3, 2],
             [6, 5]
-          ] } } }
-    game.import(gameExport)
+          ]
+        }
+      }
+    }
+    this.game.import(gameExport)
 
     let valeurAttendu = [
       [4, 3],
@@ -291,8 +297,11 @@ export class TestsUnits {
     return (!WinnerManager.verifWin(this.game, 'yellow') && JSON.stringify(WinnerManager.verifWin(this.game, 'red')) === JSON.stringify(valeurAttendu))
   }
   testUnit7() {
-    game.resetGame()
-    let gameExport = { "parametres": { "x": "7", "y": "10" }, "datas": { "pions": { "red": [
+    let gameExport = {
+      "parametres": { "x": "7", "y": "10" },
+      "datas": {
+        "pions": {
+          "red": [
             [6, 10],
             [2, 10],
             [7, 9],
@@ -316,7 +325,8 @@ export class TestsUnits {
             [3, 4],
             [3, 3],
             [1, 7]
-          ], "yellow": [
+          ],
+          "yellow": [
             [7, 10],
             [3, 10],
             [6, 9],
@@ -341,8 +351,11 @@ export class TestsUnits {
             [6, 2],
             [7, 5],
             [1, 6]
-          ] } } }
-    game.import(gameExport)
+          ]
+        }
+      }
+    }
+    this.game.import(gameExport)
 
     let valeurAttendu = [
       [9, 4],
@@ -353,8 +366,11 @@ export class TestsUnits {
     return (!WinnerManager.verifWin(this.game, 'red') && JSON.stringify(WinnerManager.verifWin(this.game, 'yellow')) === JSON.stringify(valeurAttendu))
   }
   testUnit8() {
-    game.resetGame()
-    let gameExport = { "parametres": { "x": "11", "y": "6" }, "datas": { "pions": { "red": [
+    let gameExport = {
+      "parametres": { "x": "11", "y": "6" },
+      "datas": {
+        "pions": {
+          "red": [
             [1, 6],
             [5, 6],
             [7, 6],
@@ -366,7 +382,8 @@ export class TestsUnits {
             [3, 4],
             [4, 6],
             [9, 4]
-          ], "yellow": [
+          ],
+          "yellow": [
             [8, 6],
             [8, 5],
             [2, 6],
@@ -378,8 +395,11 @@ export class TestsUnits {
             [2, 4],
             [7, 5],
             [9, 3]
-          ] } } }
-    game.import(gameExport)
+          ]
+        }
+      }
+    }
+    this.game.import(gameExport)
 
     let valeurAttendu = [
       [6, 6],
@@ -390,8 +410,11 @@ export class TestsUnits {
     return (!WinnerManager.verifWin(this.game, 'red') && JSON.stringify(WinnerManager.verifWin(this.game, 'yellow')) === JSON.stringify(valeurAttendu))
   }
   testUnit9() {
-    game.resetGame()
-    let gameExport = { "parametres": { "x": "4", "y": "4" }, "datas": { "pions": { "red": [
+    let gameExport = {
+      "parametres": { "x": "4", "y": "4" },
+      "datas": {
+        "pions": {
+          "red": [
             [4, 4],
             [2, 4],
             [4, 2],
@@ -400,7 +423,8 @@ export class TestsUnits {
             [2, 1],
             [1, 2],
             [3, 1]
-          ], "yellow": [
+          ],
+          "yellow": [
             [1, 4],
             [4, 3],
             [3, 4],
@@ -409,21 +433,28 @@ export class TestsUnits {
             [1, 3],
             [3, 2],
             [1, 1]
-          ] } } }
-    game.import(gameExport)
+          ]
+        }
+      }
+    }
+    this.game.import(gameExport)
 
     return (!WinnerManager.verifWin(this.game, 'red') && !WinnerManager.verifWin(this.game, 'yellow'))
   }
   testUnit10() {
-    game.resetGame()
-    let gameExport = { "parametres": { "x": "4", "y": "4" }, "datas": { "pions": { "red": [
+    let gameExport = {
+      "parametres": { "x": "4", "y": "4" },
+      "datas": {
+        "pions": {
+          "red": [
             [2, 4],
             [3, 4],
             [2, 2],
             [2, 1],
             [1, 3],
             [4, 2]
-          ], "yellow": [
+          ],
+          "yellow": [
             [4, 4],
             [4, 3],
             [2, 3],
@@ -431,8 +462,11 @@ export class TestsUnits {
             [3, 3],
             [3, 2],
             [4, 1]
-          ] } } }
-    game.import(gameExport)
+          ]
+        }
+      }
+    }
+    this.game.import(gameExport)
 
     let valeurAttendu = [
       [4, 1],
@@ -443,8 +477,11 @@ export class TestsUnits {
     return (!WinnerManager.verifWin(this.game, 'red') && JSON.stringify(WinnerManager.verifWin(this.game, 'yellow')) === JSON.stringify(valeurAttendu))
   }
   testUnit11() {
-    game.resetGame()
-    let gameExport = { "parametres": { "x": "8", "y": "7" }, "datas": { "pions": { "red": [
+    let gameExport = {
+      "parametres": { "x": "8", "y": "7" },
+      "datas": {
+        "pions": {
+          "red": [
             [1, 7],
             [6, 7],
             [4, 6],
@@ -460,7 +497,8 @@ export class TestsUnits {
             [5, 3],
             [7, 3],
             [6, 5]
-          ], "yellow": [
+          ],
+          "yellow": [
             [8, 7],
             [3, 7],
             [4, 7],
@@ -477,8 +515,11 @@ export class TestsUnits {
             [3, 4],
             [7, 2],
             [6, 4]
-          ] } } }
-    game.import(gameExport)
+          ]
+        }
+      }
+    }
+    this.game.import(gameExport)
 
     let valeurAttendu = [
       [4, 3],
@@ -489,3 +530,5 @@ export class TestsUnits {
     return (!WinnerManager.verifWin(this.game, 'red') && JSON.stringify(WinnerManager.verifWin(this.game, 'yellow')) === JSON.stringify(valeurAttendu))
   }
 }
+
+module.exports = { TestsUnits }
