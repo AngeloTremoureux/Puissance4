@@ -25,13 +25,13 @@ module.exports = [{
     rules: [{
       test: /\.tsx?$/,
       loader: 'ts-loader'
-    }, ],
-    loaders: [
-      { exclude: ['node_modules'], loader: 'babel', test: /\.jsx?$/ },
-    ]
+    }, ]
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js"],
+    alias: {
+      '@modules': path.resolve(__dirname, 'src/modules')
+    },
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
   output: {
     filename: '[name].js',

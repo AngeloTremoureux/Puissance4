@@ -1,6 +1,6 @@
 import { WinnerManager } from '../src/modules/WinnerManager';
 
-class TestsUnits {
+export class TestsUnits {
   constructor(game) {
     if (game) {
       this.game = game
@@ -530,5 +530,3 @@ class TestsUnits {
     return (!WinnerManager.verifWin(this.game, 'red') && JSON.stringify(WinnerManager.verifWin(this.game, 'yellow')) === JSON.stringify(valeurAttendu))
   }
 }
-
-module.exports = { TestsUnits }
