@@ -123,7 +123,7 @@ export class Game {
     this.disableGame()
   }
   public playGame(): void {
-    let audio = new Audio('../public/audio/startGame.mp4');
+    let audio = new Audio('../audio/startGame.mp4');
     audio.play();
     audio = null;
     this.resetGame()
@@ -317,7 +317,7 @@ export class Game {
             this.setMessage("Au tour de l'adversaire!");
             const game = this;
             setTimeout(function () {
-              const audio = new Audio('../../public/audio/pop.mp4');
+              const audio = new Audio('../../audio/pop.mp4');
               audio.play();
               const robotManager = RobotManager.getRobotManager(game)
               if (robotManager.robotPlaceUnPion("yellow")) {
