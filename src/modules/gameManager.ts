@@ -34,6 +34,10 @@ export function openParam() {
         $("#parametersValues").submit();
         (<any>$(this)).dialog("close")
       },
+      "Export": function () {
+        (<any>$(this)).dialog("close")
+        Game.getGame().export()
+      },
       "Fermer": function () {
         (<any>$(this)).dialog("close")
       }

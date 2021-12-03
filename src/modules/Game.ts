@@ -181,12 +181,11 @@ export class Game {
     return listeDesCasesPouvantEtreJouer;
   }
   public export(): void {
+    let self = this;
     this.log("Puissance 4", "Affichage de l'export...");
     let params: { [key: string]: Jeton[] } = {};
-    params['red'] = this.getPions('red')
-    params['yellow'] = this.getPions('yellow')
-    const red = params['red'];
-    const yellow = params['yellow'];
+    const red = this.getPionsFormatedArray('red');
+    const yellow = this.getPionsFormatedArray('yellow');
     const request = $.ajax({
       type: 'POST',
       url: "api/export?x=" + this.tailleHorizontaleDuJeu + "&y=" + this.tailleVerticaleDuJeu,
@@ -196,13 +195,13 @@ export class Game {
     })
     request.done(function (output_success: any) {
       console.log(output_success)
-      this.log("Puissance 4", "L'export s'est correctement terminé");
+      self.log("Puissance 4", "L'export s'est correctement terminé");
     })
     request.fail(function (http_error: any) {
       let server_msg = http_error.responseText;
       let code = http_error.status;
       let code_label = http_error.statusText;
-      this.log("Puissance 4", "Echec lors de l'export (" + code + ")");
+      self.log("Puissance 4", "Echec lors de l'export (" + server_msg + ")");
     });
   }
   public unSelect(): void {
@@ -389,5 +388,13 @@ export class Game {
     } else {
       throw "Le joueur est introuvable";
     }
+  }
+  public getPionsFormatedArray(team: string | number): number[][] {
+    let listeJetons: number[][] = [];
+    let jetons: Jeton[] = this.getPions(team);
+    jetons.forEach(jeton => {
+      listeJetons.push([jeton.getPositionHorizontale(), jeton.getPositionVerticale()]);
+    });
+    return listeJetons;
   }
 }

@@ -18,7 +18,9 @@ module.exports = [{
       './src/modules/RobotManager',
       './src/modules/WinnerManager'
     ],
-    util: ['./src/modules/Utils']
+    util: [
+      './src/modules/Utils'
+    ]
   },
   devtool: 'inline-source-map',
   module: {
@@ -35,6 +37,6 @@ module.exports = [{
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'public/dist'),
+    path: path.resolve(__dirname, 'public/dist')
   }
 }];

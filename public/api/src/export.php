@@ -18,7 +18,4 @@ if (isset($_GET['x'], $_GET['y'], $_POST['red'], $_POST['yellow'])) {
 
     echo json_encode($affichage);
 
-} else {
-    
 }
-
