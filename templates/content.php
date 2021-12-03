@@ -29,3 +29,8 @@
         <button" class="btn btn-secondary" id="optionsButton" title="Afficher les options et paramètres"><i class="fas fa-tools"></i> Options</button>
     </div>
 </div>
+<div class="credits position-absolute">
+    &copy; Angelo Tremoureux
+    <br>
+    📋 Tous droits réservés (2020-<?= date('Y'); ?>)
+</div>

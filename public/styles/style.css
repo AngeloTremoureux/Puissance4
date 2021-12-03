@@ -1,10 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap');
+/* font-family: 'Source Sans Pro', sans-serif; */
 
 html {
     background: radial-gradient(#ffffff, #d6dbff);
     height: 100%;
     width: 100%;
+}
+.credits {
+    font-family: 'Source Sans Pro', sans-serif;
+    bottom: 5px;
+    left: 5px;
 }
 #box {
     transform: translate(-50%, -50%);
@@ -29,10 +36,10 @@ html {
     font-weight: bold;
 }
 #game {
-    background: #6a91ff;
+    background: linear-gradient(295deg, #456cd9, #799af5);
     text-align: center;
     padding: 20px;
-    border: 3px black solid;
+    border: 3px #3b5db9 solid;
     width: max-content;
     -webkit-animation-name: tada;
     animation-name: tada;
