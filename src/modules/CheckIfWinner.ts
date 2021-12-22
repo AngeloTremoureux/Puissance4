@@ -97,7 +97,7 @@ export class CheckIfWinner {
 
     listeDesPionsGagnants = [];
 
-    for (let indexHorizontale = 2; indexHorizontale <= (tailleHorizontale - 4); indexHorizontale++) {
+    for (let indexHorizontale = 2; indexHorizontale <= (tailleHorizontale - 3); indexHorizontale++) {
       nbPionsGagnants = 0;
       listeDesPionsGagnants = [];
       indexCourantHorizontale = indexHorizontale;

@@ -51,3 +51,7 @@ test('Test 11', () => {
   const isTrue = testUnitManager.testUnit11()
   expect(isTrue).toBe(true);
 });
+test('Test 12', () => {
+  const isTrue = testUnitManager.testUnit12()
+  expect(isTrue).toBe(true);
+});
