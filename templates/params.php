@@ -19,11 +19,11 @@
     <form method="get" action="" id="parametersValues">
         <div class="form-group">
             <label for="tailleVerticale">Taille verticale du jeu : </label>
-            <input type="number" min="4" max="20" step="1" name="tailleVerticale" value="<?php echo $game->getNbCase('y'); ?>" class="text ui-widget-content ui-corner-all">
+            <input type="number" min="4" max="20" step="1" name="tailleVerticale" value="<?php echo $game->getNbCase('y'); ?>" class="form-control text ui-widget-content ui-corner-all">
         </div>
         <div class="form-group">
             <label for="tailleHorizontale">Taille horizontale du jeu : </label>
-            <input type="number" min="4" max="20" step="1" name="tailleHorizontale" value="<?php echo $game->getNbCase('x'); ?>" class="text ui-widget-content ui-corner-all">
+            <input type="number" min="4" max="20" step="1" name="tailleHorizontale" value="<?php echo $game->getNbCase('x'); ?>" class="form-control text ui-widget-content ui-corner-all">
         </div>
     </form>
 </div>

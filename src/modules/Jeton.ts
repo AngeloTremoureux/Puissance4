@@ -23,5 +23,5 @@ export class Jeton {
   public aPositionEgale(jeton: Jeton): boolean {
     return (this.getPositionHorizontale() == jeton.getPositionHorizontale() && this.getPositionVerticale() == jeton.getPositionVerticale());
   }
-  
+
 }

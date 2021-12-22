@@ -4,6 +4,7 @@ import { WinnerManager } from "./WinnerManager";
 import { RobotManager } from "./RobotManager";
 import { Jeton } from "./Jeton";
 import * as Interface from "./Interfaces";
+var $ = require( "jquery" );
 
 export class Game {
 
@@ -122,7 +123,7 @@ export class Game {
     this.disableGame()
   }
   public playGame(): void {
-    let audio = new Audio('../public/audio/startGame.mp4');
+    let audio = new Audio('../audio/startGame.mp4');
     audio.play();
     audio = null;
     this.resetGame()
@@ -180,12 +181,11 @@ export class Game {
     return listeDesCasesPouvantEtreJouer;
   }
   public export(): void {
+    let self = this;
     this.log("Puissance 4", "Affichage de l'export...");
     let params: { [key: string]: Jeton[] } = {};
-    params['red'] = this.getPions('red')
-    params['yellow'] = this.getPions('yellow')
-    const red = params['red'];
-    const yellow = params['yellow'];
+    const red = this.getPionsFormatedArray('red');
+    const yellow = this.getPionsFormatedArray('yellow');
     const request = $.ajax({
       type: 'POST',
       url: "api/export?x=" + this.tailleHorizontaleDuJeu + "&y=" + this.tailleVerticaleDuJeu,
@@ -193,15 +193,15 @@ export class Game {
       cache: false,
       timeout: 120000
     })
-    request.done(function (output_success) {
+    request.done(function (output_success: any) {
       console.log(output_success)
-      this.log("Puissance 4", "L'export s'est correctement terminé");
+      self.log("Puissance 4", "L'export s'est correctement terminé");
     })
-    request.fail(function (http_error) {
+    request.fail(function (http_error: any) {
       let server_msg = http_error.responseText;
       let code = http_error.status;
       let code_label = http_error.statusText;
-      this.log("Puissance 4", "Echec lors de l'export (" + code + ")");
+      self.log("Puissance 4", "Echec lors de l'export (" + server_msg + ")");
     });
   }
   public unSelect(): void {
@@ -239,6 +239,7 @@ export class Game {
     this.log("Puissance 4", "Fin de l'import");
   }
   public setWinner(couleur: string, pionsGagnants: number[][] = null): void {
+    this.unSelect()
     this.disableGame()
     if (pionsGagnants) {
       for (let i = 0; i < pionsGagnants.length; i++) {
@@ -316,7 +317,7 @@ export class Game {
             this.setMessage("Au tour de l'adversaire!");
             const game = this;
             setTimeout(function () {
-              const audio = new Audio('../../public/audio/pop.mp4');
+              const audio = new Audio('../../audio/pop.mp4');
               audio.play();
               const robotManager = RobotManager.getRobotManager(game)
               if (robotManager.robotPlaceUnPion("yellow")) {
@@ -388,5 +389,13 @@ export class Game {
     } else {
       throw "Le joueur est introuvable";
     }
+  }
+  public getPionsFormatedArray(team: string | number): number[][] {
+    let listeJetons: number[][] = [];
+    let jetons: Jeton[] = this.getPions(team);
+    jetons.forEach(jeton => {
+      listeJetons.push([jeton.getPositionHorizontale(), jeton.getPositionVerticale()]);
+    });
+    return listeJetons;
   }
 }

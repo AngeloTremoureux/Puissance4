@@ -1,5 +1,4 @@
 import { Game } from "./Game"
-import { TestsUnits } from "./TestsUnits"
 import { RobotManager } from "./RobotManager";
 
 export function ajouteUnPionDansBdd(px: number, py: number, color: string) {
@@ -12,11 +11,6 @@ export function ajouteUnPionDansBdd(px: number, py: number, color: string) {
   })
     .done(function (data) {
     });
-}
-
-export function testsUnits() {
-  let testsUnits = new TestsUnits(Game.getGame());
-  testsUnits.launchTestsUnits()
 }
 
 export function playGame() {
@@ -39,6 +33,10 @@ export function openParam() {
       "Valider": function () {
         $("#parametersValues").submit();
         (<any>$(this)).dialog("close")
+      },
+      "Export": function () {
+        (<any>$(this)).dialog("close")
+        Game.getGame().export()
       },
       "Fermer": function () {
         (<any>$(this)).dialog("close")
