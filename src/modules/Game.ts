@@ -239,6 +239,7 @@ export class Game {
     this.log("Puissance 4", "Fin de l'import");
   }
   public setWinner(couleur: string, pionsGagnants: number[][] = null): void {
+    this.unSelect()
     this.disableGame()
     if (pionsGagnants) {
       for (let i = 0; i < pionsGagnants.length; i++) {

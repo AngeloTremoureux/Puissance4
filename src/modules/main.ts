@@ -71,8 +71,8 @@ $(function () {
   $("#box").on('click', '#game .icon', function () {
     if (game.monTour.get()) {
       const positionHorizontale = game.getPositionHorizontale($(this))
-      game.addPion(positionHorizontale);
       game.select(positionHorizontale);
+      game.addPion(positionHorizontale);
     }
   })
   $("#box").on('mouseover', '#game .icon', function () {
