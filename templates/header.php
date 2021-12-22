@@ -10,3 +10,4 @@
 <script src="https://kit.fontawesome.com/f1e20245fc.js"      crossorigin="anonymous"></script>
 <script type="text/javascript" src="/dist/puissance4.js"></script>
 <script type="text/javascript" src="/dist/util.js"></script>
+<script type="text/javascript" src="/dist/shared.js"></script>
