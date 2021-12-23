@@ -30,7 +30,7 @@
     </div>
 </div>
 <div class="credits position-absolute">
-    &copy; Angelo Tremoureux
+    <a target="_blank" href="https://angelotremoureux.fr" title="Accéder à mon portfolio">&copy; Angelo Tremoureux</a>
     <br>
     📋 Tous droits réservés (2020-<?= date('Y'); ?>)
 </div>
