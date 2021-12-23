@@ -23,11 +23,11 @@ module.exports = [{
     },
     util: {
       import: './src/modules/Utils',
-      dependOn: 'shared'      
+      dependOn: 'shared'
     },
     shared: 'jquery'
   },
-  devtool: 'inline-source-map',
+  // devtool: 'inline-source-map',
   module: {
     rules: [{
       test: /\.tsx?$/,
