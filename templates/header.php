@@ -1,6 +1,10 @@
 <title>Puissance 4</title>
 <meta charset="utf-8">
-<meta name="description" content="Le puissance4 est un jeu de stratégie pour tout âge.  Le but du jeu est d'aligner 4 pions horizontalement, verticalement ou en diagonale.">
+<meta name="author" content="Angelo Tremoureux">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Le but du jeu est d'aligner 4 pions horizontalement, verticalement ou en diagonale. © Application développé par Angelo Tremoureux">
+<meta property="og:description" content="Le but du jeu est d'aligner 4 pions horizontalement, verticalement ou en diagonale. © Application développé par Angelo Tremoureux">
+<meta name="theme-color" content="#FF0000">
 <link rel="icon"       type="image/png" href="images/pion_bleu.png">
 <link rel="stylesheet" type="text/css"  href="styles/style.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.css">
