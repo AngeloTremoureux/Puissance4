@@ -1,10 +1,22 @@
-<title>Puissance 4</title>
-<meta charset="utf-8">
-<meta name="author" content="Angelo Tremoureux">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Puissance 4 © Angelo Tremoureux</title>
+<meta name="title" content="Puissance 4 © Angelo Tremoureux">
 <meta name="description" content="Le but du jeu est d'aligner 4 pions horizontalement, verticalement ou en diagonale. © Application développé par Angelo Tremoureux">
+<meta charset="utf-8">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.angelotremoureux.online/Puissance4/">
+<meta property="og:title" content="Puissance 4 © Angelo Tremoureux">
 <meta property="og:description" content="Le but du jeu est d'aligner 4 pions horizontalement, verticalement ou en diagonale. © Application développé par Angelo Tremoureux">
+<meta property="og:image" content="https://www.angelotremoureux.online/Puissance4/images/bg-puissance4.png">
+
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://www.angelotremoureux.online/Puissance4/">
+<meta property="twitter:title" content="Puissance 4 © Angelo Tremoureux">
+<meta property="twitter:description" content="Le but du jeu est d'aligner 4 pions horizontalement, verticalement ou en diagonale. © Application développé par Angelo Tremoureux">
+<meta property="twitter:image" content="https://www.angelotremoureux.online/Puissance4/images/bg-puissance4.png">
+
 <meta name="theme-color" content="#FF0000">
+
 <link rel="icon"       type="image/png" href="images/pion_bleu.png">
 <link rel="stylesheet" type="text/css"  href="styles/style.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.css">
