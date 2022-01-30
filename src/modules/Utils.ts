@@ -24,6 +24,7 @@ export class Utils {
         return i;
       }
     }
+    return 0;
   }
 
   static getCouleurEquipeAleatoire() {

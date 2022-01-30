@@ -69,7 +69,7 @@ export class RobotManager {
     });
 
     if (!lesCasesPouvantEtreJouer || lesCasesPouvantEtreJouer.length === 0) {
-      this.game.setWinner(null, null);
+      this.game.setWinner('');
       return true;
     } else {
       let boucleActive = true;

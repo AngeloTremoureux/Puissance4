@@ -11,7 +11,7 @@ $(function () {
       const key = event.keyCode;
       if ($("#game .row .icon[surbrillance='red']").length >= 1 && !game.isDraw()) {
         const pionEnSurbrillance = $("#game .row .icon[surbrillance='red']");
-        let indexHorizontaleDuPion = parseInt(pionEnSurbrillance.attr("case"));
+        let indexHorizontaleDuPion = parseInt(pionEnSurbrillance.attr("case")!);
         if (indexHorizontaleDuPion) {
           $("#game .row .icon").mouseout();
           if (key == 39) {

@@ -125,7 +125,6 @@ export class Game {
   public playGame(): void {
     let audio = new Audio('audio/startGame.mp4');
     audio.play();
-    audio = null;
     this.resetGame()
     this.setMessage("A toi de jouer !")
     this.enableGame()
@@ -173,7 +172,6 @@ export class Game {
           listeDesCasesPouvantEtreJouer.push([numeroColonneHorizontale, numeroColonneVerticale])
           aTrouverLePion = true;
         }
-        tempJeton = null;
 
         numeroColonneVerticale--;
       }
@@ -238,7 +236,7 @@ export class Game {
     }
     this.log("Puissance 4", "Fin de l'import");
   }
-  public setWinner(couleur: string, pionsGagnants: number[][] = null): void {
+  public setWinner(couleur: string, pionsGagnants?: number[][]): void {
     this.unSelect()
     this.disableGame()
     if (pionsGagnants) {
@@ -279,7 +277,7 @@ export class Game {
       let rowY = '<div class="row" val="' + i + '"></div>';
       $("#game").append(rowY);
       for (let j = 1; j <= this.tailleHorizontaleDuJeu; j++) {
-        $('.row[val="' + i + '"]').append(this.searchPiece(null, j));
+        $('.row[val="' + i + '"]').append(this.searchPiece('', j));
       }
     }
   }
@@ -311,7 +309,7 @@ export class Game {
           if (lesPionsGagnants) {
             this.setWinner('red', lesPionsGagnants);
           } else if (this.isDraw()) {
-            this.setWinner(null, null)
+            this.setWinner('')
           } else {
             this.select(indexHorizontaleClicked);
             this.setMessage("Au tour de l'adversaire!");
@@ -353,7 +351,6 @@ export class Game {
     } else {
       throw new Error("Le joueur est introuvable");
     }
-    
   }
   private getIndexOfPion(team: string, pion: Jeton): number {
     let index = -1;
