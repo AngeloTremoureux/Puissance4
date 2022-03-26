@@ -4,4 +4,4 @@ Ce jeu est est un jeu de stratégie pour tout âge dont le but du jeu est d'alig
 
 ## Jouer
 
-https://www.angelotremoureux.online/Puissance4/
+https://angelotremoureux.fr/projets/puissance4
