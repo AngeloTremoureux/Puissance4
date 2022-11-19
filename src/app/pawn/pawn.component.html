@@ -1,0 +1,22 @@
+<div class="col">
+  <svg class="icon" (click)="isDisabled ? null : click()" (mouseenter)="isDisabled ? null : onMouseEnter()" [ngClass]="{ winner: isWinner, disabled: isDisabled, survol: isHighlight}" viewBox="229.937 99.737 41.192 41.103" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+    <circle [ngStyle]="{
+      'stroke-miterlimit': 8,
+      'paint-order': 'fill markers',
+      'fill': team ? getFillColor(team) : 'white',
+      'cx': 250.76,
+      'cy': 120.36,
+      'r': 17.46
+    }" />
+    <path d="M 327 247 m -20 0 a 20 20 0 1 0 40 0 a 20 20 0 1 0 -40 0 Z M 327 247 m -16.2 0 a 16.2 16.2 0 0 1 32.4 0 a 16.2 16.2 0 0 1 -32.4 0 Z"
+      [ngStyle]="{
+        'paint-order': 'fill',
+        'stroke-linejoin': 'round',
+        'stroke-dashoffset': '35px',
+        'stroke': 'rgb(0, 0, 0)',
+        'fill': team ? team : 'rgb(94, 135, 255)'
+      }"
+      transform="matrix(-0.80291, 0.5961, -0.5961, -0.80291, 660.268085, 123.699843)"
+      bx:shape="ring 327 247 16.2 16.2 20 20 1@4a3258e7" />
+  </svg>
+</div>

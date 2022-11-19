@@ -1,0 +1,15 @@
+<div id="box">
+  <h2>Puissance 4</h2>
+  <div id="game">
+    <p id="tour">{{ message }}</p>
+    <div class="row" *ngFor="let positionY of getLoopSizeY(); index as i;">
+      <app-pawn *ngFor="let positionX of getLoopSizeX(); index as j;" [game]="this" [position]="{x: j+1, y: i+1}"></app-pawn>
+    </div>
+  </div>
+  <div class="btn-group mt-4" role="group">
+    <button (click)="play()" class="btn btn-secondary" title="Lancer une partie de puissance 4"><i class="fas fa-dice"></i> Jouer</button>
+    <button class="btn btn-secondary" title="Un match de robot contre robot"><i class="fas fa-robot"></i> Robot vs Robot</button>
+    <button class="btn btn-secondary" title="Afficher les options et paramètres"><i class="fas fa-tools"></i> Options</button>
+  </div>
+</div>
+<app-credits></app-credits>
