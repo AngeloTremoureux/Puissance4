@@ -34,18 +34,18 @@ export class RobotManager {
     this.game.enableGame()
     this.game.monTour.set(false)
     // On choisis une équipe qui commence aléatoirement
-    const color = Utils.getCouleurEquipeAleatoire();
+    const color = Utils.getRandomTeam();
     // On lance la partie
     this.robotVsRobot(color);
   }
 
-  private robotVsRobot(color: string) {
+  private robotVsRobot(color: 'red'|'yellow') {
     // Si la partie n'est pas terminé
     const that = this;
     if (!this.robotPlaceUnPion(color)) {
       // On fais jouer l'équipe adverse
       setTimeout(function () {
-        that.robotVsRobot(Utils.getCouleurEquipeAdverse(color))
+        that.robotVsRobot(Utils.getOpposingTeam(color))
       }, 5)
     }
   }

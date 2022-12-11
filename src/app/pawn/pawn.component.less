@@ -5,11 +5,21 @@
   stroke-opacity: .5;
   cursor: pointer;
 }
-.winner {
-  opacity: 1;
-}
+
 .icon.disabled {
   opacity: .3;
+}
+.icon.winner {
+  opacity: .9;
+}
+.icon.winner::before {
+  content: '';
+  position: absolute;
+  width: 64px;
+  background: red;
+  top: 0;
+  left: 0;
+  height: 64px;
 }
 .survol {
   fill: red;

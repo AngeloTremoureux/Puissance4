@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CheckIfWinner } from '../modules/CheckIfWinner';
 import { MonTour } from '../modules/MonTour';
 import { Utils } from '../modules/Utils';
@@ -11,28 +11,28 @@ import { PawnComponent } from '../pawn/pawn.component';
 })
 export class GameComponent implements OnInit {
 
-  sizeX: number;
-  sizeY: number;
-  monTour: MonTour;
+  rowSize: number;
+  columnSize: number;
+  myTurn: MonTour;
   message: string = '';
 
-  listePions: PawnComponent[];
+  pawns: PawnComponent[];
 
   constructor() {
-    this.sizeX = 7;
-    this.sizeY = 5;
-    this.listePions = [];
-    this.monTour = new MonTour(true);
+    this.rowSize = 7;
+    this.columnSize = 5;
+    this.pawns = [];
+    this.myTurn = new MonTour(true);
   }
 
   ngOnInit(): void {
     this.log(
       "Puissance 4",
-      "Initialisation du jeu en " + this.sizeX + "x" + this.sizeY
+      "Initialisation du jeu en " + this.rowSize + "x" + this.columnSize
     );
   }
 
-  public log(prefix: string, message: string, colorText: string = 'false'): void {
+  log(prefix: string, message: string, colorText: string = 'false'): void {
     console.log(
       "%c[" + prefix + "] %c" + message,
       "color: purple; font-size: 13px; font-weight: bold;",
@@ -40,51 +40,75 @@ export class GameComponent implements OnInit {
     );
   }
 
-  addPion(pawn: PawnComponent) {
-    this.listePions.push(pawn);
+  /**
+   * Initialise un pion jouable
+   * @param pawn Pion
+   */
+  initializePawn(pawn: PawnComponent): void {
+    this.pawns.push(pawn);
   }
 
-  getAllPionsOfColor(color: string) {
-    return this.listePions.filter(x => x.team == color);
+  /**
+   * Récupère la liste des pions d'une couleur spécifique
+   * @param color rouge ou jaune
+   * @returns liste de pions ou liste vide
+   */
+  getPawnsOfTeam(team: 'red'|'yellow'): PawnComponent[] {
+    return this.pawns.filter(x => x.team == team);
   }
 
-  getLoopSizeX() {
-    return new Array(this.sizeX);
+  /**
+   * Créer une liste d'éléments null de la taille du nombre de colonnes
+   * @returns Liste de null
+   */
+  getColumnNumberAsArray(): null[] {
+    return new Array(this.rowSize);
   }
 
-  getLoopSizeY() {
-    return new Array(this.sizeY);
+  /**
+   * Créer une liste d'éléments null de la taille du nombre de colonnes
+   * @returns Liste de null
+   */
+  getRowNumberAsArray(): null[] {
+    return new Array(this.columnSize);
   }
 
-  getLesColonnesNonCompletes() {
-    return this.listePions.filter(x => x.position.y == 1 && !x.team);
-  }
-
-  getLesCasesPouvantEtreJouer() {
+  /**
+   * Récupère la liste des colonnes jouables et non complétés avec le pion correspondant
+   * @returns Liste
+   */
+  getNonEmptyColumns(): PawnComponent[] {
     const liste: PawnComponent[] = [];
-    for (let index = 1; index <= this.sizeX; index++) {
-      const a = this.listePions.filter(x => x.position.x == index && !x.team);
-      if (a && a.length > 0) {
-        liste.push(a[a.length - 1]);
+    // Parcours de chaque colonne
+    for (let index = 1; index <= this.rowSize; index++) {
+      // On récupère la liste des pions
+      const pawns: PawnComponent[] = this.pawns.filter(x => x.position.x == index && !x.team);
+      if (pawns && pawns.length > 0) {
+        liste.push(pawns[pawns.length - 1]);
       }
     }
     return liste;
   }
 
-  verifWin(liste: PawnComponent[]) {
-    let verification = CheckIfWinner.horizontal(this.sizeY, this.sizeX, liste);
+  /**
+   * Vérifie s'il y a une équipe gagnante
+   * @param liste Liste de pion à vérifier
+   * @returns La liste des pions gagnants ou false
+   */
+  checksIfThereAreWiningPawns(liste: PawnComponent[]):  PawnComponent[] | false {
+    let verification: PawnComponent[]|null = CheckIfWinner.horizontal(this.columnSize, this.rowSize, liste);
     if (verification) {
       return verification;
     }
-    verification = CheckIfWinner.vertical(this.sizeY, this.sizeX, liste);
+    verification = CheckIfWinner.vertical(this.columnSize, this.rowSize, liste);
     if (verification) {
       return verification;
     }
-    verification = CheckIfWinner.diagonalTopLeft(this.sizeY, this.sizeX, liste);
+    verification = CheckIfWinner.diagonalTopLeft(this.columnSize, this.rowSize, liste);
     if (verification) {
       return verification;
     }
-    verification = CheckIfWinner.diagonalTopRight(this.sizeY, this.sizeX, liste);
+    verification = CheckIfWinner.diagonalTopRight(this.columnSize, this.rowSize, liste);
     if (verification) {
       return verification;
     } else {
@@ -92,21 +116,34 @@ export class GameComponent implements OnInit {
     }
   }
 
-  verifIfPionPlacedGiveWin(pawn: PawnComponent, couleurPion: string): false|PawnComponent[] {
-    const liste: PawnComponent[] = this.getAllPionsOfColor(couleurPion);
-    const liste2: PawnComponent[] = [pawn];
-    return this.verifWin(liste2.concat(liste));
+  /**
+   * Vérifie si l'ajout d'un pion donne la victoire à une équipe
+   * @param pawn Pion à ajouter
+   * @param team Equipe  correspondante
+   * @returns Liste des pions gagnants ou false
+   */
+  checksIfThisPawnGivesVictory(pawn: PawnComponent, team: 'red'|'yellow'): false|PawnComponent[] {
+    const pawnsOfTeam: PawnComponent[] = this.getPawnsOfTeam(team);
+    const arrayWithGivedPawn: PawnComponent[] = [pawn];
+    return this.checksIfThereAreWiningPawns(arrayWithGivedPawn.concat(pawnsOfTeam));
   }
 
-  play() {
-    let audio = new Audio('assets/audio/startGame.mp4');
+  /**
+   * Lance une nouvelle partie
+   */
+  startNewGame(): void {
+    const audio: HTMLAudioElement = new Audio('assets/audio/startGame.mp4');
+    this.myTurn.set(true);
     audio.play();
     this.setMessage("A toi de jouer !");
     this.resetGame();
   }
 
-  public resetGame(): void {
-    this.listePions.forEach(pawn => {
+  /**
+   * Réinitialise une partie
+   */
+  resetGame(): void {
+    this.pawns.forEach(pawn => {
       pawn.team = null;
       pawn.isDisabled = false;
       pawn.isHighlight = false;
@@ -114,31 +151,48 @@ export class GameComponent implements OnInit {
     });
   }
 
-  public setMessage(message: string): void {
+  /**
+   * Met à jour le statut de la partie avec un message
+   * @param message Message à afficher
+   */
+  setMessage(message: string): void {
     this.message = message;
   }
 
-  public findAllByHorizontaleRangeWithoutTeam(rowX: number) {
-    return this.listePions.filter(x => x.position.x == rowX && !x.team);
+  /**
+   * Récupère la liste des pions d'une colonne sans équipe
+   * @param indexColumn Index de la ligne
+   * @returns Liste des pions ou liste vide
+   */
+  findPawnsWithoutTeamFromColumn(indexColumn: number): PawnComponent[] {
+    return this.pawns.filter(x => x.position.x == indexColumn && !x.team);
   }
 
-  public findHighlights() {
-    return this.listePions.filter(x => x.isHighlight = true);
+  /**
+   * Récupère la liste des pions en surbrillance
+   * @returns Liste des pions ou liste vide
+   */
+  getHighlightedPawns(): PawnComponent[] {
+    return this.pawns.filter(x => x.isHighlight == true);
   }
 
-  public setWinner(pionsGagnants: PawnComponent[]|null): void {
-    const highlights = this.findHighlights();
+  /**
+   * Met des pions gagnants
+   * @param winningPawns Liste des pions
+   */
+  setWinner(winningPawns: PawnComponent[]|null): void {
+    const highlights = this.getHighlightedPawns();
     highlights.forEach(pawn => {
       pawn.isHighlight = false;
     });
-    this.listePions.forEach(pion => {
+    this.pawns.forEach(pion => {
       pion.isDisabled = true;
     });
-    if (pionsGagnants && pionsGagnants.length > 0) {
-      pionsGagnants.forEach(pion => {
+    if (winningPawns && winningPawns.length > 0) {
+      winningPawns.forEach(pion => {
         pion.isWinner = true;
       });
-      if (pionsGagnants[0].team == 'red') {
+      if (winningPawns[0].team == 'red') {
         this.setMessage("Les rouges ont gagnés");
       } else {
         this.setMessage("Les jaunes ont gagnés");
@@ -148,32 +202,68 @@ export class GameComponent implements OnInit {
     }
   }
 
-  playBotMove(color: string) {
-    // On récupère la liste des colonnes qui n'ont pas leurs
-    // colonnes complétés.
-    const lesCasesPouvantEtreJouer: PawnComponent[] = this.getLesCasesPouvantEtreJouer();
-    let pionChoisit: PawnComponent = Utils.getElementAleatoire(lesCasesPouvantEtreJouer);
-    lesCasesPouvantEtreJouer.forEach(pawn => {
-      if (this.verifIfPionPlacedGiveWin(pawn, color) || this.verifIfPionPlacedGiveWin(pawn, Utils.getCouleurEquipeAdverse(color))) {
-        pionChoisit = pawn;
+  /**
+   * Lance une partie de robots
+   */
+  startARobotGame() {
+    this.setMessage("Robot Vs. Robot");
+    this.resetGame();
+    this.myTurn.set(false);
+    // On choisis une équipe qui commence aléatoirement
+    const color = Utils.getRandomTeam();
+    // On lance la partie
+    this.robotVsRobotManager(color);
+  }
+
+  /**
+   * Place toutes les 0.3 secondes un pion aléatoire
+   * @param color Equipe
+   */
+  robotVsRobotManager(team: 'red'|'yellow'): void {
+    const currentgameComponent: GameComponent = this;
+    setTimeout(function () {
+      const isWinner = currentgameComponent.checksIfThereAreWiningPawns(currentgameComponent.getPawnsOfTeam(Utils.getOpposingTeam(team)));
+      if (isWinner) {
+        currentgameComponent.setWinner(isWinner);
+      } else {
+        currentgameComponent.playBotMove(team);
+        currentgameComponent.robotVsRobotManager(Utils.getOpposingTeam(team))
+      }
+    }, 300);
+  }
+
+  /**
+   * Joue et place un pion
+   * @param team Equipe correspondante au pion
+   */
+  playBotMove(team: 'red' | 'yellow'): void {
+    // On récupère la liste des colonnes qui n'ont pas leurs colonnes complétés.
+    const playablePawns: PawnComponent[] = this.getNonEmptyColumns();
+    // Définit un pion à jouer choisit aléatoirement
+    let choosedPawn: PawnComponent = Utils.getRandomObject(playablePawns);
+    // Si un pion donne la victoire, on modifie le pion choisit aléatoirement
+    // avec celui qui donne la victoire
+    playablePawns.forEach(pawn => {
+      if (this.checksIfThisPawnGivesVictory(pawn, team) || this.checksIfThisPawnGivesVictory(pawn, Utils.getOpposingTeam(team))) {
+        choosedPawn = pawn;
       }
     });
-    if (!lesCasesPouvantEtreJouer || lesCasesPouvantEtreJouer.length === 0) {
+    if (!playablePawns || playablePawns.length === 0) {
       this.setWinner(null);
     } else {
-      let audio = new Audio('assets/audio/pop.mp4');
+      const audio: HTMLAudioElement = new Audio('assets/audio/pop.mp4');
       audio.play();
-      pionChoisit.team = color;
-      const isWinner = this.verifWin(this.getAllPionsOfColor(color))
-      if (isWinner) {
-        this.setWinner(isWinner);
+      choosedPawn.team = team;
+      const winningPawns = this.checksIfThereAreWiningPawns(this.getPawnsOfTeam(team));
+      if (winningPawns) {
+        this.setWinner(winningPawns);
       } else {
-        this.monTour.set(true);
+        this.myTurn.set(true);
       }
     }
-    const a = this.listePions.find(x => x.isHighlight == true);
-    if (a) {
-      a.onMouseEnter();
+    const highlightedPawns: PawnComponent[] = this.getHighlightedPawns();
+    if (highlightedPawns && highlightedPawns.length > 0) {
+      highlightedPawns[0].onMouseEnter();
     }
   }
 }

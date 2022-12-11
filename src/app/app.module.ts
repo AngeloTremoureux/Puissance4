@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { GameComponent } from './game/game.component';
 import { PawnComponent } from './pawn/pawn.component';
 import { CreditsComponent } from './credits/credits.component';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
   declarations: [
@@ -16,9 +18,14 @@ import { CreditsComponent } from './credits/credits.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas);
+  }
+}
