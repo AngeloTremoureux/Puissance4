@@ -3,6 +3,8 @@ import { CheckIfWinner } from '../modules/CheckIfWinner';
 import { MonTour } from '../modules/MonTour';
 import { Utils } from '../modules/Utils';
 import { PawnComponent } from '../pawn/pawn.component';
+import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { ParametersComponent } from '../parameters/parameters.component';
 
 @Component({
   selector: 'app-game',
@@ -14,11 +16,19 @@ export class GameComponent implements OnInit {
   rowSize: number;
   columnSize: number;
   myTurn: MonTour;
+  state: string;
+  progress: boolean;
   message: string = '';
+  playMessage: string;
+  isGameBreak: boolean = false;
+  speed: number = 500;
 
   pawns: PawnComponent[];
 
-  constructor() {
+  constructor(public dialog: MatDialog) {
+    this.state = '';
+    this.playMessage = 'Jouer';
+    this.progress = false;
     this.rowSize = 7;
     this.columnSize = 5;
     this.pawns = [];
@@ -133,19 +143,39 @@ export class GameComponent implements OnInit {
    */
   startNewGame(): void {
     const audio: HTMLAudioElement = new Audio('assets/audio/startGame.mp4');
-    this.myTurn.set(true);
-    audio.play();
     this.setMessage("A toi de jouer !");
-    this.resetGame();
+    audio.play();
+    if (this.isGameIsStarted()) {
+      this.pawns.forEach(pawn => {
+        pawn.isDisabled = false;
+      });
+    } else {
+      this.resetGame();
+    }
+    this.state = 'play';
+    this.myTurn.set(true);
   }
 
   /**
    * Réinitialise une partie
    */
   resetGame(): void {
+    this.isGameBreak = false;
     this.pawns.forEach(pawn => {
       pawn.team = null;
       pawn.isDisabled = false;
+      pawn.isHighlight = false;
+      pawn.isWinner = false;
+    });
+  }
+
+  /**
+   * Désactive une partie
+   */
+  disableGame(): void {
+    this.pawns.forEach(pawn => {
+      pawn.team = null;
+      pawn.isDisabled = true;
       pawn.isHighlight = false;
       pawn.isWinner = false;
     });
@@ -181,6 +211,7 @@ export class GameComponent implements OnInit {
    * @param winningPawns Liste des pions
    */
   setWinner(winningPawns: PawnComponent[]|null): void {
+    this.isGameBreak = true;
     const highlights = this.getHighlightedPawns();
     highlights.forEach(pawn => {
       pawn.isHighlight = false;
@@ -202,11 +233,112 @@ export class GameComponent implements OnInit {
     }
   }
 
+  isPlayState() {
+    return (this.state == 'play');
+  }
+
+  isRobotState() {
+    return (this.state == 'robot');
+  }
+
+  isDefaultState() {
+    return (this.state == '');
+  }
+
+  selectPane(message: 'play' | 'robot') {
+    this.playMessage = 'Jouer';
+    this.progress = false;
+    if (message == 'play') {
+      this.setMessage("Jouer");
+    } else {
+      this.setMessage("Robot Vs. Robot");
+    }
+    this.state = message;
+  }
+
+  start() {
+    this.progress = true;
+    if (this.isPlayState()) {
+      this.startNewGame();
+    } else if (this.isRobotState()) {
+      this.startARobotGame();
+    }
+  }
+
+  isGameIsStarted(): boolean {
+    let verify: boolean = false;
+    this.pawns.forEach(pawn => {
+      if (pawn.team) {
+        verify = true;
+      }
+    });
+    return verify;
+  }
+
+  stop() {
+    if (this.isPlayState()) {
+      if (this.isGameIsStarted()) {
+        this.playMessage = 'Reprendre';
+      }
+      this.progress = false;
+      this.pawns.forEach(pawn => {
+        pawn.isDisabled = true;
+        pawn.isHighlight = false;
+      });
+      this.setMessage("");
+    } else {
+      if (this.isGameIsStarted()) {
+        this.playMessage = 'Reprendre';
+      }
+      this.progress = false;
+      this.pawns.forEach(pawn => {
+        pawn.isDisabled = true;
+        pawn.isHighlight = false;
+      });
+      this.setMessage("");
+    }
+    
+  }
+
+  reset() {
+    if (this.isPlayState()) {
+      this.myTurn.set(true);
+      this.setMessage("Jouer");
+      this.resetGame();
+    } else if (this.isRobotState()) {
+      this.setMessage("Robot Vs. Robot");
+      this.resetGame();
+    }
+    
+  }
+
+  retour() {
+    this.disableGame();
+    this.state = '';
+    this.setMessage("");
+    this.myTurn.set(false);
+  }
+
+  parametres() {
+    const dialogRef = this.dialog.open(ParametersComponent, {
+      data: {speed: this.speed/1000},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.speed = result*1000;
+      }
+    });
+  }
+
+
+
   /**
    * Lance une partie de robots
    */
   startARobotGame() {
     this.setMessage("Robot Vs. Robot");
+    this.state = 'robot';
     this.resetGame();
     this.myTurn.set(false);
     // On choisis une équipe qui commence aléatoirement
@@ -219,17 +351,34 @@ export class GameComponent implements OnInit {
    * Place toutes les 0.3 secondes un pion aléatoire
    * @param color Equipe
    */
-  robotVsRobotManager(team: 'red'|'yellow'): void {
-    const currentgameComponent: GameComponent = this;
-    setTimeout(function () {
-      const isWinner = currentgameComponent.checksIfThereAreWiningPawns(currentgameComponent.getPawnsOfTeam(Utils.getOpposingTeam(team)));
-      if (isWinner) {
-        currentgameComponent.setWinner(isWinner);
-      } else {
-        currentgameComponent.playBotMove(team);
-        currentgameComponent.robotVsRobotManager(Utils.getOpposingTeam(team))
+  async robotVsRobotManager(team: 'red'|'yellow'): Promise<void> {
+    if (this.state == '' || !this.progress) {
+      return;
+    }
+    await this.structuredSleep(this.speed);
+    if (this.state == '' || !this.progress) {
+      return;
+    }
+    const isWinner = this.checksIfThereAreWiningPawns(this.getPawnsOfTeam(Utils.getOpposingTeam(team)));
+    if (isWinner) {
+      this.setWinner(isWinner);
+    } else {
+      this.playBotMove(team);
+      this.robotVsRobotManager(Utils.getOpposingTeam(team))
+    }
+  }
+
+  async structuredSleep(ms: number): Promise<void> {
+    const timer = (ms > 50) ? 50 : ms;
+    for (let index = 0; index < ms; index += 50) {
+      if (this.state != '' || !this.progress) {
+        await this.sleep(timer);
       }
-    }, 300);
+    }
+  }
+
+  sleep(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   /**
@@ -257,7 +406,7 @@ export class GameComponent implements OnInit {
       const winningPawns = this.checksIfThereAreWiningPawns(this.getPawnsOfTeam(team));
       if (winningPawns) {
         this.setWinner(winningPawns);
-      } else {
+      } else if (this.state == 'play') {
         this.myTurn.set(true);
       }
     }

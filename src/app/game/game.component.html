@@ -7,9 +7,28 @@
     </div>
   </div>
   <div class="btn-group mt-4" role="group">
-    <button (click)="startNewGame()" class="btn btn-secondary" title="Lancer une partie de puissance 4"><fa-icon [icon]="['fas', 'dice']"></fa-icon> Jouer</button>
-    <button (click)="startARobotGame()" class="btn btn-secondary" title="Un match de robot contre robot"><fa-icon [icon]="['fas', 'robot']"></fa-icon> Robot vs Robot</button>
-    <button class="btn btn-secondary" title="Afficher les options et paramètres"><fa-icon [icon]="['fas', 'tools']"></fa-icon> Options</button>
+    <!-- PLAY -->
+    <ng-template [ngIf]="state == 'play'">
+      <button disabled class="active btn btn-dark disabled" ><fa-icon [icon]="['fas', 'circle']"></fa-icon></button>
+      <button *ngIf="!progress" (click)="start()" class="btn btn-dark text-primary font-weight-bold text-shadow" title="Lancer"><fa-icon [icon]="['fas', 'play']"></fa-icon> {{ playMessage }}</button>
+      <button *ngIf="!isGameBreak && progress" (click)="stop()" class="btn btn-dark text-danger font-weight-bold text-shadow" title="Stopper"><fa-icon [icon]="['fas', 'stop']"></fa-icon> Stopper</button>
+      <button *ngIf="progress" (click)="reset()" class="btn btn-dark font-weight-bold text-shadow" title="Réinitialiser"><fa-icon [icon]="['fas', 'arrow-rotate-left']"></fa-icon> Réinitialiser</button>
+      <button (click)='retour()' class="btn btn-dark text-warning font-weight-bold text-shadow" title="Retour"><fa-icon [icon]="['fas', 'door-open']"></fa-icon> Retour</button>
+    </ng-template>
+    <!-- ROBOT VS ROBOT -->
+    <ng-template [ngIf]="state == 'robot'">
+      <button disabled class="btn btn-dark" ><fa-icon [icon]="['fas', 'robot']"></fa-icon></button>
+      <button *ngIf="!progress" (click)="start()" class="btn btn-dark text-primary font-weight-bold text-shadow" title="Lancer"><fa-icon [icon]="['fas', 'play']"></fa-icon> {{ playMessage }}</button>
+      <button *ngIf="!isGameBreak && progress" (click)="stop()" class="btn btn-dark text-danger font-weight-bold text-shadow" title="Stopper"><fa-icon [icon]="['fas', 'stop']"></fa-icon> Stopper</button>
+      <button *ngIf="progress" (click)="reset()" class="btn btn-dark font-weight-bold text-shadow" title="Réinitialiser"><fa-icon [icon]="['fas', 'arrow-rotate-left']"></fa-icon> Réinitialiser</button>
+      <button (click)="parametres()" class="btn btn-dark text-info font-weight-bold text-shadow" title="Paramètres"><fa-icon [icon]="['fas', 'gear']"></fa-icon> Paramètres</button>
+      <button (click)='retour()' class="btn btn-dark text-warning font-weight-bold text-shadow" title="Retour"><fa-icon [icon]="['fas', 'door-open']"></fa-icon> Retour</button>
+    </ng-template>
+    <!-- NONE -->
+    <ng-template [ngIf]="state == ''">
+      <button (click)="selectPane('play')" class="btn btn-dark" title="Lancer une partie de puissance 4"><fa-icon [icon]="['fas', 'circle']"></fa-icon> Jouer</button>
+      <button (click)="selectPane('robot')" class="btn btn-dark" title="Un match de robot contre robot"><fa-icon [icon]="['fas', 'robot']"></fa-icon> Robot vs Robot</button>
+    </ng-template>
   </div>
 </div>
 <app-credits></app-credits>

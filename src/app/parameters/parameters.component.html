@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Paramètres</h1>
+<div mat-dialog-content>
+    <div class="pt-3">
+        <mat-slider min="0.1" max="5" [value]="data.speed" step="0.1" thumbLabel="true" tickInterval="5" #t showTickMarks discrete [displayWith]="formatLabel">
+            <input matSliderThumb>
+        </mat-slider>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="dialogRef.close(t.value)">Fermer</button>
+</div>

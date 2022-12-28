@@ -67,10 +67,12 @@ export class PawnComponent implements OnInit {
       lowestPawn.team = 'red';
       const audio: HTMLAudioElement = new Audio('assets/audio/pop.mp4');
       audio.play();
-      // Vérifie si ce pion donne la victoire ou le match nul
-      const isWinner: PawnComponent[] | false = (pawns.length === 1 && lowestPawn.position.y === 1) ? [] : this.game.checksIfThereAreWiningPawns(this.game.getPawnsOfTeam("red"));
+      // Vérifie si ce pion donne la victoire
+      const isWinner: PawnComponent[] | false = this.game.checksIfThereAreWiningPawns(this.game.getPawnsOfTeam("red"));
       if (isWinner) {
         this.game.setWinner(isWinner);
+      } else if (!this.game.getNonEmptyColumns() || this.game.getNonEmptyColumns().length == 0) {
+        this.game.setWinner(null);
       } else {
         setTimeout(() => {
           this.game.playBotMove('yellow');
