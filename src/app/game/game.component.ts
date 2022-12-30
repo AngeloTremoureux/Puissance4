@@ -256,6 +256,9 @@ export class GameComponent implements OnInit {
     this.state = message;
   }
 
+  /**
+   * Evenement lors du clique sur le bouton Jouer ou Reprendre
+   */
   start() {
     this.progress = true;
     if (this.isPlayState()) {
@@ -297,7 +300,7 @@ export class GameComponent implements OnInit {
       });
       this.setMessage("");
     }
-    
+
   }
 
   reset() {
@@ -306,10 +309,20 @@ export class GameComponent implements OnInit {
       this.setMessage("Jouer");
       this.resetGame();
     } else if (this.isRobotState()) {
-      this.setMessage("Robot Vs. Robot");
-      this.resetGame();
+      this.stopRobotGame().then(() => {
+        this.resetGame();
+        this.setMessage("Robot Vs. Robot");
+        this.startARobotGame();
+      })
     }
-    
+  }
+
+  async stopRobotGame() {
+    this.progress = false;
+    console.log("sleep 1")
+    await this.sleep(100);
+    console.log("sleep 2")
+    this.progress = true;
   }
 
   retour() {
@@ -339,7 +352,13 @@ export class GameComponent implements OnInit {
   startARobotGame() {
     this.setMessage("Robot Vs. Robot");
     this.state = 'robot';
-    this.resetGame();
+    if (!this.isGameIsStarted()) {
+      this.resetGame();
+    } else {
+      this.pawns.forEach(pion => {
+        pion.isDisabled = false;
+      });
+    }
     this.myTurn.set(false);
     // On choisis une équipe qui commence aléatoirement
     const color = Utils.getRandomTeam();
@@ -352,10 +371,12 @@ export class GameComponent implements OnInit {
    * @param color Equipe
    */
   async robotVsRobotManager(team: 'red'|'yellow'): Promise<void> {
+    console.log("(1) robot vs robot ! ", "state:", this.state, "progress:", this.progress)
     if (this.state == '' || !this.progress) {
       return;
     }
     await this.structuredSleep(this.speed);
+    console.log("(2) robot vs robot ! ", "state:", this.state, "progress:", this.progress)
     if (this.state == '' || !this.progress) {
       return;
     }
@@ -371,7 +392,7 @@ export class GameComponent implements OnInit {
   async structuredSleep(ms: number): Promise<void> {
     const timer = (ms > 50) ? 50 : ms;
     for (let index = 0; index < ms; index += 50) {
-      if (this.state != '' || !this.progress) {
+      if (this.state != '' && this.progress) {
         await this.sleep(timer);
       }
     }
