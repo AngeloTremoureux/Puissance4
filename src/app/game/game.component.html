@@ -1,7 +1,7 @@
 <div id="box">
   <h2>Puissance 4</h2>
   <div id="game">
-    <p id="tour">{{ message }}</p>
+    <p id="tour" [innerHTML]="message"></p>
     <div class="row" *ngFor="let positionY of getRowNumberAsArray(); index as i;">
       <app-pawn *ngFor="let positionX of getColumnNumberAsArray(); index as j;" [game]="this" [position]="{x: j+1, y: i+1}"></app-pawn>
     </div>

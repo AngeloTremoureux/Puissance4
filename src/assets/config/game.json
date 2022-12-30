@@ -1,0 +1,21 @@
+{
+  "messages": {
+    "winners": {
+      "red": "Les rouges ont gagnés",
+      "yellow": "Les jaunes ont gagnés",
+      "draw": "Match nul !"
+    },
+    "status": {
+      "play": "Jouer",
+      "robot": "Robot Vs. Robot",
+      "turns": {
+        "me": "A mon tour",
+        "robot": "&nbsp;"
+      }
+    },
+    "buttons": {
+      "start": "Jouer",
+      "resume": "Reprendre"
+    }
+  }
+}

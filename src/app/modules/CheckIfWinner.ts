@@ -1,4 +1,3 @@
-import { GameComponent } from "../game/game.component";
 import { PawnComponent } from "../pawn/pawn.component";
 
 export class CheckIfWinner {

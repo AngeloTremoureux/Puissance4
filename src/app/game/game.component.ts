@@ -3,8 +3,9 @@ import { CheckIfWinner } from '../modules/CheckIfWinner';
 import { MonTour } from '../modules/MonTour';
 import { Utils } from '../modules/Utils';
 import { PawnComponent } from '../pawn/pawn.component';
-import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ParametersComponent } from '../parameters/parameters.component';
+import data from '../../assets/config/game.json';
 
 @Component({
   selector: 'app-game',
@@ -27,7 +28,7 @@ export class GameComponent implements OnInit {
 
   constructor(public dialog: MatDialog) {
     this.state = '';
-    this.playMessage = 'Jouer';
+    this.playMessage = data.messages.buttons.start;
     this.progress = false;
     this.rowSize = 7;
     this.columnSize = 5;
@@ -143,7 +144,7 @@ export class GameComponent implements OnInit {
    */
   startNewGame(): void {
     const audio: HTMLAudioElement = new Audio('assets/audio/startGame.mp4');
-    this.setMessage("A toi de jouer !");
+    this.setMessage(data.messages.status.turns.me);
     audio.play();
     if (this.isGameIsStarted()) {
       this.pawns.forEach(pawn => {
@@ -224,12 +225,12 @@ export class GameComponent implements OnInit {
         pion.isWinner = true;
       });
       if (winningPawns[0].team == 'red') {
-        this.setMessage("Les rouges ont gagnés");
+        this.setMessage(data.messages.winners.red);
       } else {
-        this.setMessage("Les jaunes ont gagnés");
+        this.setMessage(data.messages.winners.yellow);
       }
     } else {
-      this.setMessage("Match nul !");
+      this.setMessage(data.messages.winners.draw);
     }
   }
 
@@ -249,9 +250,9 @@ export class GameComponent implements OnInit {
     this.playMessage = 'Jouer';
     this.progress = false;
     if (message == 'play') {
-      this.setMessage("Jouer");
+      this.setMessage(data.messages.status.play);
     } else {
-      this.setMessage("Robot Vs. Robot");
+      this.setMessage(data.messages.status.robot);
     }
     this.state = message;
   }
@@ -279,10 +280,10 @@ export class GameComponent implements OnInit {
   }
 
   stop() {
+    if (this.isGameIsStarted()) {
+      this.playMessage = data.messages.buttons.resume;
+    }
     if (this.isPlayState()) {
-      if (this.isGameIsStarted()) {
-        this.playMessage = 'Reprendre';
-      }
       this.progress = false;
       this.pawns.forEach(pawn => {
         pawn.isDisabled = true;
@@ -290,9 +291,6 @@ export class GameComponent implements OnInit {
       });
       this.setMessage("");
     } else {
-      if (this.isGameIsStarted()) {
-        this.playMessage = 'Reprendre';
-      }
       this.progress = false;
       this.pawns.forEach(pawn => {
         pawn.isDisabled = true;
@@ -306,12 +304,12 @@ export class GameComponent implements OnInit {
   reset() {
     if (this.isPlayState()) {
       this.myTurn.set(true);
-      this.setMessage("Jouer");
+      this.setMessage(data.messages.status.play);
       this.resetGame();
     } else if (this.isRobotState()) {
       this.stopRobotGame().then(() => {
         this.resetGame();
-        this.setMessage("Robot Vs. Robot");
+        this.setMessage(data.messages.status.robot);
         this.startARobotGame();
       })
     }
@@ -319,9 +317,7 @@ export class GameComponent implements OnInit {
 
   async stopRobotGame() {
     this.progress = false;
-    console.log("sleep 1")
     await this.sleep(100);
-    console.log("sleep 2")
     this.progress = true;
   }
 
@@ -344,13 +340,11 @@ export class GameComponent implements OnInit {
     });
   }
 
-
-
   /**
    * Lance une partie de robots
    */
   startARobotGame() {
-    this.setMessage("Robot Vs. Robot");
+    this.setMessage(data.messages.status.robot);
     this.state = 'robot';
     if (!this.isGameIsStarted()) {
       this.resetGame();
@@ -371,12 +365,10 @@ export class GameComponent implements OnInit {
    * @param color Equipe
    */
   async robotVsRobotManager(team: 'red'|'yellow'): Promise<void> {
-    console.log("(1) robot vs robot ! ", "state:", this.state, "progress:", this.progress)
     if (this.state == '' || !this.progress) {
       return;
     }
     await this.structuredSleep(this.speed);
-    console.log("(2) robot vs robot ! ", "state:", this.state, "progress:", this.progress)
     if (this.state == '' || !this.progress) {
       return;
     }
@@ -407,6 +399,9 @@ export class GameComponent implements OnInit {
    * @param team Equipe correspondante au pion
    */
   playBotMove(team: 'red' | 'yellow'): void {
+    if (this.state == 'play') {
+      this.setMessage(data.messages.status.turns.me);
+    }
     // On récupère la liste des colonnes qui n'ont pas leurs colonnes complétés.
     const playablePawns: PawnComponent[] = this.getNonEmptyColumns();
     // Définit un pion à jouer choisit aléatoirement

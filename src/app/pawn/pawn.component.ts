@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GameComponent } from '../game/game.component';
 import { Utils } from '../modules/Utils';
+import data from '../../assets/config/game.json';
 
 interface IPosition {
   x: number,
@@ -74,6 +75,7 @@ export class PawnComponent implements OnInit {
       } else if (!this.game.getNonEmptyColumns() || this.game.getNonEmptyColumns().length == 0) {
         this.game.setWinner(null);
       } else {
+        this.game.setMessage(data.messages.status.turns.robot);
         setTimeout(() => {
           this.game.playBotMove('yellow');
         }, Utils.getRandomInt(200, 600));
