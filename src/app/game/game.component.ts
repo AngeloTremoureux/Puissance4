@@ -17,6 +17,7 @@ export class GameComponent implements OnInit {
   rowSize: number;
   columnSize: number;
   myTurn: MonTour;
+  robot_last_turn_team: 'red'|'yellow'|null = null;
   state: string;
   progress: boolean;
   message: string = '';
@@ -265,7 +266,7 @@ export class GameComponent implements OnInit {
     if (this.isPlayState()) {
       this.startNewGame();
     } else if (this.isRobotState()) {
-      this.startARobotGame();
+      this.startARobotGame(this.robot_last_turn_team);
     }
   }
 
@@ -302,6 +303,7 @@ export class GameComponent implements OnInit {
   }
 
   reset() {
+    this.robot_last_turn_team = null;
     if (this.isPlayState()) {
       this.myTurn.set(true);
       this.setMessage(data.messages.status.play);
@@ -310,7 +312,7 @@ export class GameComponent implements OnInit {
       this.stopRobotGame().then(() => {
         this.resetGame();
         this.setMessage(data.messages.status.robot);
-        this.startARobotGame();
+        this.startARobotGame(this.robot_last_turn_team);
       })
     }
   }
@@ -343,7 +345,7 @@ export class GameComponent implements OnInit {
   /**
    * Lance une partie de robots
    */
-  startARobotGame() {
+  startARobotGame(team: 'red'|'yellow'|null) {
     this.setMessage(data.messages.status.robot);
     this.state = 'robot';
     if (!this.isGameIsStarted()) {
@@ -354,10 +356,14 @@ export class GameComponent implements OnInit {
       });
     }
     this.myTurn.set(false);
-    // On choisis une équipe qui commence aléatoirement
-    const color = Utils.getRandomTeam();
-    // On lance la partie
-    this.robotVsRobotManager(color);
+    if (team == null) {
+      // On choisis une équipe qui commence aléatoirement
+      const color = Utils.getRandomTeam();
+      // On lance la partie
+      this.robotVsRobotManager(color);
+    } else {
+      this.robotVsRobotManager(Utils.getOpposingTeam(team));
+    }
   }
 
   /**
@@ -401,6 +407,8 @@ export class GameComponent implements OnInit {
   playBotMove(team: 'red' | 'yellow'): void {
     if (this.state == 'play') {
       this.setMessage(data.messages.status.turns.me);
+    } else {
+      this.robot_last_turn_team = team;
     }
     // On récupère la liste des colonnes qui n'ont pas leurs colonnes complétés.
     const playablePawns: PawnComponent[] = this.getNonEmptyColumns();

@@ -1,11 +1,12 @@
 <h1 mat-dialog-title>Paramètres</h1>
 <div mat-dialog-content>
+  <span class="bold">Modifier la vitesse du robot :</span>
     <div class="pt-3">
-        <mat-slider min="0.1" max="5" [value]="data.speed" step="0.1" thumbLabel="true" tickInterval="5" #t showTickMarks discrete [displayWith]="formatLabel">
+        <mat-slider color="primary" min="0.1" max="5" [value]="data.speed" step="0.1" thumbLabel="true" tickInterval="5" #t showTickMarks discrete [displayWith]="formatLabel">
             <input matSliderThumb>
         </mat-slider>
     </div>
 </div>
 <div mat-dialog-actions>
-    <button mat-button (click)="dialogRef.close(t.value)">Valider</button>
+    <button mat-raised-button color="primary" (click)="dialogRef.close(t.value)">Valider</button>
 </div>

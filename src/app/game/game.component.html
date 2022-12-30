@@ -9,7 +9,7 @@
   <div class="btn-group mt-4" role="group">
     <!-- PLAY -->
     <ng-template [ngIf]="state == 'play'">
-      <button disabled class="active btn btn-dark disabled" ><fa-icon [icon]="['fas', 'circle']"></fa-icon></button>
+      <button disabled class="active btn btn-dark playButton" ><fa-icon [icon]="['fas', 'circle']"></fa-icon></button>
       <button *ngIf="!progress" (click)="start()" class="btn btn-dark text-primary font-weight-bold text-shadow" title="Lancer"><fa-icon [icon]="['fas', 'play']"></fa-icon> {{ playMessage }}</button>
       <button *ngIf="!isGameBreak && progress" (click)="stop()" class="btn btn-dark text-danger font-weight-bold text-shadow" title="Stopper"><fa-icon [icon]="['fas', 'stop']"></fa-icon> Stopper</button>
       <button *ngIf="progress" (click)="reset()" class="btn btn-dark font-weight-bold text-shadow" title="Réinitialiser"><fa-icon [icon]="['fas', 'arrow-rotate-left']"></fa-icon> Réinitialiser</button>
@@ -17,7 +17,7 @@
     </ng-template>
     <!-- ROBOT VS ROBOT -->
     <ng-template [ngIf]="state == 'robot'">
-      <button disabled class="btn btn-dark" ><fa-icon [icon]="['fas', 'robot']"></fa-icon></button>
+      <button disabled class="btn btn-dark robotButton" ><fa-icon [icon]="['fas', 'robot']"></fa-icon></button>
       <button *ngIf="!progress" (click)="start()" class="btn btn-dark text-primary font-weight-bold text-shadow" title="Lancer"><fa-icon [icon]="['fas', 'play']"></fa-icon> {{ playMessage }}</button>
       <button *ngIf="!isGameBreak && progress" (click)="stop()" class="btn btn-dark text-danger font-weight-bold text-shadow" title="Stopper"><fa-icon [icon]="['fas', 'stop']"></fa-icon> Stopper</button>
       <button *ngIf="progress" (click)="reset()" class="btn btn-dark font-weight-bold text-shadow" title="Réinitialiser"><fa-icon [icon]="['fas', 'arrow-rotate-left']"></fa-icon> Réinitialiser</button>

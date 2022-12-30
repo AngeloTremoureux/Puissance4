@@ -28,8 +28,15 @@
     text-align: center;
     font-weight: bold;
 }
-#robotButton:hover i {
+::ng-deep .robotButton > fa-icon > svg {
     animation: robotBipBoup 2s infinite cubic-bezier(0, 0.49, 0.76, -0.01) forwards;
+}
+::ng-deep .playButton > fa-icon > svg {
+  animation: playBounce 2s infinite ;
+  animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
+}
+.btn-dark[disabled] {
+  opacity: .9;
 }
 #game {
     background: linear-gradient(295deg, #456cd9, #799af5);
@@ -97,4 +104,14 @@
     100% {
         opacity: 1;
     }
+}
+
+@keyframes playBounce {
+  0%   { transform: scale(1,1)      translateY(6px); }
+  10%  { transform: scale(1.1,.9)   translateY(6px); }
+  30%  { transform: scale(.9,1.1)   translateY(-5px); }
+  50%  { transform: scale(1.05,.95) translateY(6px); }
+  57%  { transform: scale(1,1)      translateY(4px); }
+  64%  { transform: scale(1,1)      translateY(6px); }
+  100% { transform: scale(1,1)      translateY(6px); }
 }
